@@ -22,7 +22,7 @@ public class PrettyPrintListener : IParseTreeListener
 
     int _indent;
 
-    public void EnterEveryRule([NotNull] ParserRuleContext ctx)
+    public void EnterEveryRule(ParserRuleContext ctx)
     {
         Result.AppendLine();
         for (int i = 0; i < _indent; i++)
@@ -33,7 +33,7 @@ public class PrettyPrintListener : IParseTreeListener
         _indent += 2;
     }
 
-    public void ExitEveryRule([NotNull] ParserRuleContext ctx)
+    public void ExitEveryRule(ParserRuleContext ctx)
     {
         _indent -= 2;
         Result.Append(')');
