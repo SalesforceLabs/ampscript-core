@@ -1,0 +1,95 @@
+﻿==========
+EMPTY CONSTANTS
+==========
+%%[
+	FOR @FOO = 1 TO 10 DO
+	NEXT @FOO
+]%%
+----------
+(ContentBlockFileContext
+  (AmpOrEmbeddedContentContext
+    (AmpBlockContext
+      (AmpStatementContext
+        (ForLoopContext
+          (VariableAssignmentContext
+            (ConstantExpressionContext
+              (ConstantContext)))
+          (ConstantExpressionContext
+            (ConstantContext)))))))
+==========
+EMPTY FUNCTION CALL
+==========
+%%[
+	FOR @FOO = FunctionCall() TO OtherFunctionCall() DO
+	NEXT @FOO
+]%%
+----------
+(ContentBlockFileContext
+  (AmpOrEmbeddedContentContext
+    (AmpBlockContext
+      (AmpStatementContext
+        (ForLoopContext
+          (VariableAssignmentContext
+            (FunctionExpressionContext
+              (FunctionCallContext
+                (ArgumentsContext))))
+          (FunctionExpressionContext
+            (FunctionCallContext
+              (ArgumentsContext))))))))
+==========
+HTML EMBEDDED
+==========
+%%[
+	FOR @FOO = 1 TO 10 DO
+]%%
+	HI
+%%[
+	NEXT @FOO
+]%%
+----------
+(ContentBlockFileContext
+  (AmpOrEmbeddedContentContext
+    (AmpBlockContext
+      (AmpStatementContext
+        (ForLoopContext
+          (VariableAssignmentContext
+            (ConstantExpressionContext
+              (ConstantContext)))
+          (ConstantExpressionContext
+            (ConstantContext))
+          (AmpOrEmbeddedContentContext
+            (InlineHtmlContext)))))))
+==========
+Ampscript.Guide FOR Example 1
+==========
+%%[
+
+var @counter
+for @counter = 1 to 5 do
+
+]%%
+%%=v(@counter)=%% 
+%%[ next ]%%
+----------
+(ContentBlockFileContext
+  (AmpOrEmbeddedContentContext
+    (AmpBlockContext
+      (AmpStatementContext
+        (VarDeclarationContext))
+      (AmpStatementContext
+        (ForLoopContext
+          (VariableAssignmentContext
+            (ConstantExpressionContext
+              (ConstantContext)))
+          (ConstantExpressionContext
+            (ConstantContext))
+          (AmpOrEmbeddedContentContext
+            (InlineHtmlContext))
+          (AmpOrEmbeddedContentContext
+            (InlineAmpBlockContext
+              (FunctionExpressionContext
+                (FunctionCallContext
+                  (ArgumentsContext
+                    (ConstantExpressionContext))))))
+          (AmpOrEmbeddedContentContext
+            (InlineHtmlContext)))))))

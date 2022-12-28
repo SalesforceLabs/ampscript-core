@@ -1,0 +1,34 @@
+﻿==========
+Ampscript.Guide FOR Example 1
+==========
+%%[
+
+var @counter
+for @counter = 1 to 5 do
+
+]%%
+%%=v(@counter)=%% 
+%%[ next ]%%
+----------
+(ContentBlockFileContext
+  (AmpOrEmbeddedContentContext
+    (AmpBlockContext
+      (AmpStatementContext
+        (VarDeclarationContext))
+      (AmpStatementContext
+        (ForLoopContext
+          (VariableAssignmentContext
+            (ConstantExpressionContext
+              (ConstantContext)))
+          (ConstantExpressionContext
+            (ConstantContext))
+          (AmpOrEmbeddedContentContext
+            (InlineHtmlContext))
+          (AmpOrEmbeddedContentContext
+            (InlineAmpBlockContext
+              (FunctionExpressionContext
+                (FunctionCallContext
+                  (ArgumentsContext
+                    (ConstantExpressionContext))))))
+          (AmpOrEmbeddedContentContext
+            (InlineHtmlContext)))))))

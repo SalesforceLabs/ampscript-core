@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Engine", "Sage.Engine\Sage.Engine.csproj", "{5F3C4C0B-0845-4602-B1BD-3C28FA048365}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Engine.Tests", "Sage.Engine.Tests\Sage.Engine.Tests.csproj", "{44035D51-DF2A-4CDF-B71F-515FEA567885}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35C6E507-5522-42F3-AE87-5CFFA4A7846E}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F3C4C0B-0845-4602-B1BD-3C28FA048365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F3C4C0B-0845-4602-B1BD-3C28FA048365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F3C4C0B-0845-4602-B1BD-3C28FA048365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F3C4C0B-0845-4602-B1BD-3C28FA048365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44035D51-DF2A-4CDF-B71F-515FEA567885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44035D51-DF2A-4CDF-B71F-515FEA567885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44035D51-DF2A-4CDF-B71F-515FEA567885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44035D51-DF2A-4CDF-B71F-515FEA567885}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE814E64-BB2D-4652-BF6F-9BF23DF4A21E}
+	EndGlobalSection
+EndGlobal
