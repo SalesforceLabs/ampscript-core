@@ -3,13 +3,58 @@ Sage is a set of tools for Salesforce Marketing Cloud content development, analy
 
 The goal of this project is to make writing, debugging and analyzing content easier.
 
-At the moment, it only contains an ANTLR4 grammar without an interpreter.
+## Marketing Cloud Supported Languages
 
-Features on the roadmap include:
-* Transpile the parsed tree into C#
-* Generate a runtime capable of executing the C# code (aka - build ampscript functions)
+| Language | Summary |
+|----------|---------|
+| AMPScript | ⚠️ Partial support |
+| SSJS | ⛔ Not supported |
+| GTL | ⛔ Not Supported |
+
+### ⚠️ AMPScript Support
+The language has full grammar support, but very little runtime support at the moment.
+
+| Feature | Summary |
+|----------|---------|
+| Ampscript Blocks `%%[]%%` | ⚠️ Supports a single content block in a single file |
+| Inline Ampscript `%%= =%%`| ⚠️ Grammar support only |
+| Variables | ✔️ |
+| Logic Operators `==`, `!=`, `&&`, etc | ⚠️ Grammar support only |
+| If `if`| ⚠️ Grammar support only |
+| For `for`| ⚠️ Grammar support only |
+| Tag Syntax `<script language="ampscript">` | ⛔ Not Supported |
+| System Strings `xtmonth, jobid, subscriberkey, etc` | ⛔ Not Supported |
+| Personalization Strings `[Foo]` or `%%Foo%%` | ⛔ Not Supported |
+
+
+## Supported Functions
+
+If the function isn't listed here, then it's not supported.
+| Function Area | Supported / Notes |
+|----------|---------|
+|[Marketing Cloud API](https://ampscript.guide/marketing-cloud-api-functions/)| ⛔ Not Supported |
+|[Contact Model](https://ampscript.guide/content-model-functions/)| ⛔ Not Supported |
+|[Content](https://ampscript.guide/content-functions/)| ⛔ Not Supported |
+|[Data Extensions](https://ampscript.guide/data-extension-functions/)| ⛔ Not Supported |
+|[Date and Time](https://ampscript.guide/date-and-time-functions/)| ⛔ Not Supported |
+|[Einstein](https://ampscript.guide/einstein-email-recommendation-functions/)| ⛔ Not Supported |
+|[Encryption](https://ampscript.guide/encryption-and-encoding-functions/)| ⛔ Not Supported |
+|[HTTP](https://ampscript.guide/http-functions/)| ⛔ Not Supported |
+|[Math](https://ampscript.guide/math-functions/)| ⛔ Not Supported |
+|[Microsoft Dynamics](https://ampscript.guide/microsoft-dynamics-crm-functions/)| ⛔ Not Supported |
+|[Sales and Service Cloud](https://ampscript.guide/sales-and-service-cloud-functions/)| ⛔ Not Supported |
+|[Site](https://ampscript.guide/site-based-functions/)| ⛔ Not Supported |
+|[Social](https://ampscript.guide/social-functions/)| ⛔ Not Supported |
+|[String](https://ampscript.guide/string-functions/)| ⛔ Not Supported |
+|[Utility](https://ampscript.guide/utility-functions/)| ⛔ Not Supported |
+|[Content Syndication](https://ampscript.guide/content-syndication/)| ⛔ Not Supported |
+
+
+## Roadmap
+* Increase supported feature set for both static analysis and runtime execution
 * A 95% compatibility target for supporting ampscript functions, with mockability for local execution.
-* Debugger ability to step through ampscript code
+* Debugger ability to step through code
+* SSJS & GTL
 * Static code analysis tools to identify and remediate performance or security issues
 
 ## Docs
