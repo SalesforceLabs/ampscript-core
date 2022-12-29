@@ -97,4 +97,27 @@ internal class Runtime
     {
         return ampVariableName.ToLower();
     }
+
+    /// <summary>
+    /// Emits a string to the output stream.
+    ///
+    /// The output stream is used to output text to the final result of executing the file.
+    /// </summary>
+    internal ExpressionStatementSyntax EmitToOutputStream(string content)
+    {
+        // __runtime.Output(content);
+        return ExpressionStatement(
+            InvocationExpression(
+                    MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        IdentifierName(RuntimeVariable),
+                        IdentifierName("Output")))
+                .WithArgumentList(
+                    ArgumentList(
+                        SingletonSeparatedList<ArgumentSyntax>(
+                            Argument(
+                                LiteralExpression(
+                                    SyntaxKind.StringLiteralExpression,
+                                    Literal(content)))))));
+    }
 }

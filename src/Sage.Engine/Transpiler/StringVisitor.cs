@@ -8,6 +8,7 @@ using Antlr4.Runtime.Tree;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sage.Engine.Parser;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Sage.Engine.Transpiler;
 
@@ -56,9 +57,9 @@ internal class StringVisitor : SageParserBaseVisitor<LiteralExpressionSyntax>
         }
         string result = joinedStrings.ToString();
 
-        return SyntaxFactory.LiteralExpression(
+        return LiteralExpression(
             SyntaxKind.StringLiteralExpression,
-            SyntaxFactory.Literal(result));
+            Literal(result));
     }
 
     /// <summary>
@@ -88,8 +89,8 @@ internal class StringVisitor : SageParserBaseVisitor<LiteralExpressionSyntax>
 
         string result = joinedStrings.ToString();
 
-        return SyntaxFactory.LiteralExpression(
+        return LiteralExpression(
             SyntaxKind.StringLiteralExpression,
-            SyntaxFactory.Literal(result));
+            Literal(result));
     }
 }

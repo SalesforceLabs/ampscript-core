@@ -6,6 +6,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sage.Engine.Parser;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Sage.Engine.Transpiler;
 
@@ -50,9 +51,9 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
                 // TODO ERRORSTREAM ADD ERROR throw new ParserException(context, "Integer not parsable by a long");
             }
 
-            return SyntaxFactory.LiteralExpression(
+            return LiteralExpression(
                 SyntaxKind.NumericLiteralExpression,
-                SyntaxFactory.Literal(longResult));
+                Literal(longResult));
         }
 
         if (context.Real() != null)
@@ -62,19 +63,19 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
                 throw new InternalEngineException($"Unable to parse {context.GetText()} as decimal");
             }
 
-            return SyntaxFactory.LiteralExpression(
+            return LiteralExpression(
                 SyntaxKind.NumericLiteralExpression,
-                SyntaxFactory.Literal(decimalResult));
+                Literal(decimalResult));
         }
 
         if (context.True() != null)
         {
-            return SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression);
+            return LiteralExpression(SyntaxKind.TrueLiteralExpression);
         }
 
         if (context.False() != null)
         {
-            return SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression);
+            return LiteralExpression(SyntaxKind.FalseLiteralExpression);
         }
 
         if (context.@string() != null)

@@ -3,7 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using Sage.Engine.Parser;
 
 namespace Sage.Engine.Transpiler;
@@ -46,5 +48,19 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
                 yield return statement;
             }
         }
+    }
+
+    /// <summary>
+    /// Inline HTML only needs to add the content to the output stream.
+    ///
+    /// Example:
+    /// __outputStream.Append("<html><body></body></html>");
+    /// </summary>
+    public override IEnumerable<StatementSyntax> VisitInlineHtml(SageParser.InlineHtmlContext context)
+    {
+        return new[]
+        {
+            _transpiler.Runtime.EmitToOutputStream(context.GetText())
+        };
     }
 }

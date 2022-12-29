@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-
 namespace Sage.Engine.Tests
 {
     using System.Reflection.Emit;
@@ -49,7 +48,6 @@ namespace Sage.Engine.Tests
             Assert.That(variableDeclaration, Is.EqualTo(expected));
         }
 
-
         [Test]
         [TestCase("\"foo\"", "foo")]
         [TestCase("'foo'", "foo")]
@@ -59,10 +57,10 @@ namespace Sage.Engine.Tests
         public void TestStringLiterals(string code, string expected)
         {
             SageParser parser = GetParserInAmpMode(code);
-            var transpiler = new CSharpTranspiler();
+            var transpiler = new CSharpTranspiler(parser);
 
             LiteralExpressionSyntax transpiledString = transpiler.StringVisitor.Visit(parser.@string());
-            Assert.That(transpiledString.Token.Value?.ToString(),  Is.EqualTo(expected));
+            Assert.That(transpiledString.Token.Value?.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -72,8 +70,9 @@ namespace Sage.Engine.Tests
         public void TestSet(string code, string expected)
         {
             SageParser parser = GetParserInAmpMode(code);
+            var transpiler = new CSharpTranspiler(parser);
 
-            TestAmpCodeGeneratesExpectedCSharpCode(new[] { expected }, parser.setVariable());
+            TestAmpCodeGeneratesExpectedCSharpCode(new[] { expected }, parser.setVariable(), transpiler.StatementVisitor);
         }
 
         [Test]
@@ -90,7 +89,8 @@ namespace Sage.Engine.Tests
             string ampCodeInput = $"SET @foo = {ampInput}";
             string cSharpCodeExpected = $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", {cSharpExpected});";
             SageParser parser = GetParserInAmpMode(ampCodeInput);
-            TestAmpCodeGeneratesExpectedCSharpCode(new[] { cSharpCodeExpected }, parser.setVariable());
+            var transpiler = new CSharpTranspiler(parser);
+            TestAmpCodeGeneratesExpectedCSharpCode(new[] { cSharpCodeExpected }, parser.setVariable(), transpiler.StatementVisitor);
         }
 
         [Test]
@@ -107,7 +107,8 @@ namespace Sage.Engine.Tests
         public void TestVarDeclaration(string code, string[] expectedCode)
         {
             SageParser parser = GetParserInAmpMode(code);
-            TestAmpCodeGeneratesExpectedCSharpCode(expectedCode, parser.varDeclaration());
+            var transpiler = new CSharpTranspiler(parser);
+            TestAmpCodeGeneratesExpectedCSharpCode(expectedCode, parser.varDeclaration(), transpiler.StatementVisitor);
         }
 
         [Test]
@@ -118,8 +119,38 @@ namespace Sage.Engine.Tests
         public void TestAmpBlock(string code, string[] expectedCode)
         {
             SageParser parser = GetParserInContentMode(code);
-            var transpiler = new CSharpTranspiler();
+            var transpiler = new CSharpTranspiler(parser);
             TestAmpCodeGeneratesExpectedCSharpCode(expectedCode, parser.contentBlock(), transpiler.BlockVisitor);
+        }
+
+        [Test]
+        [TestCase("This is inline HTML", new[]
+        {
+            $"{Runtime.RuntimeVariable}.Output(\"This is inline HTML\");"
+        })]
+        [TestCase("Before %%[]%% After", new[]
+        {
+            $"{Runtime.RuntimeVariable}.Output(\"Before \");", 
+            $"{Runtime.RuntimeVariable}.Output(\" After\");"
+        })]
+        public void TestInlineHtml(string ampCode, string[] cSharpStatements)
+        {
+            SageParser parser = GetParserInContentMode(ampCode);
+            var transpiler = new CSharpTranspiler(parser);
+            TestAmpCodeGeneratesExpectedCSharpCode(cSharpStatements, parser.contentBlock(), transpiler.BlockVisitor);
+        }
+
+        [Test]
+        public void TestGeneratedMethod()
+        {
+            SageParser parser = GetParserInContentMode("%%[VAR @FOO]%%");
+            var transpiler = new CSharpTranspiler(parser);
+            string methodText = transpiler.GenerateMethodFromCode("Foo").NormalizeWhitespace().ToString();
+            Assert.That(methodText, Is.EqualTo(@$"public static void Foo(RuntimeContext __runtime)
+{{
+    RuntimeContext __runtime = new RuntimeContext();
+    {Runtime.RuntimeVariable}.SetVariable(""@foo"", null);
+}}"));
         }
 
         private static void TestAmpCodeGeneratesExpectedCSharpCode(
@@ -138,12 +169,6 @@ namespace Sage.Engine.Tests
             {
                 Assert.That(actualCode[i], Is.EqualTo(expectedCSharpCode[i]));
             }
-        }
-
-        private static void TestAmpCodeGeneratesExpectedCSharpCode(string[] expectedCSharpCode, ParserRuleContext context)
-        {
-            var transpiler = new CSharpTranspiler();
-            TestAmpCodeGeneratesExpectedCSharpCode(expectedCSharpCode, context, transpiler.StatementVisitor);
         }
     }
 }
