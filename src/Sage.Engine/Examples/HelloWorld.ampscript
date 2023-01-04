@@ -1,0 +1,14 @@
+﻿Hello World 
+
+I can declare variables
+%%[ 
+    VAR @foo 
+]%% 
+
+I can set their values and see them in the debugger
+%%[
+    SET @foo = 5
+    SET @bar = "Biz"
+]%%
+
+It's now a whole new world for content!

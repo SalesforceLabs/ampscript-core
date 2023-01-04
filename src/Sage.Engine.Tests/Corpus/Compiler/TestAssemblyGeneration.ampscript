@@ -1,0 +1,7 @@
+﻿Hello 
+
+%%[ 
+    VAR @foo 
+]%% 
+
+World

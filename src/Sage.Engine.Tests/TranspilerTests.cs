@@ -5,13 +5,12 @@
 
 namespace Sage.Engine.Tests
 {
-    using System.Reflection.Emit;
     using Antlr4.Runtime;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NUnit.Framework;
-    using Sage.Engine.Parser;
-    using Sage.Engine.Transpiler;
+    using Parser;
+    using Transpiler;
 
     /// <summary>
     /// These tests validate that the ANTLR4 generated parse tree is what is cSharpExpected from test files
@@ -143,12 +142,11 @@ namespace Sage.Engine.Tests
         [Test]
         public void TestGeneratedMethod()
         {
-            SageParser parser = GetParserInContentMode("%%[VAR @FOO]%%");
-            var transpiler = new CSharpTranspiler(parser);
+            var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");
             string methodText = transpiler.GenerateMethodFromCode("Foo").NormalizeWhitespace().ToString();
             Assert.That(methodText, Is.EqualTo(@$"public static void Foo(RuntimeContext __runtime)
 {{
-    RuntimeContext __runtime = new RuntimeContext();
+#line (1, 4) - (1, 12) ""TEST""
     {Runtime.RuntimeVariable}.SetVariable(""@foo"", null);
 }}"));
         }
@@ -169,6 +167,28 @@ namespace Sage.Engine.Tests
             {
                 Assert.That(actualCode[i], Is.EqualTo(expectedCSharpCode[i]));
             }
+        }
+
+        [Test]
+        public void TestGenerateCompilationUnit()
+        {
+            var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");
+            string methodText = transpiler.GenerateProgram().NormalizeWhitespace().ToString();
+            Assert.That(methodText, Is.EqualTo(@$"namespace Sage.Engine.Runtime
+{{
+    using System.Collections.Generic;
+    using System.Text;
+    using System;
+
+    public static class AmpProgram
+    {{
+        public static void TEST(RuntimeContext __runtime)
+        {{
+#line (1, 4) - (1, 12) ""TEST""
+            {Runtime.RuntimeVariable}.SetVariable(""@foo"", null);
+        }}
+    }}
+}}"));
         }
     }
 }

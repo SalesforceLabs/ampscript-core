@@ -22,7 +22,7 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
     {
         this._transpiler = transpiler;
     }
-
+    
     /// <summary>
     /// Visits the statement for setting variables: SET @var='bar'
     /// </summary>
@@ -45,7 +45,8 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
         {
             yield return _transpiler.Runtime.AssignToRuntime(
                     context.VarName(i).GetText(),
-                    LiteralExpression(SyntaxKind.NullLiteralExpression));
+                    LiteralExpression(SyntaxKind.NullLiteralExpression))
+                .WithLineDirective(context, this._transpiler.SourceFileName);
         }
     }
 }

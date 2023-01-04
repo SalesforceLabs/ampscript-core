@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Sage.Engine": {
+      "commandName": "Project",
+      "commandLineArgs": "Examples\\HelloWorld.ampscript -d"
+    }
+  }
+}

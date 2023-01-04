@@ -106,18 +106,29 @@ internal class Runtime
     internal ExpressionStatementSyntax EmitToOutputStream(string content)
     {
         // __runtime.Output(content);
+        return EmitToOutputStream(LiteralExpression(
+            SyntaxKind.StringLiteralExpression,
+            Literal(content)));
+    }
+
+    /// <summary>
+    /// Emits a string to the output stream.
+    ///
+    /// The output stream is used to output text to the final result of executing the file.
+    /// </summary>
+    internal ExpressionStatementSyntax EmitToOutputStream(ExpressionSyntax expression)
+    {
+        // __outputStream.Append(expression);
         return ExpressionStatement(
-            InvocationExpression(
-                    MemberAccessExpression(
-                        SyntaxKind.SimpleMemberAccessExpression,
-                        IdentifierName(RuntimeVariable),
-                        IdentifierName("Output")))
-                .WithArgumentList(
-                    ArgumentList(
-                        SingletonSeparatedList<ArgumentSyntax>(
-                            Argument(
-                                LiteralExpression(
-                                    SyntaxKind.StringLiteralExpression,
-                                    Literal(content)))))));
+                InvocationExpression(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            IdentifierName(RuntimeVariable),
+                            IdentifierName("Output")))
+                    .WithArgumentList(
+                        ArgumentList(
+                            SingletonSeparatedList(
+                                Argument(expression)))))
+            .WithHiddenLineDirective();
     }
 }
