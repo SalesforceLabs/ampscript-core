@@ -3,6 +3,25 @@ Sage is a set of tools for Salesforce Marketing Cloud content development, analy
 
 The goal of this project is to make writing, debugging and analyzing content easier.
 
+## Debugging AMPscript using Sage
+In Visual Studio, modify the [launchsettings.json](src/Sage.Engine/Properties/launchSettings.json) file to point to your ampscript file.
+
+In VSCode, create a `launch.json` file which launches the sage engine. Example:
+```json
+    "configurations": [
+        {
+            "name": "Debug AMPscript",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "Sage.Engine.exe",
+            "args": ["${file}", "-d"],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
+    ]
+```
+
 ## Marketing Cloud Supported Languages
 
 | Language | Summary |
@@ -16,7 +35,7 @@ The language has full grammar support, but very little runtime support at the mo
 
 | Feature | Summary |
 |----------|---------|
-| Ampscript Blocks `%%[]%%` | ⚠️ Supports a single content block in a single file |
+| Ampscript Blocks `%%[]%%` | ✔️ |
 | Inline Ampscript `%%= =%%`| ⚠️ Grammar support only |
 | Variables | ✔️ |
 | Logic Operators `==`, `!=`, `&&`, etc | ⚠️ Grammar support only |
@@ -53,7 +72,6 @@ If the function isn't listed here, then it's not supported.
 ## Roadmap
 * Increase supported feature set for both static analysis and runtime execution
 * A 95% compatibility target for supporting ampscript functions, with mockability for local execution.
-* Debugger ability to step through code
 * SSJS & GTL
 * Static code analysis tools to identify and remediate performance or security issues
 
