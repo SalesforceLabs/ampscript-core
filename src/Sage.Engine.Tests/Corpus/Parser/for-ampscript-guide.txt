@@ -1,6 +1,6 @@
-﻿==========
-Ampscript.Guide FOR Example 1
-==========
+﻿===========
+Ampscript_Guide FOR Example 1
+===========
 %%[
 
 var @counter
@@ -11,24 +11,26 @@ for @counter = 1 to 5 do
 %%[ next ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (VarDeclarationContext))
-      (AmpStatementContext
-        (ForLoopContext
-          (VariableAssignmentContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (VarDeclarationContext))
+        (AmpStatementContext
+          (ForLoopContext
+            (VariableAssignmentContext
+              (ConstantExpressionContext
+                (ConstantContext)))
             (ConstantExpressionContext
-              (ConstantContext)))
-          (ConstantExpressionContext
-            (ConstantContext))
-          (AmpOrEmbeddedContentContext
-            (InlineHtmlContext))
-          (AmpOrEmbeddedContentContext
-            (InlineAmpBlockContext
-              (FunctionExpressionContext
-                (FunctionCallContext
-                  (ArgumentsContext
-                    (ConstantExpressionContext))))))
-          (AmpOrEmbeddedContentContext
-            (InlineHtmlContext)))))))
+              (ConstantContext))
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (InlineHtmlContext))
+              (AmpOrEmbeddedContentContext
+                (InlineAmpBlockContext
+                  (FunctionExpressionContext
+                    (FunctionCallContext
+                      (ArgumentsContext
+                        (ConstantExpressionContext))))))
+              (AmpOrEmbeddedContentContext
+                (InlineHtmlContext)))))))))

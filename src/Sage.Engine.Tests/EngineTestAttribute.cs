@@ -49,7 +49,7 @@ namespace Sage.Engine.Tests
 
         public IEnumerable<TestMethod> BuildFrom(IMethodInfo method, Test? suite)
         {
-            foreach (CorpusData corpusData in CorpusLoader.LoadFromDirectory(this._baseDirectory))
+            foreach (CorpusData corpusData in CorpusLoader.LoadFromDirectory(this._baseDirectory).SelectMany(kvp => kvp.Value))
             {
                 string filenameWithoutExtension = Path.GetFileNameWithoutExtension(corpusData.File);
 

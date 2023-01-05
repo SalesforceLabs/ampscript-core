@@ -1,80 +1,87 @@
-﻿==========
+﻿===========
 EMPTY FUNCTION
-==========
+===========
 %%[
 OUTPUT()
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (ExpressionStatementContext
-          (FunctionExpressionContext
-            (FunctionCallContext
-              (ArgumentsContext))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (FunctionExpressionContext
+              (FunctionCallContext
+                (ArgumentsContext)))))))))
+
+===========
 SINGLE ARGUMENT CONSTANT
-==========
+===========
 %%[
 OUTPUT(1)
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (ExpressionStatementContext
-          (FunctionExpressionContext
-            (FunctionCallContext
-              (ArgumentsContext
-                (ConstantExpressionContext
-                  (ConstantContext))))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (FunctionExpressionContext
+              (FunctionCallContext
+                (ArgumentsContext
+                  (ConstantExpressionContext
+                    (ConstantContext)))))))))))
+
+===========
 MULTIPLE ARGUMENT CONSTANTS
-==========
+===========
 %%[
 ADD(1,2)
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (ExpressionStatementContext
-          (FunctionExpressionContext
-            (FunctionCallContext
-              (ArgumentsContext
-                (ConstantExpressionContext
-                  (ConstantContext))
-                (ConstantExpressionContext
-                  (ConstantContext))))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (FunctionExpressionContext
+              (FunctionCallContext
+                (ArgumentsContext
+                  (ConstantExpressionContext
+                    (ConstantContext))
+                  (ConstantExpressionContext
+                    (ConstantContext)))))))))))
+
+===========
 FUNCTIONS CALLING FUNCTIONS
-==========
+===========
 %%[
 ADD(ADD(1,2),ADD(3,4))
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (ExpressionStatementContext
-          (FunctionExpressionContext
-            (FunctionCallContext
-              (ArgumentsContext
-                (FunctionExpressionContext
-                  (FunctionCallContext
-                    (ArgumentsContext
-                      (ConstantExpressionContext
-                        (ConstantContext))
-                      (ConstantExpressionContext
-                        (ConstantContext)))))
-                (FunctionExpressionContext
-                  (FunctionCallContext
-                    (ArgumentsContext
-                      (ConstantExpressionContext
-                        (ConstantContext))
-                      (ConstantExpressionContext
-                        (ConstantContext)))))))))))))
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (FunctionExpressionContext
+              (FunctionCallContext
+                (ArgumentsContext
+                  (FunctionExpressionContext
+                    (FunctionCallContext
+                      (ArgumentsContext
+                        (ConstantExpressionContext
+                          (ConstantContext))
+                        (ConstantExpressionContext
+                          (ConstantContext)))))
+                  (FunctionExpressionContext
+                    (FunctionCallContext
+                      (ArgumentsContext
+                        (ConstantExpressionContext
+                          (ConstantContext))
+                        (ConstantExpressionContext
+                          (ConstantContext))))))))))))))

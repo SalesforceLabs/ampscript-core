@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -37,14 +38,22 @@ namespace Sage.Engine.Tests
             return GetTestsFromFileUsingHandmadeParser(filename);
         }
 
-        public static IEnumerable<CorpusData> LoadFromDirectory(string directory)
+        /// <summary>
+        /// Loads all of the corpus files from a directory in the corpus folder
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns>Key=filename, Value=Tests</returns>
+        public static IEnumerable<KeyValuePair<string, IEnumerable<CorpusData>>> LoadFromDirectory(string directory)
         {
             foreach (var filename in Directory.GetFiles(Path.Combine("corpus", directory)))
             {
+                List<CorpusData> corpusForFile = new List<CorpusData>();
                 foreach (CorpusData data in CorpusLoader.LoadFromFile(Path.GetFullPath(filename)))
                 {
-                    yield return data;
+                    corpusForFile.Add(data);
                 }
+
+                yield return new KeyValuePair<string, IEnumerable<CorpusData>>(Path.GetFileName(filename), corpusForFile);
             }
         }
 

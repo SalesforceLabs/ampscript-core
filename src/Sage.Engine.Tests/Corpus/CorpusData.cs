@@ -55,5 +55,23 @@ namespace Sage.Engine.Tests
             File = file;
             LineNumber = lineNumber;
         }
+
+        public override string ToString()
+        {
+            string parseTreeSection = string.Empty;
+            string outputSection = string.Empty;
+
+            if (!string.IsNullOrEmpty(ParseTree))
+            {
+                parseTreeSection = $"----------\n{ParseTree}\n";
+            }
+
+            if (!string.IsNullOrEmpty(outputSection))
+            {
+                outputSection = $"++++++++++\n{Output}\n";
+            }
+
+            return $"===========\n{Name}\n===========\n{Code}\n{parseTreeSection}{outputSection}";
+        }
     }
 }

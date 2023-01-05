@@ -20,5 +20,27 @@ namespace Sage.Engine.Tests
         {
             return TestUtils.GetParseResultFromTest(test);
         }
+
+        [Test]
+        [TestCase("Parser")]
+        [Ignore("Only run manually to rebuild corpus files")]
+        public void RebuildTestCorpus(string folder)
+        {
+            foreach (KeyValuePair<string, IEnumerable<CorpusData>> corpusInFile in CorpusLoader.LoadFromDirectory(folder))
+            {
+                var newCorpusFileData = new List<CorpusData>();
+
+                foreach (CorpusData corpus in corpusInFile.Value)
+                {
+                    CorpusData newCorpusData = corpus;
+                    newCorpusData.ParseTree = TestUtils.GetParseResultFromTest(corpus).ParseTree;
+                    newCorpusFileData.Add(newCorpusData);
+                }
+
+                File.WriteAllText(
+                    Path.Combine(TestContext.CurrentContext.WorkDirectory, $"rebuilt_{corpusInFile.Key}"),
+                    string.Join('\n', newCorpusFileData));
+            }
+        }
     }
 }

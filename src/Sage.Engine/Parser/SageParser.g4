@@ -8,7 +8,11 @@
 options { tokenVocab=SageLexer; }
 
 contentBlockFile
-    : ampOrEmbeddedContent* EOF
+    : contentBlock EOF
+    ;
+
+contentBlock
+    : ampOrEmbeddedContent*
     ;
 
 inlineHtml
@@ -51,19 +55,19 @@ variableAssignment
     ;
 
 forLoop
-    : For variableAssignment (To|Downto) expression Do ampOrEmbeddedContent* Next (VarName)?
+    : For variableAssignment (To|Downto) expression Do contentBlock Next (VarName)?
     ;
 
 ifStatement
-    : If expression Then ampOrEmbeddedContent* elseIfStatement* elseStatement? Endif
+    : If expression Then contentBlock elseIfStatement* elseStatement? Endif
     ;
 
 elseIfStatement
-    : Elseif expression Then ampOrEmbeddedContent*
+    : Elseif expression Then contentBlock
     ;
 
 elseStatement
-    : Else ampOrEmbeddedContent*
+    : Else contentBlock
     ;
 
 expressionStatement

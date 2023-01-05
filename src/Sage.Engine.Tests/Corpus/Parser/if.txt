@@ -1,24 +1,27 @@
-﻿==========
+﻿===========
 EMPTY IF
-==========
+===========
 %%[
 	IF 1==1 THEN
 	ENDIF
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext)))))))
+
+===========
 EMPTY IF ELSE
-==========
+===========
 %%[
 	IF 1==1 THEN
     ELSE
@@ -26,19 +29,23 @@ EMPTY IF ELSE
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (ElseStatementContext))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext)
+            (ElseStatementContext
+              (ContentBlockContext))))))))
+
+===========
 EMPTY IF ELSEIF
-==========
+===========
 %%[
 	IF 1==1 THEN
     ELSEIF 2==2 THEN
@@ -46,24 +53,28 @@ EMPTY IF ELSEIF
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (ElseIfStatementContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
             (ComparisionExpressionContext
               (ConstantExpressionContext
                 (ConstantContext))
               (ConstantExpressionContext
-                (ConstantContext)))))))))
-==========
+                (ConstantContext)))
+            (ContentBlockContext)
+            (ElseIfStatementContext
+              (ComparisionExpressionContext
+                (ConstantExpressionContext
+                  (ConstantContext))
+                (ConstantExpressionContext
+                  (ConstantContext)))
+              (ContentBlockContext))))))))
+
+===========
 EMPTY IF ELSEIF ELSE
-==========
+===========
 %%[
 	IF 1==1 THEN
     ELSEIF 2==2 THEN
@@ -72,25 +83,30 @@ EMPTY IF ELSEIF ELSE
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (ElseIfStatementContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
             (ComparisionExpressionContext
               (ConstantExpressionContext
                 (ConstantContext))
               (ConstantExpressionContext
-                (ConstantContext))))
-          (ElseStatementContext))))))
-==========
+                (ConstantContext)))
+            (ContentBlockContext)
+            (ElseIfStatementContext
+              (ComparisionExpressionContext
+                (ConstantExpressionContext
+                  (ConstantContext))
+                (ConstantExpressionContext
+                  (ConstantContext)))
+              (ContentBlockContext))
+            (ElseStatementContext
+              (ContentBlockContext))))))))
+
+===========
 EMPTY IF
-==========
+===========
 %%[
 	IF 1==1 THEN
         IF 2==2 THEN
@@ -101,36 +117,41 @@ EMPTY IF
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (AmpBlockContext
-              (AmpStatementContext
-                (IfStatementContext
-                  (ComparisionExpressionContext
-                    (ConstantExpressionContext
-                      (ConstantContext))
-                    (ConstantExpressionContext
-                      (ConstantContext)))
-                  (AmpOrEmbeddedContentContext
-                    (AmpBlockContext
-                      (AmpStatementContext
-                        (IfStatementContext
-                          (ComparisionExpressionContext
-                            (ConstantExpressionContext
-                              (ConstantContext))
-                            (ConstantExpressionContext
-                              (ConstantContext))))))))))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (AmpBlockContext
+                  (AmpStatementContext
+                    (IfStatementContext
+                      (ComparisionExpressionContext
+                        (ConstantExpressionContext
+                          (ConstantContext))
+                        (ConstantExpressionContext
+                          (ConstantContext)))
+                      (ContentBlockContext
+                        (AmpOrEmbeddedContentContext
+                          (AmpBlockContext
+                            (AmpStatementContext
+                              (IfStatementContext
+                                (ComparisionExpressionContext
+                                  (ConstantExpressionContext
+                                    (ConstantContext))
+                                  (ConstantExpressionContext
+                                    (ConstantContext)))
+                                (ContentBlockContext)))))))))))))))))
+
+===========
 VAR IF
-==========
+===========
 %%[
 	IF 1==1 THEN
         VAR @FOO
@@ -138,22 +159,25 @@ VAR IF
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (AmpBlockContext
-              (AmpStatementContext
-                (VarDeclarationContext)))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (AmpBlockContext
+                  (AmpStatementContext
+                    (VarDeclarationContext)))))))))))
+
+===========
 IF ELSE
-==========
+===========
 %%[
 	IF 1==1 THEN
         VAR @FOO
@@ -163,27 +187,31 @@ IF ELSE
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (AmpBlockContext
-              (AmpStatementContext
-                (VarDeclarationContext))))
-          (ElseStatementContext
-            (AmpOrEmbeddedContentContext
-              (AmpBlockContext
-                (AmpStatementContext
-                  (VarDeclarationContext))))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (AmpBlockContext
+                  (AmpStatementContext
+                    (VarDeclarationContext)))))
+            (ElseStatementContext
+              (ContentBlockContext
+                (AmpOrEmbeddedContentContext
+                  (AmpBlockContext
+                    (AmpStatementContext
+                      (VarDeclarationContext))))))))))))
+
+===========
 IF ELSEIF
-==========
+===========
 %%[
 	IF 1==1 THEN
         VAR @FOO
@@ -193,32 +221,36 @@ IF ELSEIF
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (AmpBlockContext
-              (AmpStatementContext
-                (VarDeclarationContext))))
-          (ElseIfStatementContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
             (ComparisionExpressionContext
               (ConstantExpressionContext
                 (ConstantContext))
               (ConstantExpressionContext
                 (ConstantContext)))
-            (AmpOrEmbeddedContentContext
-              (AmpBlockContext
-                (AmpStatementContext
-                  (VarDeclarationContext))))))))))
-==========
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (AmpBlockContext
+                  (AmpStatementContext
+                    (VarDeclarationContext)))))
+            (ElseIfStatementContext
+              (ComparisionExpressionContext
+                (ConstantExpressionContext
+                  (ConstantContext))
+                (ConstantExpressionContext
+                  (ConstantContext)))
+              (ContentBlockContext
+                (AmpOrEmbeddedContentContext
+                  (AmpBlockContext
+                    (AmpStatementContext
+                      (VarDeclarationContext))))))))))))
+
+===========
 IF ELSEIF ELSE
-==========
+===========
 %%[
 	IF 1==1 THEN
         VAR @FOO
@@ -230,37 +262,42 @@ IF ELSEIF ELSE
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (AmpBlockContext
-              (AmpStatementContext
-                (VarDeclarationContext))))
-          (ElseIfStatementContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
             (ComparisionExpressionContext
               (ConstantExpressionContext
                 (ConstantContext))
               (ConstantExpressionContext
                 (ConstantContext)))
-            (AmpOrEmbeddedContentContext
-              (AmpBlockContext
-                (AmpStatementContext
-                  (VarDeclarationContext)))))
-          (ElseStatementContext
-            (AmpOrEmbeddedContentContext
-              (AmpBlockContext
-                (AmpStatementContext
-                  (VarDeclarationContext))))))))))
-==========
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (AmpBlockContext
+                  (AmpStatementContext
+                    (VarDeclarationContext)))))
+            (ElseIfStatementContext
+              (ComparisionExpressionContext
+                (ConstantExpressionContext
+                  (ConstantContext))
+                (ConstantExpressionContext
+                  (ConstantContext)))
+              (ContentBlockContext
+                (AmpOrEmbeddedContentContext
+                  (AmpBlockContext
+                    (AmpStatementContext
+                      (VarDeclarationContext))))))
+            (ElseStatementContext
+              (ContentBlockContext
+                (AmpOrEmbeddedContentContext
+                  (AmpBlockContext
+                    (AmpStatementContext
+                      (VarDeclarationContext))))))))))))
+
+===========
 IF SWITCH CONTEXT
-==========
+===========
 %%[
 	IF 1==1 THEN
 ]%%
@@ -270,20 +307,23 @@ IF SWITCH CONTEXT
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (InlineHtmlContext)))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (InlineHtmlContext)))))))))
+
+===========
 IF ELSE SWITCH CONTEXT
-==========
+===========
 %%[
 	IF 1==1 THEN
 ]%%
@@ -297,23 +337,27 @@ IF ELSE SWITCH CONTEXT
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (InlineHtmlContext))
-          (ElseStatementContext
-            (AmpOrEmbeddedContentContext
-              (InlineHtmlContext))))))))
-==========
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (InlineHtmlContext)))
+            (ElseStatementContext
+              (ContentBlockContext
+                (AmpOrEmbeddedContentContext
+                  (InlineHtmlContext))))))))))
+
+===========
 IF MULTIPLE EMBEDDED CONTEXT
-==========
+===========
 %%[
 	IF 1==1 THEN
 ]%%
@@ -330,27 +374,30 @@ IF MULTIPLE EMBEDDED CONTEXT
 ]%%
 ----------
 (ContentBlockFileContext
-  (AmpOrEmbeddedContentContext
-    (AmpBlockContext
-      (AmpStatementContext
-        (IfStatementContext
-          (ComparisionExpressionContext
-            (ConstantExpressionContext
-              (ConstantContext))
-            (ConstantExpressionContext
-              (ConstantContext)))
-          (AmpOrEmbeddedContentContext
-            (InlineHtmlContext))
-          (AmpOrEmbeddedContentContext
-            (AmpBlockContext
-              (AmpStatementContext
-                (IfStatementContext
-                  (ComparisionExpressionContext
-                    (ConstantExpressionContext
-                      (ConstantContext))
-                    (ConstantExpressionContext
-                      (ConstantContext)))
-                  (AmpOrEmbeddedContentContext
-                    (InlineHtmlContext))))))
-          (AmpOrEmbeddedContentContext
-            (InlineHtmlContext)))))))
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (IfStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))
+            (ContentBlockContext
+              (AmpOrEmbeddedContentContext
+                (InlineHtmlContext))
+              (AmpOrEmbeddedContentContext
+                (AmpBlockContext
+                  (AmpStatementContext
+                    (IfStatementContext
+                      (ComparisionExpressionContext
+                        (ConstantExpressionContext
+                          (ConstantContext))
+                        (ConstantExpressionContext
+                          (ConstantContext)))
+                      (ContentBlockContext
+                        (AmpOrEmbeddedContentContext
+                          (InlineHtmlContext)))))))
+              (AmpOrEmbeddedContentContext
+                (InlineHtmlContext)))))))))
