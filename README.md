@@ -36,11 +36,11 @@ The language has full grammar support, but very little runtime support at the mo
 | Feature | Summary |
 |----------|---------|
 | Ampscript Blocks `%%[]%%` | ✔️ |
-| Inline Ampscript `%%= =%%`| ⚠️ Grammar support only |
 | Variables | ✔️ |
+| For `for`| ✔️ |
+| Inline Ampscript `%%= =%%`| ⚠️ Grammar support only |
 | Logic Operators `==`, `!=`, `&&`, etc | ⚠️ Grammar support only |
 | If `if`| ⚠️ Grammar support only |
-| For `for`| ⚠️ Grammar support only |
 | Tag Syntax `<script language="ampscript">` | ⛔ Not Supported |
 | System Strings `xtmonth, jobid, subscriberkey, etc` | ⛔ Not Supported |
 | Personalization Strings `[Foo]` or `%%Foo%%` | ⛔ Not Supported |
