@@ -59,6 +59,11 @@ internal class CSharpTranspiler
         get;
     }
 
+    internal IfVisitor IfVisitor
+    {
+        get;
+    }
+
     private readonly SageParser _parser;
 
     /// <summary>
@@ -72,6 +77,7 @@ internal class CSharpTranspiler
         ExpressionVisitor = new ExpressionVisitor(this);
         StringVisitor = new StringVisitor(this);
         Runtime = new Runtime();
+        IfVisitor = new IfVisitor(this);
         this.SourceFileName = "TEST.cs";
         this.GeneratedMethod = "TEST";
         this._parser = parser;

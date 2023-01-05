@@ -24,6 +24,16 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
     }
 
     /// <summary>
+    /// Visits expressions within parenthesis ()
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public override ExpressionSyntax VisitParenthesisExpression(SageParser.ParenthesisExpressionContext context)
+    {
+        return base.Visit(context.parentheses().expression());
+    }
+
+    /// <summary>
     /// A constant expression is either the variable name, or a constant.
     /// </summary>
     public override ExpressionSyntax VisitConstantExpression(SageParser.ConstantExpressionContext context)

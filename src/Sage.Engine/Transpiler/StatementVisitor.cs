@@ -24,6 +24,52 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
     }
 
     /// <summary>
+    /// Generates the C# code for AMPscript IF statements.
+    /// </summary>
+    /// <remarks>
+    /// There is a small disconnect between the AMPscript grammar and the C# grammar, which makes this implementation awkward.
+    /// Maybe some day, this will be fixed.
+    ///
+    /// The AMPscript grammar is of the following form, where elseIf is its own parser rule:
+    /// If expression Then contentBlock elseIfStatement* elseStatement? Endif
+    ///
+    /// C#, on the other hand, has the expression such as:
+    /// If expression statement else statement
+    ///
+    /// Notice how in C#, there is no "else if", because the "if" is considered a single statement after the else.
+    /// It's equivalent to:
+    /// if (expression) {} else { if (expression) {} }
+    /// </remarks>
+    public override IEnumerable<StatementSyntax> VisitIfStatement(SageParser.IfStatementContext context)
+    {
+        var ifStack = new Stack<IfStatementSyntax>();
+
+        ifStack.Push(_transpiler.IfVisitor.Visit(context).WithLineDirective(context.If().Symbol, context.Then().Symbol, _transpiler.SourceFileName));
+
+        foreach (SageParser.ElseIfStatementContext? elseIfExpression in context.elseIfStatement())
+        {
+            ifStack.Push(_transpiler.IfVisitor.Visit(elseIfExpression).WithLineDirective(elseIfExpression.Elseif().Symbol, elseIfExpression.Then().Symbol, _transpiler.SourceFileName));
+        }
+
+        ElseClauseSyntax? elseClause = null;
+        if (context.elseStatement() != null)
+        {
+            elseClause =
+                ElseClause(Block(_transpiler.BlockVisitor.Visit(context.elseStatement()))).WithLineDirective(context.elseStatement().Else().Symbol, context.elseStatement().Else().Symbol, _transpiler.SourceFileName);
+        }
+
+        IfStatementSyntax root = ifStack.Peek();
+        while (ifStack.Any())
+        {
+            root = ifStack.Pop();
+            root = root.WithElse(elseClause);
+            elseClause = ElseClause(root);
+        }
+
+        return new[] { root };
+    }
+
+    /// <summary>
     /// Generates the C# code for AMPscript FOR statements.
     /// </summary>
     public override IEnumerable<StatementSyntax> VisitForLoop(SageParser.ForLoopContext context)

@@ -182,6 +182,17 @@ namespace Sage.Engine.Tests
         }
 
         [Test]
+        [TestCase("IF (true) THEN ENDIF", new[] { "if (true)\r\n{\r\n}" })]
+        [TestCase("IF (true) THEN ELSEIF (false) THEN ENDIF", new[] { "if (true)\r\n{\r\n}\r\nelse \r\n#line (1, 16) - (1, 35) \"TEST.cs\"\r\nif (false)\r\n{\r\n}" })]
+        [TestCase("IF (true) THEN ELSEIF (false) THEN ELSE ENDIF", new[] { "if (true)\r\n{\r\n}\r\nelse \r\n#line (1, 16) - (1, 35) \"TEST.cs\"\r\nif (false)\r\n{\r\n}\r\n#line (1, 36) - (1, 40) \"TEST.cs\"\r\nelse\r\n{\r\n}" })]
+        public void TestIfStatement(string ampCode, string[] cSharpStatements)
+        {
+            SageParser parser = GetParserInAmpMode(ampCode);
+            var transpiler = new CSharpTranspiler(parser);
+            TestAmpCodeGeneratesExpectedCSharpCode(cSharpStatements, parser.contentBlock(), transpiler.StatementVisitor);
+        }
+
+        [Test]
         public void TestGeneratedMethod()
         {
             var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");
