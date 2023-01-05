@@ -13,7 +13,7 @@ namespace Sage.Engine.Transpiler;
 /// </summary>
 internal class CSharpTranspiler
 {
-    internal Variables Variables
+    internal Runtime Runtime
     {
         get;
     }
@@ -44,6 +44,6 @@ internal class CSharpTranspiler
         StatementVisitor = new StatementVisitor(this);
         ExpressionVisitor = new ExpressionVisitor(this);
         StringVisitor = new StringVisitor(this);
-        Variables = new Variables();
+        Runtime = new Runtime();
     }
 }

@@ -29,7 +29,7 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
     {
         if (context.VarName() != null)
         {
-            return _transpiler.Variables.GetFromRuntime(context.VarName().GetText());
+            return _transpiler.Runtime.GetFromRuntime(context.VarName().GetText());
         }
         else
         {

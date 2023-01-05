@@ -42,9 +42,9 @@ namespace Sage.Engine.Tests
         [Test]
         public void TestVariableDeclaration()
         {
-            string variableDeclaration = Variables.GetInitializationStatement().NormalizeWhitespace().ToString();
+            string variableDeclaration = Runtime.GetInitializationStatement().NormalizeWhitespace().ToString();
             string expected =
-                $"Dictionary<string, object> {Variables.VariableSymbolName} = new Dictionary<string, object>();";
+                $"RuntimeContext {Runtime.RuntimeVariable} = new RuntimeContext();";
 
             Assert.That(variableDeclaration, Is.EqualTo(expected));
         }
@@ -66,9 +66,9 @@ namespace Sage.Engine.Tests
         }
 
         [Test]
-        [TestCase("SET @FOO = 1", $"{Variables.VariableSymbolName}[\"@foo\"] = 1L;")]
-        [TestCase("SET @BAR = 'Foo'", $"{Variables.VariableSymbolName}[\"@bar\"] = \"Foo\";")]
-        [TestCase("SET @BAR = @FOO", $"{Variables.VariableSymbolName}[\"@bar\"] = {Variables.VariableSymbolName}[\"@foo\"];")]
+        [TestCase("SET @FOO = 1", $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", 1L);")]
+        [TestCase("SET @BAR = 'Foo'", $"{Runtime.RuntimeVariable}.SetVariable(\"@bar\", \"Foo\");")]
+        [TestCase("SET @BAR = @FOO", $"{Runtime.RuntimeVariable}.SetVariable(\"@bar\", {Runtime.RuntimeVariable}.GetVariable(\"@foo\"));")]
         public void TestSet(string code, string expected)
         {
             SageParser parser = GetParserInAmpMode(code);
@@ -88,7 +88,7 @@ namespace Sage.Engine.Tests
         public void TestSetConstants(string ampInput, string cSharpExpected)
         {
             string ampCodeInput = $"SET @foo = {ampInput}";
-            string cSharpCodeExpected = $"{Variables.VariableSymbolName}[\"@foo\"] = {cSharpExpected};";
+            string cSharpCodeExpected = $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", {cSharpExpected});";
             SageParser parser = GetParserInAmpMode(ampCodeInput);
             TestAmpCodeGeneratesExpectedCSharpCode(new[] { cSharpCodeExpected }, parser.setVariable());
         }
@@ -96,13 +96,13 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("VAR @FOO", new[]
         {
-            $"{Variables.VariableSymbolName}[\"@foo\"] = null;"
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", null);"
         })]
         [TestCase("VAR @FOO, @BAR, @BIZ", new[]
         {
-            $"{Variables.VariableSymbolName}[\"@foo\"] = null;",
-            $"{Variables.VariableSymbolName}[\"@bar\"] = null;",
-            $"{Variables.VariableSymbolName}[\"@biz\"] = null;"
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", null);",
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@bar\", null);",
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@biz\", null);"
         })]
         public void TestVarDeclaration(string code, string[] expectedCode)
         {
@@ -113,7 +113,7 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("%%[ SET @FOO = 'bar' ]%%", new[]
         {
-            $"{Variables.VariableSymbolName}[\"@foo\"] = \"bar\";",
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", \"bar\");",
         })]
         public void TestAmpBlock(string code, string[] expectedCode)
         {

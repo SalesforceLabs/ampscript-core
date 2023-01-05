@@ -32,7 +32,7 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
 
         ExpressionSyntax expression = _transpiler.ExpressionVisitor.Visit(context.variableAssignment().expression());
 
-        yield return ExpressionStatement(_transpiler.Variables.AssignToRuntime(variableName, expression));
+        yield return _transpiler.Runtime.AssignToRuntime(variableName, expression);
     }
 
     /// <summary>
@@ -43,10 +43,9 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
     {
         for (int i = 0; i < context.VarName().Length; i++)
         {
-            yield return ExpressionStatement(
-                _transpiler.Variables.AssignToRuntime(
+            yield return _transpiler.Runtime.AssignToRuntime(
                     context.VarName(i).GetText(),
-                    LiteralExpression(SyntaxKind.NullLiteralExpression)));
+                    LiteralExpression(SyntaxKind.NullLiteralExpression));
         }
     }
 }
