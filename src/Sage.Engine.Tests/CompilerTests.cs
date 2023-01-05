@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using Sage.Engine.Runtime;
+
 namespace Sage.Engine.Tests
 {
     using Microsoft.CodeAnalysis;
@@ -34,12 +36,13 @@ namespace Sage.Engine.Tests
             Assert.That(File.Exists(options.OutputSymbolsFullPath));
             Assert.IsNotNull(result.Assembly);
 
-            object[] variables = new object[] { new Dictionary<string, object>() };
+            var context = new RuntimeContext();
+            object[] variables = new object[] { context };
             object? results = result.Assembly
                 ?.GetType("Sage.Engine.Runtime.AmpProgram")
                 ?.GetMethod(options.BaseName)
                 ?.Invoke(null, variables);
-            Assert.That(results?.ToString(), Is.EqualTo("Hello  World"));
+            Assert.That(context.FlushOutputStream(), Is.EqualTo("Hello  World"));
         }
     }
 }

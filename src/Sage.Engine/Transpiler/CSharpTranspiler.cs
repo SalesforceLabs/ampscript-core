@@ -22,7 +22,7 @@ internal class CSharpTranspiler
     /// <summary>
     /// This is the full path to the input file
     /// </summary>
-    internal string? SourceFileName
+    internal string SourceFileName
     {
         get;
     }

@@ -13,6 +13,7 @@ namespace Sage.Engine.Runtime
 {
     public partial class RuntimeContext
     {
+        StringBuilder _outputStream = new StringBuilder();
         private Dictionary<string, object?> _variables = new();
 
         public object? GetVariable(string name)
@@ -28,6 +29,23 @@ namespace Sage.Engine.Runtime
         public void SetVariable(string name, object? value)
         {
             _variables[name] = value;
+        }
+
+        public void Output(object? data)
+        {
+            _outputStream.Append(data?.ToString());
+        }
+
+        public void OutputLine(object? data)
+        {
+            _outputStream.AppendLine(data?.ToString());
+        }
+
+        public string FlushOutputStream()
+        {
+            string results = _outputStream.ToString();
+            _outputStream.Clear();
+            return results;
         }
     }
 }

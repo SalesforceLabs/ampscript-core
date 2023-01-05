@@ -1,7 +1,1 @@
-﻿Hello 
-
-%%[ 
-    VAR @foo 
-]%% 
-
-World
+﻿Hello %%[ VAR @foo ]%% World

@@ -140,6 +140,48 @@ namespace Sage.Engine.Tests
         }
 
         [Test]
+        [TestCase("FOR @I=1 TO 10 DO VAR @VAR NEXT @I", new[]
+        {
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(1L));",
+            $"{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(10L));",
+            @$"while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) <= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
+{{
+#line (1, 19) - (1, 27) ""TEST.cs""
+    {Runtime.RuntimeVariable}.SetVariable(""@var"", null);
+#line (1, 28) - (1, 32) ""TEST.cs""
+    {Runtime.RuntimeVariable}.SetVariable(""@i"", ((long){Runtime.RuntimeVariable}.GetVariable(""@i"")) + 1);
+#line hidden
+    if (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) == long.MaxValue)
+    {{
+        break;
+    }}
+}}"
+        })]
+        [TestCase("FOR @I=10 DOWNTO 1 DO VAR @VAR NEXT @I", new[]
+        {
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(10L));",
+            $"{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(1L));",
+            @$"while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) >= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
+{{
+#line (1, 23) - (1, 31) ""TEST.cs""
+    {Runtime.RuntimeVariable}.SetVariable(""@var"", null);
+#line (1, 32) - (1, 36) ""TEST.cs""
+    {Runtime.RuntimeVariable}.SetVariable(""@i"", ((long){Runtime.RuntimeVariable}.GetVariable(""@i"")) - 1);
+#line hidden
+    if (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) == long.MinValue)
+    {{
+        break;
+    }}
+}}"
+        })]
+        public void TestForLoop(string ampCode, string[] cSharpStatements)
+        {
+            SageParser parser = GetParserInAmpMode(ampCode);
+            var transpiler = new CSharpTranspiler(parser);
+            TestAmpCodeGeneratesExpectedCSharpCode(cSharpStatements, parser.contentBlock(), transpiler.StatementVisitor);
+        }
+
+        [Test]
         public void TestGeneratedMethod()
         {
             var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");

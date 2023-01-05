@@ -11,4 +11,13 @@ I can set their values and see them in the debugger
     SET @bar = "Biz"
 ]%%
 
-It's now a whole new world for content!
+I can loop through values and display them
+%%[
+    FOR @I = 1 TO 10 DO
+]%%
+    Hello
+%%[
+    NEXT @I
+]%%
+
+It's now a whole new world for conte    nt!
