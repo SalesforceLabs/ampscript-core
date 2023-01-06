@@ -8,30 +8,27 @@ namespace Sage.Engine.Runtime
     public partial class RuntimeContext
     {
         /// <summary>
-        /// https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/output.html
-        /// 
         /// Outputs to where this block appears in the content.
         /// </summary>
+        /// <param name="data">The data to add to the output stream</param>
         public void OUTPUT(object? data)
         {
             Output(data);
         }
 
         /// <summary>
-        /// https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/OutputLine.html
-        /// 
         /// Outputs to where this block appears in the content, with a newline
         /// </summary>
+        /// <param name="data">The data to add to the output stream</param>
         public void OUTPUTLINE(object? data)
         {
             OutputLine(data);
         }
 
         /// <summary>
-        /// https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/v.html
-        /// 
         /// Outputs a variable where this appears in the content
         /// </summary>
+        /// <param name="data">The data to add to the output stream</param>
         public void V(object? data)
         {
             Output(data);

@@ -64,8 +64,8 @@ If the function isn't listed here, then it's not supported.
 |[Sales and Service Cloud](https://ampscript.guide/sales-and-service-cloud-functions/)| ⛔ Not Supported |
 |[Site](https://ampscript.guide/site-based-functions/)| ⛔ Not Supported |
 |[Social](https://ampscript.guide/social-functions/)| ⛔ Not Supported |
-|[String](https://ampscript.guide/string-functions/)| ⛔ Not Supported |
-|[Utility](https://ampscript.guide/utility-functions/)| ⛔ Not Supported |
+|[String](https://ampscript.guide/string-functions/)| ⚠️ Partial Support |
+|[Utility](https://ampscript.guide/utility-functions/)| ⚠️ Partial Support |
 |[Content Syndication](https://ampscript.guide/content-syndication/)| ⛔ Not Supported |
 
 

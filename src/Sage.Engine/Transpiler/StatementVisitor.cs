@@ -149,7 +149,6 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
                         Literal(1))))
                 .WithLineDirective(context.Next(), _transpiler.SourceFileName));
 
-
         // Break if we hit the bounds.
         // Without this check the loop would run forever because the long over/under flows to a negative number
         // This is backwards-incompatible with Marketing Cloud because MC returns a "Convergence" error - a type of
