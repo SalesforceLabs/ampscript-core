@@ -37,6 +37,8 @@ namespace Sage.Engine.Compiler
                 ?.GetMethod(options.BaseName)
                 ?.Invoke(null, arguments);
 
+            result.AssemblyContext!.Unload();
+
             return context.FlushOutputStream();
         }
 
@@ -53,7 +55,7 @@ namespace Sage.Engine.Compiler
             string cSharpCode = compilationUnit.NormalizeWhitespace(indentation: string.Empty).ToString();
 
             (CSharpCompilation compilation, SourceText sourceText) = CompileExecutable(options, cSharpCode);
-            (EmitResult emitResult, Assembly? assembly) = GenerateAssembly(options, compilation, sourceText);
+            (EmitResult emitResult, Assembly? assembly, AssemblyLoadContext? assemblyContext) = GenerateAssembly(options, compilation, sourceText);
 
             return new CompileResult(
                 options.InputSourceFullPath,
@@ -61,6 +63,7 @@ namespace Sage.Engine.Compiler
                 compilation,
                 emitResult,
                 assembly,
+                assemblyContext,
                 cSharpCode);
         }
 
@@ -70,9 +73,9 @@ namespace Sage.Engine.Compiler
         private static (CSharpCompilation, SourceText) CompileExecutable(CompilationOptions options, string cSharpCode)
         {
             Encoding encoding = Encoding.UTF8;
-            IEnumerable<MetadataReference> references = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.IsDynamic)
-                .Select(a => MetadataReference.CreateFromFile(a.Location));
+            IEnumerable<string> references = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic && File.Exists(a.Location))
+                .Select(a => a.Location);
 
             IEnumerable<string> defaultNamespaces =
                 new[]
@@ -99,7 +102,7 @@ namespace Sage.Engine.Compiler
             var compilation = CSharpCompilation.Create(
                 options.OutputAssemblyFilename,
                 syntaxTrees: new[] { encoded },
-                references: references,
+                references: references.Select(r => MetadataReference.CreateFromFile(r)),
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                     .WithUsings(defaultNamespaces)
                     .WithOptimizationLevel(options.Optimization));
@@ -110,7 +113,7 @@ namespace Sage.Engine.Compiler
         /// <summary>
         /// Writes the in-memory representation of the compilation to an exe on disk
         /// </summary>
-        private static (EmitResult, Assembly?) GenerateAssembly(CompilationOptions options, CSharpCompilation compilation, SourceText sourceText)
+        private static (EmitResult, Assembly?, AssemblyLoadContext?) GenerateAssembly(CompilationOptions options, CSharpCompilation compilation, SourceText sourceText)
         {
             using var assemblyStream = new FileStream(options.OutputAssemblyFullPath, FileMode.Create);
             using var symbolsStream = new FileStream(options.OutputSymbolsFullPath, FileMode.Create);
@@ -133,13 +136,16 @@ namespace Sage.Engine.Compiler
             assemblyStream.Seek(0, SeekOrigin.Begin);
             symbolsStream.Seek(0, SeekOrigin.Begin);
 
-            Assembly? assembly = null;
             if (emitResult.Success)
             {
-                assembly = AssemblyLoadContext.Default.LoadFromStream(assemblyStream, symbolsStream);
+                var context = new AssemblyLoadContext(options.BaseName, true);
+
+                Assembly assembly = context.LoadFromStream(assemblyStream, symbolsStream);
+
+                return (emitResult, assembly, context);
             }
 
-            return (emitResult, assembly);
+            return (emitResult, null, null);
         }
     }
 }
