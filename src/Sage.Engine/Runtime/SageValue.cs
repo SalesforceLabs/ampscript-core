@@ -24,9 +24,15 @@ namespace Sage.Engine.Runtime
                 return false;
             }
 
-            if (inputObj is int || inputObj is long)
+            if (inputObj is int intObj)
             {
-                result = (long)inputObj;
+                result = intObj;
+                return true;
+            }
+
+            if (inputObj is long longObj)
+            {
+                result = longObj;
                 return true;
             }
 
@@ -41,13 +47,17 @@ namespace Sage.Engine.Runtime
                 return true;
             }
 
-            if (inputObj is string stringValue)
+            try
             {
-                return long.TryParse(stringValue, out result);
+                // Return false but still convert, because strings can convert - it's just not the optimal representation
+                result = Convert.ToInt64(inputObj);
+                return false;
+            }
+            catch
+            {
+                result = 0;
             }
 
-            // Return false but still convert, because strings can convert - it's just not the optimal representation
-            result = Convert.ToInt64(inputObj);
             return false;
         }
 

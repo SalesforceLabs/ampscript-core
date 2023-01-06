@@ -33,4 +33,9 @@ I can loop through values and display them
     NEXT @I
 ]%%
 
+I can invoke functions!
+%%[
+    OUTPUTLINE(CONCAT("Concatinate", " Strings"))
+]%%
+
 It's now a whole new world for content!

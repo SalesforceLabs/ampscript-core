@@ -95,4 +95,41 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
 
         throw new InternalEngineException("Unknown constant during parsing");
     }
+
+    /// <summary>
+    /// Visits an AMPscript function call
+    ///
+    /// Functions are supported by methods in the Sage.Engine.Functions namespace, with the name in all uppercase:
+    /// OUTPUT(), V(), NOW(), etc.
+    ///
+    /// All supported functions must take the variables and output stream as the first two parameters:
+    /// FUNCTION(Dictionary<string, object> __variables, StringBuilder __outputStream, ...)
+    ///
+    /// Functions that have data to return must return of type object.
+    /// </summary>
+    public override ExpressionSyntax VisitFunctionCall(SageParser.FunctionCallContext context)
+    {
+        string functionName = context.NameString().GetText().ToUpper();
+
+        var argSyntax = new List<ArgumentSyntax>();
+
+        for (int i = 0; i < context.arguments().expression().Length; i++)
+        {
+            argSyntax.Add(Argument(base.Visit(context.arguments().expression(i))));
+        }
+
+        // This does not add any #line directives, since it's just an expression.
+        // The invocation of the function as an ExpressionStatement adds the #line directive, since usually you want to break
+        // and debug on a statement and not an expression.
+        //
+        // For example, debugging a function call like this:
+        // OUTPUT(CONCAT("A","B"))
+        // Do you want to F10 into each and every argument? Probably not - so don't put line directives on the expressions or arguments.
+        return InvocationExpression(
+                    MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        IdentifierName(Runtime.RuntimeVariable),
+                        IdentifierName(functionName)))
+            .WithArgumentList(ArgumentList(SeparatedList(argSyntax)));
+    }
 }

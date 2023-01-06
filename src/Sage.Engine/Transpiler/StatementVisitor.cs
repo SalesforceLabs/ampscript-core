@@ -242,4 +242,18 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
                 .WithLineDirective(context, this._transpiler.SourceFileName);
         }
     }
+
+    /// <summary>
+    /// Function calls can show up as either expressions (right side of = sign), or statements (all by themselves on a line).
+    ///
+    /// This visit is when it was a statement, it just forwards it to the expression visitor.
+    /// </summary>
+    public override IEnumerable<StatementSyntax> VisitFunctionCall(SageParser.FunctionCallContext context)
+    {
+        return new[]
+        {
+            ExpressionStatement(_transpiler.ExpressionVisitor.VisitFunctionCall(context))
+                .WithLineDirective(context.Start, context.Stop, _transpiler.SourceFileName)
+        };
+    }
 }

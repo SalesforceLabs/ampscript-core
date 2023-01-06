@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Text;
 using System.Text;
 using System.Runtime.Loader;
+using Sage.Engine.Runtime;
 
 namespace Sage.Engine.Compiler
 {
@@ -29,13 +30,14 @@ namespace Sage.Engine.Compiler
                 throw new CompileCodeException(result);
             }
 
-            object[] arguments = new object[] { new Dictionary<string, object>() };
-            object? results = result.Assembly
+            var context = new RuntimeContext();
+            object[] arguments = { context };
+            result.Assembly
                 ?.GetType("Sage.Engine.Runtime.AmpProgram")
                 ?.GetMethod(options.BaseName)
                 ?.Invoke(null, arguments);
 
-            return results?.ToString() ?? string.Empty;
+            return context.FlushOutputStream();
         }
 
         /// <summary>

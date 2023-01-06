@@ -1,7 +1,12 @@
-﻿using System.CommandLine;
-using CommandHandler = System.CommandLine.NamingConventionBinder.CommandHandler;
+﻿// Copyright (c) 2022, salesforce.com, inc.
+// All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+// For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
+
+using System.CommandLine;
 using Microsoft.CodeAnalysis;
 using Sage.Engine.Compiler;
+using CommandHandler = System.CommandLine.NamingConventionBinder.CommandHandler;
 using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 
 Argument<string> sourceFile = new Argument<string>(name: "--source", description: "Path to the AMPscript program to debug").LegalFilePathsOnly();
@@ -21,7 +26,7 @@ rootCommand.Handler = CommandHandler.Create((string source, bool debug, IConsole
 
     var options =
         new CompilationOptions(source, tempPath.FullName, optimizeLevel);
-    
+
     try
     {
         console.Write(CSharpCompiler.CompileAndExecute(options));
