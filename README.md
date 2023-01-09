@@ -39,8 +39,8 @@ The language has full grammar support, but very little runtime support at the mo
 | Variables | ✔️ |
 | For `for`| ✔️ |
 | If `if`| ✔️ |
-| Inline Ampscript `%%= =%%`| ⚠️ Grammar support only |
-| Logic Operators `==`, `!=`, `&&`, etc | ⚠️ Grammar support only |
+| Logic Operators `==`, `!=`, `&&`, etc | ✔️ |
+| Inline Ampscript `%%= =%%`| ✔️ |
 | Tag Syntax `<script language="ampscript">` | ⛔ Not Supported |
 | System Strings `xtmonth, jobid, subscriberkey, etc` | ⛔ Not Supported |
 | Personalization Strings `[Foo]` or `%%Foo%%` | ⛔ Not Supported |
@@ -55,7 +55,7 @@ If the function isn't listed here, then it's not supported.
 |[Contact Model](https://ampscript.guide/content-model-functions/)| ⛔ Not Supported |
 |[Content](https://ampscript.guide/content-functions/)| ⛔ Not Supported |
 |[Data Extensions](https://ampscript.guide/data-extension-functions/)| ⛔ Not Supported |
-|[Date and Time](https://ampscript.guide/date-and-time-functions/)| ⛔ Not Supported |
+|[Date and Time](https://ampscript.guide/date-and-time-functions/)| ⚠️ Partial Support |
 |[Einstein](https://ampscript.guide/einstein-email-recommendation-functions/)| ⛔ Not Supported |
 |[Encryption](https://ampscript.guide/encryption-and-encoding-functions/)| ⛔ Not Supported |
 |[HTTP](https://ampscript.guide/http-functions/)| ⛔ Not Supported |
