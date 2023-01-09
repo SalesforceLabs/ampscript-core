@@ -50,6 +50,14 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
         }
     }
 
+    public override IEnumerable<StatementSyntax> VisitInlineAmpBlock(SageParser.InlineAmpBlockContext context)
+    {
+        return new[]
+        {
+            ExpressionStatement(_transpiler.ExpressionVisitor.Visit(context.expression()))
+        };
+    }
+
     /// <summary>
     /// Inline HTML only needs to add the content to the output stream.
     ///

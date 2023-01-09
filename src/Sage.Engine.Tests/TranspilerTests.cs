@@ -123,13 +123,25 @@ namespace Sage.Engine.Tests
         }
 
         [Test]
+        [TestCase("%%= V(@FOO) =%%", new[]
+        {
+            $"{Runtime.RuntimeVariable}.V({Runtime.RuntimeVariable}.GetVariable(\"@foo\"));",
+        })]
+        public void TestInlineAmpBlock(string code, string[] expectedCode)
+        {
+            SageParser parser = GetParserInContentMode(code);
+            var transpiler = new CSharpTranspiler(parser);
+            TestAmpCodeGeneratesExpectedCSharpCode(expectedCode, parser.contentBlock(), transpiler.BlockVisitor);
+        }
+
+        [Test]
         [TestCase("This is inline HTML", new[]
         {
             $"{Runtime.RuntimeVariable}.Output(\"This is inline HTML\");"
         })]
         [TestCase("Before %%[]%% After", new[]
         {
-            $"{Runtime.RuntimeVariable}.Output(\"Before \");", 
+            $"{Runtime.RuntimeVariable}.Output(\"Before \");",
             $"{Runtime.RuntimeVariable}.Output(\" After\");"
         })]
         public void TestInlineHtml(string ampCode, string[] cSharpStatements)
