@@ -3,102 +3,52 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace Sage.Engine.Compiler
 {
     /// <summary>
     /// Options specifying how the AMPscript code compiler should operate
     /// </summary>
-    /// <param name="InputSourceFile">Path to the input ampscript file. Can be relative to the current working directory or absolute.</param>
-    /// <param name="OutputPath">Output path to place the generated assemblies & artifacts. Can be relative or absolute.</param>
-    /// <param name="Optimization">Optimization level to compile code. Code compiled for release cannot be debugged.</param>
-    internal record CompilationOptions(
-        string InputSourceFile,
-        string OutputPath,
-        OptimizationLevel Optimization)
+    /// <param name="InputName">Name of the input, usually the file name of the file</param>
+    /// <param name="InputFile">Path to the input ampscript file. Can be relative to the current working directory or absolute.</param>
+    /// <param name="SourceCode">The AMPscript source code</param>
+    /// <param name="OptimizationLevel">Optimization level of the generated code</param>
+    /// <param name="OutputDirectory">What directory to output generated files</param>
+    /// <param name="AssemblyStream">Stream for the assembly to be generated into</param>
+    /// <param name="SymbolStream">Stream for the symbol file to be generated into</param>
+    public record CompilationOptions(
+        string InputName,
+        FileInfo InputFile,
+        string SourceCode,
+        OptimizationLevel OptimizationLevel,
+        DirectoryInfo OutputDirectory,
+        Stream AssemblyStream,
+        Stream SymbolStream)
     {
+        private static Regex AlphaNumeric = new Regex("[^a-zA-Z0-9]");
+
         /// <summary>
-        /// The name to base the .cs, .dll, .pdb files from.
+        /// Generates a method name from the provided inputs
         /// </summary>
-        /// <example>foo</example>
-        public string BaseName
+        public string GeneratedMethodName
         {
             get
             {
-                return Path.GetFileNameWithoutExtension(InputSourceFile);
+                return CompilationOptions.AlphaNumeric.Replace(this.InputName, "_");
             }
         }
 
         /// <summary>
-        /// The full absolute path to the input source file
+        /// Pre-defined generated assembly file
         /// </summary>
-        /// <example>c:\bar\foo.ampscript</example>
-        public string InputSourceFullPath
+        public FileInfo GeneratedAssemblyOutput
         {
             get
             {
-                return Path.GetFullPath(InputSourceFile);
-            }
-        }
-
-        /// <summary>
-        /// The filename of the output assembly
-        /// </summary>
-        /// <example>foo.dll</example>
-        public string OutputAssemblyFilename
-        {
-            get
-            {
-                return $"{BaseName}.dll";
-            }
-        }
-
-        /// <summary>
-        /// The full path to the output assembly
-        /// </summary>
-        /// <example>c:\bar\foo.dll</example>
-        public string OutputAssemblyFullPath
-        {
-            get
-            {
-                return Path.Combine(OutputPath, OutputAssemblyFilename);
-            }
-        }
-
-        /// <summary>
-        /// The filename for the generated source file
-        /// </summary>
-        /// <example>foo.cs</example>
-        public string OutputSourceFilename
-        {
-            get
-            {
-                return $"{BaseName}.cs";
-            }
-        }
-
-        /// <summary>
-        /// The filename for the generated PDB file
-        /// </summary>
-        /// <example>foo.pdb</example>
-        public string OutputSymbolsFilename
-        {
-            get
-            {
-                return $"{BaseName}.pdb";
-            }
-        }
-
-        /// <summary>
-        /// The full path to the symbols file
-        /// </summary>
-        /// <example>c:\bar\foo.pdb</example>
-        public string OutputSymbolsFullPath
-        {
-            get
-            {
-                return Path.Combine(OutputPath, OutputSymbolsFilename);
+                return new FileInfo(Path.Combine(OutputDirectory.FullName, $"{GeneratedMethodName}.dll"));
             }
         }
     }

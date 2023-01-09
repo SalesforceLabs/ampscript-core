@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Globalization;
 using Sage.Engine.Runtime;
 
 namespace Sage.Engine.Tests
@@ -22,9 +23,10 @@ namespace Sage.Engine.Tests
         public void TestAssemblyGeneration(string sourceFile)
         {
             string pathToTest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Corpus", "Compiler", sourceFile);
-            string generatedExecutablePath = Path.Combine(TestContext.CurrentContext.WorkDirectory);
 
-            var options = new Compiler.CompilationOptions(pathToTest, generatedExecutablePath, OptimizationLevel.Debug);
+            Compiler.CompilationOptions options = new CompilerOptionsBuilder()
+                .WithInputFile(new FileInfo(pathToTest))
+                .Build();
 
             CompileResult result = CSharpCompiler.GenerateAssemblyFromSource(options);
 
@@ -32,15 +34,13 @@ namespace Sage.Engine.Tests
             {
                 Assert.Fail(string.Join("\n", result.EmitResult.Diagnostics.Select(d => d.ToString())));
             }
-            Assert.That(File.Exists(options.OutputAssemblyFullPath));
-            Assert.That(File.Exists(options.OutputSymbolsFullPath));
             Assert.IsNotNull(result.Assembly);
 
             var context = new RuntimeContext();
             object[] variables = new object[] { context };
             object? results = result.Assembly
                 ?.GetType("Sage.Engine.Runtime.AmpProgram")
-                ?.GetMethod(options.BaseName)
+                ?.GetMethod(options.GeneratedMethodName)
                 ?.Invoke(null, variables);
             Assert.That(context.FlushOutputStream(), Is.EqualTo("Hello  World"));
         }

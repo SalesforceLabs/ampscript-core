@@ -87,18 +87,10 @@ internal class CSharpTranspiler
     /// Creates a transpiler based on the passed in parser.
     /// The filename is used to generate #line directives.
     /// </summary>
-    internal CSharpTranspiler(string fileName, SageParser parser) : this(parser)
+    internal CSharpTranspiler(string fileName, string generatedMethodName, SageParser parser) : this(parser)
     {
         SourceFileName = fileName;
-        this.GeneratedMethod = Path.GetFileNameWithoutExtension(fileName);
-    }
-
-    /// <summary>
-    /// Creates a transpiler based on the input file
-    /// </summary>
-    internal static CSharpTranspiler CreateFromFile(string sourceFile)
-    {
-        return CreateFromSource(sourceFile, File.ReadAllText(sourceFile));
+        this.GeneratedMethod = generatedMethodName;
     }
 
     /// <summary>
@@ -106,19 +98,19 @@ internal class CSharpTranspiler
     /// </summary>
     internal static CSharpTranspiler CreateFromSource(string code)
     {
-        return CreateFromSource("TEST", code);
+        return CreateFromSource("TEST", "TEST", code);
     }
 
     /// <summary>
     /// Creates a transpiler based on the input source code
     /// </summary>
-    internal static CSharpTranspiler CreateFromSource(string sourceFile, string code)
+    internal static CSharpTranspiler CreateFromSource(string sourceFile, string generatedMethodName, string code)
     {
         var stream = new AntlrInputStream(code);
         var lexer = new SageLexer(stream);
         var tokens = new CommonTokenStream(lexer);
 
-        return new CSharpTranspiler(sourceFile, new SageParser(tokens));
+        return new CSharpTranspiler(sourceFile, generatedMethodName, new SageParser(tokens));
     }
 
     /// <summary>

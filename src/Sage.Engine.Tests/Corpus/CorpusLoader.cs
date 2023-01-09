@@ -3,9 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 
 // ReSharper disable once CheckNamespace
 namespace Sage.Engine.Tests
@@ -45,9 +43,9 @@ namespace Sage.Engine.Tests
         /// <returns>Key=filename, Value=Tests</returns>
         public static IEnumerable<KeyValuePair<string, IEnumerable<CorpusData>>> LoadFromDirectory(string directory)
         {
-            foreach (var filename in Directory.GetFiles(Path.Combine("corpus", directory)))
+            foreach (string filename in Directory.GetFiles(Path.Combine("corpus", directory)))
             {
-                List<CorpusData> corpusForFile = new List<CorpusData>();
+                var corpusForFile = new List<CorpusData>();
                 foreach (CorpusData data in CorpusLoader.LoadFromFile(Path.GetFullPath(filename)))
                 {
                     corpusForFile.Add(data);
@@ -55,13 +53,6 @@ namespace Sage.Engine.Tests
 
                 yield return new KeyValuePair<string, IEnumerable<CorpusData>>(Path.GetFileName(filename), corpusForFile);
             }
-        }
-
-        public static string RemoveInvalidFilePathCharacters(string filename, string replaceChar)
-        {
-            string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()) + ".";
-            var r = new Regex($"[{Regex.Escape(regexSearch)}]");
-            return r.Replace(filename, replaceChar);
         }
 
         private static IEnumerable<CorpusData> GetTestsFromFileUsingHandmadeParser(string file)
@@ -89,8 +80,7 @@ namespace Sage.Engine.Tests
                     {
                         expectedOutput = programOutput.ToString().Trim();
 
-
-                        testsFromFile.Add(new CorpusData(RemoveInvalidFilePathCharacters(testName, "_"), code.ToString().Trim(), file, lineStart)
+                        testsFromFile.Add(new CorpusData(testName, code.ToString().Trim(), file, lineStart)
                         {
                             Output = expectedOutput,
                             ParseTree = parseTree.ToString().Trim()
@@ -135,7 +125,7 @@ namespace Sage.Engine.Tests
                 }
                 if (inTestNameBlock)
                 {
-                    testName = RemoveInvalidFilePathCharacters(line, "_");
+                    testName = line;
                 }
                 else if (inParseTreeBlock)
                 {

@@ -16,7 +16,10 @@ namespace Sage.Engine
     {
         public static string Render(string file)
         {
-            var options = new CompilationOptions(file, "", OptimizationLevel.Debug);
+            CompilationOptions options = new CompilerOptionsBuilder()
+                .WithInputFile(new FileInfo(file))
+                .Build();
+
             return CSharpCompiler.CompileAndExecute(options);
         }
     }

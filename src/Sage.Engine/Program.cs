@@ -24,8 +24,10 @@ rootCommand.Handler = CommandHandler.Create((string source, bool debug, IConsole
 
     var optimizeLevel = debug ? OptimizationLevel.Debug : OptimizationLevel.Release;
 
-    var options =
-        new CompilationOptions(source, tempPath.FullName, optimizeLevel);
+    CompilationOptions options = new CompilerOptionsBuilder()
+        .WithInputFile(new FileInfo(source))
+        .WithOptimizationLevel(optimizeLevel)
+        .Build();
 
     try
     {

@@ -34,7 +34,7 @@ namespace Sage.Engine.Compiler
             object[] arguments = { context };
             result.Assembly
                 ?.GetType("Sage.Engine.Runtime.AmpProgram")
-                ?.GetMethod(options.BaseName)
+                ?.GetMethod(options.GeneratedMethodName)
                 ?.Invoke(null, arguments);
 
             result.AssemblyContext!.Unload();
@@ -47,7 +47,8 @@ namespace Sage.Engine.Compiler
         /// </summary>
         public static CompileResult GenerateAssemblyFromSource(CompilationOptions options)
         {
-            var transpiler = CSharpTranspiler.CreateFromFile(options.InputSourceFullPath);
+            CSharpTranspiler transpiler = CSharpTranspiler.CreateFromSource(options.InputName, options.GeneratedMethodName, options.SourceCode);
+
             CompilationUnitSyntax compilationUnit = transpiler.GenerateProgram();
 
             // When there is whitespace in the C# code, the #line indentations don't work as expected.
@@ -58,7 +59,7 @@ namespace Sage.Engine.Compiler
             (EmitResult emitResult, Assembly? assembly, AssemblyLoadContext? assemblyContext) = GenerateAssembly(options, compilation, sourceText);
 
             return new CompileResult(
-                options.InputSourceFullPath,
+                options.InputFile.FullName,
                 compilationUnit,
                 compilation,
                 emitResult,
@@ -93,19 +94,19 @@ namespace Sage.Engine.Compiler
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(
                 sourceText,
                 new CSharpParseOptions(),
-                path: options.OutputSourceFilename);
+                path: options.InputFile.FullName);
 
             var syntaxRootNode = (CSharpSyntaxNode)syntaxTree.GetRoot();
 
-            SyntaxTree encoded = CSharpSyntaxTree.Create(syntaxRootNode, null, options.OutputSourceFilename, encoding);
+            SyntaxTree encoded = CSharpSyntaxTree.Create(syntaxRootNode);
 
             var compilation = CSharpCompilation.Create(
-                options.OutputAssemblyFilename,
+                options.GeneratedAssemblyOutput.Name,
                 syntaxTrees: new[] { encoded },
                 references: references.Select(r => MetadataReference.CreateFromFile(r)),
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                     .WithUsings(defaultNamespaces)
-                    .WithOptimizationLevel(options.Optimization));
+                    .WithOptimizationLevel(options.OptimizationLevel));
 
             return (compilation, sourceText);
         }
@@ -115,16 +116,15 @@ namespace Sage.Engine.Compiler
         /// </summary>
         private static (EmitResult, Assembly?, AssemblyLoadContext?) GenerateAssembly(CompilationOptions options, CSharpCompilation compilation, SourceText sourceText)
         {
-            using var assemblyStream = new FileStream(options.OutputAssemblyFullPath, FileMode.Create);
-            using var symbolsStream = new FileStream(options.OutputSymbolsFullPath, FileMode.Create);
+            using var assemblyStream = new MemoryStream();
+            using var symbolsStream = new MemoryStream();
 
             var emitOptions = new EmitOptions(
-                debugInformationFormat: DebugInformationFormat.PortablePdb,
-                pdbFilePath: options.OutputAssemblyFullPath);
+                debugInformationFormat: DebugInformationFormat.PortablePdb);
 
             var embeddedTexts = new List<EmbeddedText>
             {
-                EmbeddedText.FromSource(options.OutputSourceFilename, sourceText)
+                EmbeddedText.FromSource(options.InputFile.FullName, sourceText)
             };
 
             EmitResult emitResult = compilation.Emit(
@@ -138,7 +138,7 @@ namespace Sage.Engine.Compiler
 
             if (emitResult.Success)
             {
-                var context = new AssemblyLoadContext(options.BaseName, true);
+                var context = new AssemblyLoadContext(options.InputName, true);
 
                 Assembly assembly = context.LoadFromStream(assemblyStream, symbolsStream);
 
