@@ -42,7 +42,7 @@ internal static class TranspilerExtensions
     /// <see cref="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/enhanced-line-directives.md"/>
     public static TSyntax WithLineDirective<TSyntax>(
         this TSyntax node,
-        IToken start, IToken stop, string filename) where TSyntax : SyntaxNode
+        IToken start, IToken stop, string? filename) where TSyntax : SyntaxNode
     {
         if (string.IsNullOrEmpty(filename))
         {
@@ -104,6 +104,20 @@ internal static class TranspilerExtensions
     public static ExpressionSyntax GetLongValue(ExpressionSyntax inputExpression)
     {
         return InvokeStaticMethodOnClass("SageValue", "ToLong")
+            .WithArgumentList(
+                ArgumentList(
+                    SingletonSeparatedList(
+                        Argument(inputExpression))));
+    }
+
+    /// <summary>
+    /// Converts the result of the provided expression to a bool using SageValue.ToLong
+    /// </summary>
+    /// <param name="inputExpression">The input expression to be converted to a C# bool</param>
+    /// <returns>SageValue.ToBool(expression)</returns>
+    public static ExpressionSyntax GetBoolValue(ExpressionSyntax inputExpression)
+    {
+        return InvokeStaticMethodOnClass("SageValue", "ToBoolean")
             .WithArgumentList(
                 ArgumentList(
                     SingletonSeparatedList(

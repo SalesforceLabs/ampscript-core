@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sage.Engine.Parser;
@@ -131,5 +132,94 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
                         IdentifierName(Runtime.RuntimeVariable),
                         IdentifierName(functionName)))
             .WithArgumentList(ArgumentList(SeparatedList(argSyntax)));
+    }
+
+    /// <summary>
+    /// Visits a comparision, such as <= >=, ==, etc.
+    /// </summary>
+    public override ExpressionSyntax VisitComparisionExpression(SageParser.ComparisionExpressionContext context)
+    {
+        ExpressionSyntax leftExpression = base.Visit(context.expression(0));
+        ExpressionSyntax rightExpression = base.Visit(context.expression(1));
+
+        string methodName;
+        switch (context.op.Type)
+        {
+            case SageLexer.LessThan:
+                methodName = "LessThan";
+                break;
+            case SageLexer.LessThanOrEqualTo:
+                methodName = "LessThanOrEqual";
+                break;
+            case SageLexer.EqualTo:
+                methodName = "EqualTo";
+                break;
+            case SageLexer.NotEqual:
+                methodName = "NotEqualTo";
+                break;
+            case SageLexer.GreaterThanOrEqualTo:
+                methodName = "GreaterThanOrEqual";
+                break;
+            case SageLexer.GreaterThan:
+                methodName = "GreaterThan";
+                break;
+            default:
+                throw new InternalEngineException(
+                    $"Unable to parse expression op type {SageLexer.DefaultVocabulary.GetDisplayName(context.op.Type)}");
+        }
+
+        // SageValue.{Comparison}(left, right);
+        // Example: SageValue.EqualTo(left, right);
+        return TranspilerExtensions.InvokeStaticMethodOnClass("SageValue", methodName)
+            .WithArgumentList(
+                ArgumentList(
+                    SeparatedList<ArgumentSyntax>(
+                        new SyntaxNodeOrToken[]
+                        {
+                            Argument(leftExpression),
+                            Token(SyntaxKind.CommaToken),
+                            Argument(rightExpression)
+                        })));
+    }
+
+    /// <summary>
+    /// Visits && or || boolean expression
+    /// </summary>
+    public override ExpressionSyntax VisitLogicalExpression(SageParser.LogicalExpressionContext context)
+    {
+        // SageValue.ToBoolean(left)
+        ExpressionSyntax leftExpression = TranspilerExtensions.GetBoolValue(base.Visit(context.expression(0)));
+
+        // SageValue.ToBoolean(right)
+        ExpressionSyntax rightExpression = TranspilerExtensions.GetBoolValue(base.Visit(context.expression(1)));
+
+        SyntaxKind kind;
+        switch (context.op.Type)
+        {
+            case SageParser.BooleanAnd:
+                kind = SyntaxKind.LogicalAndExpression;
+                break;
+            case SageParser.BooleanOr:
+                kind = SyntaxKind.LogicalOrExpression;
+                break;
+            default:
+                throw new InternalEngineException(
+                    $"Unable to parse expression op type {SageParser.DefaultVocabulary.GetDisplayName(context.op.Type)}");
+        }
+
+        // Ex: SageValue.ToBoolean(left) || SageValue.ToBoolean(right)
+        return BinaryExpression(
+            kind,
+            leftExpression,
+            rightExpression);
+    }
+
+    public override ExpressionSyntax VisitNegateExpression(SageParser.NegateExpressionContext context)
+    {
+        ExpressionSyntax expression = TranspilerExtensions.GetBoolValue(base.Visit(context.expression()));
+
+        return PrefixUnaryExpression(
+            SyntaxKind.LogicalNotExpression,
+            ParenthesizedExpression(expression));
     }
 }

@@ -4,7 +4,6 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.Text;
-using Sage.Engine.Transpiler;
 
 namespace Sage.Engine.Runtime
 {
@@ -17,7 +16,7 @@ namespace Sage.Engine.Runtime
     /// </remarks>
     public partial class RuntimeContext
     {
-        readonly StringBuilder _outputStream = new StringBuilder();
+        readonly StringBuilder _outputStream = new();
         private readonly Dictionary<string, object?> _variables = new();
 
         /// <summary>

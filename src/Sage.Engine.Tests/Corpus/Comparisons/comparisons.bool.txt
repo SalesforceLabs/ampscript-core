@@ -1,0 +1,1848 @@
+==========
+ true < false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true < false','--',@RESULT))
+]%%
+++++++++++
+true < false--True
+==========
+NOT true < false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true < false','--',@RESULT))
+]%%
+++++++++++
+NOT true < false--False
+==========
+ true <= false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true <= false','--',@RESULT))
+]%%
+++++++++++
+true <= false--False
+==========
+NOT true <= false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true <= false','--',@RESULT))
+]%%
+++++++++++
+NOT true <= false--True
+==========
+ true == false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true == false','--',@RESULT))
+]%%
+++++++++++
+true == false--False
+==========
+NOT true == false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true == false','--',@RESULT))
+]%%
+++++++++++
+NOT true == false--True
+==========
+ true != false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true != false','--',@RESULT))
+]%%
+++++++++++
+true != false--True
+==========
+NOT true != false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true != false','--',@RESULT))
+]%%
+++++++++++
+NOT true != false--False
+==========
+ true >= false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true >= false','--',@RESULT))
+]%%
+++++++++++
+true >= false--False
+==========
+NOT true >= false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true >= false','--',@RESULT))
+]%%
+++++++++++
+NOT true >= false--True
+==========
+ true > false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true > false','--',@RESULT))
+]%%
+++++++++++
+true > false--True
+==========
+NOT true > false
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=false
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true > false','--',@RESULT))
+]%%
+++++++++++
+NOT true > false--False
+==========
+ true < 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true < 0.0','--',@RESULT))
+]%%
+++++++++++
+true < 0.0--True
+==========
+NOT true < 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true < 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT true < 0.0--False
+==========
+ true <= 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true <= 0.0','--',@RESULT))
+]%%
+++++++++++
+true <= 0.0--False
+==========
+NOT true <= 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true <= 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT true <= 0.0--True
+==========
+ true == 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true == 0.0','--',@RESULT))
+]%%
+++++++++++
+true == 0.0--False
+==========
+NOT true == 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true == 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT true == 0.0--True
+==========
+ true != 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true != 0.0','--',@RESULT))
+]%%
+++++++++++
+true != 0.0--True
+==========
+NOT true != 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true != 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT true != 0.0--False
+==========
+ true >= 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true >= 0.0','--',@RESULT))
+]%%
+++++++++++
+true >= 0.0--False
+==========
+NOT true >= 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true >= 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT true >= 0.0--True
+==========
+ true > 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true > 0.0','--',@RESULT))
+]%%
+++++++++++
+true > 0.0--True
+==========
+NOT true > 0.0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true > 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT true > 0.0--False
+==========
+ true < 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true < 0','--',@RESULT))
+]%%
+++++++++++
+true < 0--True
+==========
+NOT true < 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true < 0','--',@RESULT))
+]%%
+++++++++++
+NOT true < 0--False
+==========
+ true <= 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true <= 0','--',@RESULT))
+]%%
+++++++++++
+true <= 0--False
+==========
+NOT true <= 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true <= 0','--',@RESULT))
+]%%
+++++++++++
+NOT true <= 0--True
+==========
+ true == 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true == 0','--',@RESULT))
+]%%
+++++++++++
+true == 0--False
+==========
+NOT true == 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true == 0','--',@RESULT))
+]%%
+++++++++++
+NOT true == 0--True
+==========
+ true != 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true != 0','--',@RESULT))
+]%%
+++++++++++
+true != 0--True
+==========
+NOT true != 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true != 0','--',@RESULT))
+]%%
+++++++++++
+NOT true != 0--False
+==========
+ true >= 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true >= 0','--',@RESULT))
+]%%
+++++++++++
+true >= 0--False
+==========
+NOT true >= 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true >= 0','--',@RESULT))
+]%%
+++++++++++
+NOT true >= 0--True
+==========
+ true > 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true > 0','--',@RESULT))
+]%%
+++++++++++
+true > 0--True
+==========
+NOT true > 0
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true > 0','--',@RESULT))
+]%%
+++++++++++
+NOT true > 0--False
+==========
+ true < 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true < 1','--',@RESULT))
+]%%
+++++++++++
+true < 1--False
+==========
+NOT true < 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true < 1','--',@RESULT))
+]%%
+++++++++++
+NOT true < 1--True
+==========
+ true <= 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true <= 1','--',@RESULT))
+]%%
+++++++++++
+true <= 1--True
+==========
+NOT true <= 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true <= 1','--',@RESULT))
+]%%
+++++++++++
+NOT true <= 1--False
+==========
+ true == 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true == 1','--',@RESULT))
+]%%
+++++++++++
+true == 1--True
+==========
+NOT true == 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true == 1','--',@RESULT))
+]%%
+++++++++++
+NOT true == 1--False
+==========
+ true != 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true != 1','--',@RESULT))
+]%%
+++++++++++
+true != 1--False
+==========
+NOT true != 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true != 1','--',@RESULT))
+]%%
+++++++++++
+NOT true != 1--True
+==========
+ true >= 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true >= 1','--',@RESULT))
+]%%
+++++++++++
+true >= 1--True
+==========
+NOT true >= 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true >= 1','--',@RESULT))
+]%%
+++++++++++
+NOT true >= 1--False
+==========
+ true > 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true > 1','--',@RESULT))
+]%%
+++++++++++
+true > 1--False
+==========
+NOT true > 1
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true > 1','--',@RESULT))
+]%%
+++++++++++
+NOT true > 1--True
+==========
+ true < 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true < 1.5','--',@RESULT))
+]%%
+++++++++++
+true < 1.5--True
+==========
+NOT true < 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true < 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT true < 1.5--False
+==========
+ true <= 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true <= 1.5','--',@RESULT))
+]%%
+++++++++++
+true <= 1.5--False
+==========
+NOT true <= 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true <= 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT true <= 1.5--True
+==========
+ true == 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true == 1.5','--',@RESULT))
+]%%
+++++++++++
+true == 1.5--False
+==========
+NOT true == 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true == 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT true == 1.5--True
+==========
+ true != 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true != 1.5','--',@RESULT))
+]%%
+++++++++++
+true != 1.5--True
+==========
+NOT true != 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true != 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT true != 1.5--False
+==========
+ true >= 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true >= 1.5','--',@RESULT))
+]%%
+++++++++++
+true >= 1.5--False
+==========
+NOT true >= 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true >= 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT true >= 1.5--True
+==========
+ true > 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true > 1.5','--',@RESULT))
+]%%
+++++++++++
+true > 1.5--True
+==========
+NOT true > 1.5
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true > 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT true > 1.5--False
+==========
+ true < 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true < 2','--',@RESULT))
+]%%
+++++++++++
+true < 2--True
+==========
+NOT true < 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true < 2','--',@RESULT))
+]%%
+++++++++++
+NOT true < 2--False
+==========
+ true <= 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true <= 2','--',@RESULT))
+]%%
+++++++++++
+true <= 2--False
+==========
+NOT true <= 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true <= 2','--',@RESULT))
+]%%
+++++++++++
+NOT true <= 2--True
+==========
+ true == 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true == 2','--',@RESULT))
+]%%
+++++++++++
+true == 2--False
+==========
+NOT true == 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true == 2','--',@RESULT))
+]%%
+++++++++++
+NOT true == 2--True
+==========
+ true != 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true != 2','--',@RESULT))
+]%%
+++++++++++
+true != 2--True
+==========
+NOT true != 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true != 2','--',@RESULT))
+]%%
+++++++++++
+NOT true != 2--False
+==========
+ true >= 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true >= 2','--',@RESULT))
+]%%
+++++++++++
+true >= 2--False
+==========
+NOT true >= 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true >= 2','--',@RESULT))
+]%%
+++++++++++
+NOT true >= 2--True
+==========
+ true > 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' true > 2','--',@RESULT))
+]%%
+++++++++++
+true > 2--True
+==========
+NOT true > 2
+==========
+%%[
+SET @INPUTLEFT=true
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT true > 2','--',@RESULT))
+]%%
+++++++++++
+NOT true > 2--False
+==========
+ false < 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false < 0.0','--',@RESULT))
+]%%
+++++++++++
+false < 0.0--False
+==========
+NOT false < 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false < 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT false < 0.0--True
+==========
+ false <= 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false <= 0.0','--',@RESULT))
+]%%
+++++++++++
+false <= 0.0--True
+==========
+NOT false <= 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false <= 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT false <= 0.0--False
+==========
+ false == 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false == 0.0','--',@RESULT))
+]%%
+++++++++++
+false == 0.0--True
+==========
+NOT false == 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false == 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT false == 0.0--False
+==========
+ false != 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false != 0.0','--',@RESULT))
+]%%
+++++++++++
+false != 0.0--False
+==========
+NOT false != 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false != 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT false != 0.0--True
+==========
+ false >= 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false >= 0.0','--',@RESULT))
+]%%
+++++++++++
+false >= 0.0--True
+==========
+NOT false >= 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false >= 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT false >= 0.0--False
+==========
+ false > 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false > 0.0','--',@RESULT))
+]%%
+++++++++++
+false > 0.0--False
+==========
+NOT false > 0.0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0.0
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false > 0.0','--',@RESULT))
+]%%
+++++++++++
+NOT false > 0.0--True
+==========
+ false < 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false < 0','--',@RESULT))
+]%%
+++++++++++
+false < 0--False
+==========
+NOT false < 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false < 0','--',@RESULT))
+]%%
+++++++++++
+NOT false < 0--True
+==========
+ false <= 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false <= 0','--',@RESULT))
+]%%
+++++++++++
+false <= 0--True
+==========
+NOT false <= 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false <= 0','--',@RESULT))
+]%%
+++++++++++
+NOT false <= 0--False
+==========
+ false == 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false == 0','--',@RESULT))
+]%%
+++++++++++
+false == 0--True
+==========
+NOT false == 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false == 0','--',@RESULT))
+]%%
+++++++++++
+NOT false == 0--False
+==========
+ false != 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false != 0','--',@RESULT))
+]%%
+++++++++++
+false != 0--False
+==========
+NOT false != 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false != 0','--',@RESULT))
+]%%
+++++++++++
+NOT false != 0--True
+==========
+ false >= 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false >= 0','--',@RESULT))
+]%%
+++++++++++
+false >= 0--True
+==========
+NOT false >= 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false >= 0','--',@RESULT))
+]%%
+++++++++++
+NOT false >= 0--False
+==========
+ false > 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false > 0','--',@RESULT))
+]%%
+++++++++++
+false > 0--False
+==========
+NOT false > 0
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=0
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false > 0','--',@RESULT))
+]%%
+++++++++++
+NOT false > 0--True
+==========
+ false < 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false < 1','--',@RESULT))
+]%%
+++++++++++
+false < 1--True
+==========
+NOT false < 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false < 1','--',@RESULT))
+]%%
+++++++++++
+NOT false < 1--False
+==========
+ false <= 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false <= 1','--',@RESULT))
+]%%
+++++++++++
+false <= 1--False
+==========
+NOT false <= 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false <= 1','--',@RESULT))
+]%%
+++++++++++
+NOT false <= 1--True
+==========
+ false == 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false == 1','--',@RESULT))
+]%%
+++++++++++
+false == 1--False
+==========
+NOT false == 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false == 1','--',@RESULT))
+]%%
+++++++++++
+NOT false == 1--True
+==========
+ false != 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false != 1','--',@RESULT))
+]%%
+++++++++++
+false != 1--True
+==========
+NOT false != 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false != 1','--',@RESULT))
+]%%
+++++++++++
+NOT false != 1--False
+==========
+ false >= 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false >= 1','--',@RESULT))
+]%%
+++++++++++
+false >= 1--False
+==========
+NOT false >= 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false >= 1','--',@RESULT))
+]%%
+++++++++++
+NOT false >= 1--True
+==========
+ false > 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false > 1','--',@RESULT))
+]%%
+++++++++++
+false > 1--True
+==========
+NOT false > 1
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false > 1','--',@RESULT))
+]%%
+++++++++++
+NOT false > 1--False
+==========
+ false < 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false < 1.5','--',@RESULT))
+]%%
+++++++++++
+false < 1.5--False
+==========
+NOT false < 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false < 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT false < 1.5--True
+==========
+ false <= 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false <= 1.5','--',@RESULT))
+]%%
+++++++++++
+false <= 1.5--True
+==========
+NOT false <= 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false <= 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT false <= 1.5--False
+==========
+ false == 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false == 1.5','--',@RESULT))
+]%%
+++++++++++
+false == 1.5--True
+==========
+NOT false == 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false == 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT false == 1.5--False
+==========
+ false != 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false != 1.5','--',@RESULT))
+]%%
+++++++++++
+false != 1.5--False
+==========
+NOT false != 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false != 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT false != 1.5--True
+==========
+ false >= 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false >= 1.5','--',@RESULT))
+]%%
+++++++++++
+false >= 1.5--True
+==========
+NOT false >= 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false >= 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT false >= 1.5--False
+==========
+ false > 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false > 1.5','--',@RESULT))
+]%%
+++++++++++
+false > 1.5--False
+==========
+NOT false > 1.5
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=1.5
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false > 1.5','--',@RESULT))
+]%%
+++++++++++
+NOT false > 1.5--True
+==========
+ false < 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false < 2','--',@RESULT))
+]%%
+++++++++++
+false < 2--False
+==========
+NOT false < 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT < @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false < 2','--',@RESULT))
+]%%
+++++++++++
+NOT false < 2--True
+==========
+ false <= 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false <= 2','--',@RESULT))
+]%%
+++++++++++
+false <= 2--True
+==========
+NOT false <= 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT <= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false <= 2','--',@RESULT))
+]%%
+++++++++++
+NOT false <= 2--False
+==========
+ false == 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false == 2','--',@RESULT))
+]%%
+++++++++++
+false == 2--True
+==========
+NOT false == 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT == @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false == 2','--',@RESULT))
+]%%
+++++++++++
+NOT false == 2--False
+==========
+ false != 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false != 2','--',@RESULT))
+]%%
+++++++++++
+false != 2--False
+==========
+NOT false != 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT != @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false != 2','--',@RESULT))
+]%%
+++++++++++
+NOT false != 2--True
+==========
+ false >= 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false >= 2','--',@RESULT))
+]%%
+++++++++++
+false >= 2--True
+==========
+NOT false >= 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT >= @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false >= 2','--',@RESULT))
+]%%
+++++++++++
+NOT false >= 2--False
+==========
+ false > 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF  @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT(' false > 2','--',@RESULT))
+]%%
+++++++++++
+false > 2--False
+==========
+NOT false > 2
+==========
+%%[
+SET @INPUTLEFT=false
+SET @INPUTRIGHT=2
+SET @RESULT = false
+IF NOT @INPUTLEFT > @INPUTRIGHT THEN
+    SET @RESULT = true
+ENDIF
+OUTPUTLINE(CONCAT('NOT false > 2','--',@RESULT))
+]%%
+++++++++++
+NOT false > 2--True

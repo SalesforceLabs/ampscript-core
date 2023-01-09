@@ -15,8 +15,8 @@ namespace Sage.Engine.Tests
     public class ParserTests
     {
         [Test]
-        [EngineTest("Parser")]
-        public EngineParseTestResult TestParserCorpus(CorpusData test)
+        [ParserTest("Parser")]
+        public ParserTestResult TestParserCorpus(CorpusData test)
         {
             return TestUtils.GetParseResultFromTest(test);
         }

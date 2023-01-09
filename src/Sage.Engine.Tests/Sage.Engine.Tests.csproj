@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -21,6 +21,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Corpus\Comparisons\comparisons.bool.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Corpus\Comparisons\comparisons.datetime.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Corpus\Comparisons\comparisons.null.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Corpus\Comparisons\comparisons.numbers.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Corpus\Comparisons\comparisons.strings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Corpus\Compiler\TestAssemblyGeneration.ampscript">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
