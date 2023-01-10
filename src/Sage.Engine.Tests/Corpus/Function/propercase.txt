@@ -1,0 +1,65 @@
+==========
+Ampscript_Guide Example 1
+==========
+%%[
+
+var @fullName, @fullNameProperCase
+
+set @fullName = "BARB BROWN" /* or a literal value */
+
+set @fullNameProperCase = ProperCase(@fullName)
+
+]%%
+fullName: %%=v(@fullName)=%%
+fullNameProperCase: %%=v(@fullNameProperCase)=%%
+++++++++++
+fullName: BARB BROWN
+fullNameProperCase: Barb Brown
+==========
+Numbers
+==========
+%%[
+set @fullName = "BA1111RB BR22OW33N" /* or a literal value */
+
+set @fullName = ProperCase(@fullName)
+
+]%%
+%%=v(@fullName)=%%
+++++++++++
+Ba1111rb Br22ow33n
+==========
+Dots
+==========
+%%[
+set @fullName = "BA1R.B BR.OWN" /* or a literal value */
+
+set @fullName = ProperCase(@fullName)
+
+]%%
+%%=v(@fullName)=%%
+++++++++++
+Ba1r.b Br.own
+==========
+Many Spaces
+==========
+%%[
+set @fullName = "BA   R   B  BR.       OWN" /* or a literal value */
+
+set @fullName = ProperCase(@fullName)
+
+]%%
+%%=v(@fullName)=%%
+++++++++++
+Ba   R   B  Br.       Own
+==========
+All lower
+==========
+%%[
+set @fullName = "bar br own" /* or a literal value */
+
+set @fullName = ProperCase(@fullName)
+
+]%%
+%%=v(@fullName)=%%
+++++++++++
+Bar Br Own

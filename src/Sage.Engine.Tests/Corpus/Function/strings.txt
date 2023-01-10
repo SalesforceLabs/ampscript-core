@@ -1,0 +1,90 @@
+==========
+'Logan'
+==========
+%%[
+set @firstName = 'Logan'
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello Logan</p>
+==========
+''
+==========
+%%[
+set @firstName = ''
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello </p>
+==========
+'Logan''s Car'
+==========
+%%[
+set @firstName = 'Logan''s Car'
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello Logan's Car</p>
+==========
+'Logan''s car has the world''s best color'
+==========
+%%[
+set @firstName = 'Logan''s car has the world''s best color'
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello Logan's car has the world's best color</p>
+==========
+ CONCAT('Logans car has',' the worlds',' best color')
+==========
+%%[
+set @firstName = CONCAT('Logans car has',' the worlds',' best color')
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello Logans car has the worlds best color</p>
+==========
+CONCAT('Logan''s car has',' the world''s',' best color')
+==========
+%%[
+set @firstName = CONCAT('Logan''s car has',' the world''s',' best color')
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello Logan's car has the world's best color</p>
+==========
+"Logan"
+==========
+%%[
+set @firstName = "Logan"
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello Logan</p>
+==========
+"Logan's new car is great"
+==========
+%%[
+set @firstName = "Logan's new car is great"
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello Logan's new car is great</p>
+==========
+__
+==========
+%%[
+set @firstName = ""
+]%%
+<p>Hello %%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello </p>
+==========
+"Hello ""Logan"", if that's your name"
+==========
+%%[
+set @firstName = "Hello ""Logan"", if that's your name"
+]%%
+<p>%%=v(@firstName)=%%</p>
+++++++++++
+<p>Hello "Logan", if that's your name</p>

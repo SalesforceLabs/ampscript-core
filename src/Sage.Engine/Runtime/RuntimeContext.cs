@@ -19,6 +19,11 @@ namespace Sage.Engine.Runtime
         readonly StringBuilder _outputStream = new();
         private readonly Dictionary<string, object?> _variables = new();
 
+        public RuntimeContext()
+        {
+            this.Random = new Random();
+        }
+
         /// <summary>
         /// Returns a variable from the runtime
         /// </summary>

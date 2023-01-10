@@ -13,21 +13,21 @@ namespace Sage.Engine.Tests
     public class SageValueTests
     {
         [Test]
-        [TestCase(1, 1, true)]
-        [TestCase("1", 1, false)]
-        [TestCase("-1", -1, false)]
-        [TestCase(null, 0, false)]
-        [TestCase(1.0, 1, true)]
-        [TestCase(1.1, 1, false)]
-        [TestCase("true", 0, false)]
-        public void TestToLong(object? data, long expected, bool expectedAbleToConvert)
+        [TestCase(1, 1, SageValue.UnboxResult.Succeed)]
+        [TestCase("1", 1, SageValue.UnboxResult.SucceededFromString)]
+        [TestCase("-1", -1, SageValue.UnboxResult.SucceededFromString)]
+        [TestCase(null, 0, SageValue.UnboxResult.Fail)]
+        [TestCase(1.0, 1, SageValue.UnboxResult.Succeed)]
+        [TestCase(1.1, 0, SageValue.UnboxResult.Fail)]
+        [TestCase("true", 0, SageValue.UnboxResult.Fail)]
+        public void TestToLong(object? data, long expected, SageValue.UnboxResult expectedAbleToConvert)
         {
-            bool couldConvert = SageValue.TryToLong(data, out long result);
+            SageValue.UnboxResult couldConvert = SageValue.TryToLong(data, out long result);
 
             Assert.That(couldConvert, Is.EqualTo(expectedAbleToConvert), $"Conversion result not what was expected.  {data} of {data?.GetType()} expected {expectedAbleToConvert}, got {couldConvert}");
             Assert.That(result, Is.EqualTo(expected), "Converted result is not what was expected");
 
-            if (expectedAbleToConvert == false)
+            if (expectedAbleToConvert == SageValue.UnboxResult.Fail)
             {
                 Assert.Throws<InvalidCastException>(() => { SageValue.ToLong(data!); });
             }

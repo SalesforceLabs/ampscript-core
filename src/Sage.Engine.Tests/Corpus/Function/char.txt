@@ -1,0 +1,76 @@
+==========
+CHAR(34)
+==========
+%%[
+var @greeting
+set @greeting = ""
+set @greeting = concat(@greeting, "Just wanted to say ", Char(34), "Hello", Char(34), " ")
+set @greeting = concat(@greeting, "and tell you we", Char(39) ,"re b", Char(97,4) , "ck!")
+]%%
+greeting: %%=v(@greeting)=%%
+++++++++++
+greeting: Just wanted to say "Hello" and tell you we're baaaack!
+==========
+SET @OFFSET = ADD_20_5,13_5_ Char_@OFFSET_
+==========
+%%[
+SET @OFFSET = ADD(20.5,13.5)
+SET @NUM = Char(@OFFSET)
+]%%
+%%=v(@NUM)=%%
+++++++++++
+"
+==========
+Char(ADD(20.5,13.5))
+==========
+%%[
+SET @NUM = Char(ADD(20.5,13.5))
+]%%
+%%=v(@NUM)=%%
+++++++++++
+"
+==========
+Char(34.5)
+==========
+%%[
+SET @NUM = Char(34.5)
+]%%
+%%=v(@NUM)=%%
+++++++++++
+!
+==========
+Char("a")
+==========
+%%[
+SET @NUM = Char("a")
+]%%
+%%=v(@NUM)=%%
+++++++++++
+!
+==========
+Char(true)
+==========
+%%[
+SET @NUM = Char(true)
+]%%
+%%=v(@NUM)=%%
+++++++++++
+!
+==========
+Char("34")
+==========
+%%[
+SET @NUM = Char("34")
+]%%
+%%=v(@NUM)=%%
+++++++++++
+"
+==========
+CHAR LONGER THAN INT Char(9223372036854775807)
+==========
+%%[
+set @num1 = 9223372036854775807
+]%%
+%%=CHAR(@num1)=%%
+++++++++++
+!

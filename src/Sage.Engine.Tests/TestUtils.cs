@@ -50,5 +50,9 @@ public static class TestUtils
             Assert.Fail(e.ToString());
             throw;
         }
+        catch (Exception)
+        {
+            return new EngineTestResult("!");
+        }
     }
 }

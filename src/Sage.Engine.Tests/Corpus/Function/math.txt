@@ -1,0 +1,189 @@
+==========
+Add(5, 42)
+==========
+%%[
+
+var @sum, @num1, @num2
+
+set @num1 = 5
+set @num2 = 42
+
+set @sum  = Add(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% + %%=v(@num2)=%% = %%=v(@sum)=%%
+++++++++++
+5 + 42 = 47
+==========
+divide(10, 2)
+==========
+%%[
+
+var @quotient, @num1, @num2
+
+set @num1 = 10
+set @num2 = 2
+
+set @quotient  = divide(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% / %%=v(@num2)=%% = %%=v(@quotient)=%%
+++++++++++
+10 / 2 = 5
+==========
+mod(10, 3)
+==========
+%%[
+
+var @modulus, @num1, @num2
+
+set @num1 = 10
+set @num2 = 3
+
+set @modulus  = mod(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% % %%=v(@num2)=%% = %%=v(@modulus)=%%
+++++++++++
+10 % 3 = 1
+==========
+multiply_5, 4_
+==========
+%%[
+
+var @product, @num1, @num2
+
+set @num1 = 5
+set @num2 = 4
+
+set @product  = multiply(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% * %%=v(@num2)=%% = %%=v(@product)=%%
+++++++++++
+5 * 4 = 20
+==========
+Subtract_42, 5_
+==========
+%%[
+
+var @diff, @num1, @num2
+
+set @num1 = 42
+set @num2 = 5
+
+set @diff  = Subtract(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% - %%=v(@num2)=%% = %%=v(@diff)=%%
+++++++++++
+42 - 5 = 37
+==========
+Subtract_42_51, 5_
+==========
+%%[
+
+var @diff, @num1, @num2
+
+set @num1 = 42.51
+set @num2 = 5
+
+set @diff  = Subtract(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% - %%=v(@num2)=%% = %%=v(@diff)=%%
+++++++++++
+42.51 - 5 = 37.51
+==========
+Add("5", "42")
+==========
+%%[
+
+var @sum, @num1, @num2
+
+set @num1 = "5"
+set @num2 = "42"
+
+set @sum  = Add(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% + %%=v(@num2)=%% = %%=v(@sum)=%%
+++++++++++
+5 + 42 = 47
+==========
+divide("10", "2")
+==========
+%%[
+
+var @quotient, @num1, @num2
+
+set @num1 = "10"
+set @num2 = "2"
+
+set @quotient  = divide(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% / %%=v(@num2)=%% = %%=v(@quotient)=%%
+++++++++++
+10 / 2 = 5
+==========
+mod("10", "3")
+==========
+%%[
+
+var @modulus, @num1, @num2
+
+set @num1 = "10"
+set @num2 = "3"
+
+set @modulus  = mod(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% % %%=v(@num2)=%% = %%=v(@modulus)=%%
+++++++++++
+10 % 3 = 1
+==========
+multiply("5", "4")
+==========
+%%[
+
+var @product, @num1, @num2
+
+set @num1 = "5"
+set @num2 = "4"
+
+set @product  = multiply(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% * %%=v(@num2)=%% = %%=v(@product)=%%
+++++++++++
+5 * 4 = 20
+==========
+Subtract("42.51", "5")
+==========
+%%[
+
+var @diff, @num1, @num2
+
+set @num1 = "42.51"
+set @num2 = "5"
+
+set @diff  = Subtract(@num1, @num2)
+
+]%%
+%%=v(@num1)=%% - %%=v(@num2)=%% = %%=v(@diff)=%%
+++++++++++
+42.51 - 5 = 37.51
+==========
+OVER FLOW INT ADD(2147483647, 2147483647)
+==========
+%%[
+set @num1 = 2147483647
+set @num2 = 2147483647
+
+set @SUM  = ADD(@num1, @num2)
+
+]%%
+%%=v(@SUM)=%%
+++++++++++
+4294967294

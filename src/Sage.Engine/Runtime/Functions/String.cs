@@ -35,7 +35,7 @@ namespace Sage.Engine.Runtime
         /// <param name="subject">The string to search</param>
         /// <param name="search">The string to find</param>
         /// <returns>The position that search exists in subject. If not found, -1 is returned.</returns>
-        public int INDEXOF(object? subject, object? search)
+        public int INDEXOF(object subject, object search)
         {
             if (subject == null || search == null)
             {
@@ -59,6 +59,86 @@ namespace Sage.Engine.Runtime
 
             // The function returns offset of 1, but IndexOf returns offset of 0.
             return value + 1;
+        }
+
+        /// <summary>
+        /// Returns the ASCII character for the specified ASCII character code
+        /// </summary>
+        public string CHAR(object code)
+        {
+            return CHAR(code, 1);
+        }
+
+        /// <summary>
+        /// Returns the ASCII character for the specified ASCII character code
+        /// </summary>
+        public string CHAR(object code, object? repeated)
+        {
+            int codeInt = SageValue.ToInt(code);
+
+            if (SageValue.TryToInt(repeated, out int repeatedInt) == SageValue.UnboxResult.Fail)
+            {
+                repeatedInt = 1;
+            }
+
+            if (repeatedInt == 1)
+            {
+                return ((char)codeInt).ToString();
+            }
+
+            StringBuilder builder = new StringBuilder(repeatedInt);
+
+            for (int i = 0; i < repeatedInt; i++)
+            {
+                builder.Append((char)codeInt);
+            }
+            string result = builder.ToString();
+
+            return result;
+        }
+
+        /// <summary>
+        /// This function capitalizes the first letter in the specified string and any other letters in the string that follow any character other than a letter. It converts all other letters into lowercase.
+        /// </summary>
+        public string PROPERCASE(object input)
+        {
+            var newString = new StringBuilder();
+
+            bool shouldCapitalize = true;
+            foreach (char charItem in input.ToString())
+            {
+                char nextChar = shouldCapitalize ? char.ToUpper(charItem) : char.ToLower(charItem);
+                newString.Append(nextChar);
+
+                shouldCapitalize = char.IsWhiteSpace(charItem);
+            }
+
+            string result = newString.ToString();
+
+            return result;
+        }
+
+        public string SUBSTRING(object subject, object start, object? length = null)
+        {
+            int startInt = 1;
+            if (subject == null)
+            {
+                return string.Empty;
+            }
+
+            if (start != null)
+            {
+                startInt = SageValue.ToInt(start);
+            }
+
+            if (length == null)
+            {
+                return subject?.ToString()?.Substring(startInt - 1) ?? string.Empty;
+            }
+
+            int lengthInt = SageValue.ToInt(length);
+
+            return subject?.ToString()?.Substring(startInt - 1, lengthInt) ?? string.Empty;
         }
     }
 }

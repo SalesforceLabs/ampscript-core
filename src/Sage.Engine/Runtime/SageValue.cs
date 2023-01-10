@@ -13,6 +13,13 @@ namespace Sage.Engine.Runtime
     public static class SageValue
     {
         #region BOXING
+        public enum UnboxResult
+        {
+            Succeed,
+            SucceededFromString,
+            SucceededFromNumber,
+            Fail
+        }
 
         /// <summary>
         /// Returns whether or not the provided inputObj can be converted to a number
@@ -45,49 +52,45 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not long is the best representation of this boxed inputObj</returns>
-        public static bool TryToLong(object? inputObj, out long result)
+        public static UnboxResult TryToLong(object? inputObj, out long result)
         {
             if (inputObj == null)
             {
                 result = default;
-                return false;
+                return UnboxResult.Fail;
             }
 
             if (inputObj is int intObj)
             {
                 result = intObj;
-                return true;
+                return UnboxResult.Succeed;
             }
 
             if (inputObj is long longObj)
             {
                 result = longObj;
-                return true;
+                return UnboxResult.Succeed;
             }
 
             if (inputObj is double doubleVal && Math.Round(doubleVal, 0) == doubleVal)
             {
                 result = (long)doubleVal;
-                return true;
+                return UnboxResult.Succeed;
             }
             if (inputObj is decimal decimalVal && Math.Round(decimalVal, 0) == decimalVal)
             {
                 result = (long)decimalVal;
-                return true;
+                return UnboxResult.Succeed;
             }
 
-            try
+            if (long.TryParse(inputObj.ToString(), out result))
             {
-                // Return false but still convert, because strings can convert - it's just not the optimal representation
-                result = Convert.ToInt64(inputObj);
-                return false;
-            }
-            catch
-            {
-                result = 0;
+                return UnboxResult.SucceededFromString;
             }
 
-            return false;
+            result = 0;
+
+            return UnboxResult.Fail;
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace Sage.Engine.Runtime
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to a long inputObj.</exception>
         public static long ToLong(object inputObj)
         {
-            if (!TryToLong(inputObj, out long result))
+            if (TryToLong(inputObj, out long result) == UnboxResult.Fail)
             {
                 throw new InvalidCastException($"Cannot convert {inputObj} to long");
             }
@@ -112,33 +115,36 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not long is the best representation of this boxed inputObj</returns>
-        public static bool TryToDouble(object? inputObj, out double result)
+        public static UnboxResult TryToDouble(object? inputObj, out double result)
         {
             if (inputObj == null)
             {
                 result = 0;
-                return false;
+                return UnboxResult.Fail;
             }
 
             if (inputObj is double doubleVal)
             {
                 result = doubleVal;
-                return true;
+                return UnboxResult.Succeed;
             }
 
             if (inputObj is long or decimal or int)
             {
                 result = Convert.ToDouble(inputObj);
-                return true;
+                return UnboxResult.Succeed;
             }
 
             if (inputObj is string stringVal)
             {
-                return double.TryParse(stringVal, out result);
+                if (double.TryParse(stringVal, out result))
+                {
+                    return UnboxResult.SucceededFromString;
+                }
             }
 
             result = 0;
-            return false;
+            return UnboxResult.Fail;
         }
 
         /// <summary>
@@ -149,7 +155,7 @@ namespace Sage.Engine.Runtime
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to a double inputObj.</exception>
         public static double ToDouble(object inputObj)
         {
-            if (!TryToDouble(inputObj, out double result))
+            if (TryToDouble(inputObj, out double result) == UnboxResult.Fail)
             {
                 throw new InvalidCastException($"Cannot convert {inputObj} to double");
             }
@@ -163,17 +169,25 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not decimal is the best representation of this boxed inputObj</returns>
-        public static bool TryToDecimal(object? inputObj, out decimal result)
+        public static UnboxResult TryToDecimal(object? inputObj, out decimal result)
         {
             if (inputObj is decimal or double)
             {
                 result = (decimal)inputObj;
-                return true;
+                return UnboxResult.Succeed;
             }
 
-            // Return false but still convert, because strings can convert just not the optimal representation
-            result = Convert.ToDecimal(inputObj);
-            return false;
+            try
+            {
+                result = Convert.ToDecimal(inputObj);
+
+                return UnboxResult.SucceededFromString;
+            }
+            catch (Exception)
+            {
+                result = 0;
+                return UnboxResult.Fail;
+            }
         }
 
         /// <summary>
@@ -184,7 +198,7 @@ namespace Sage.Engine.Runtime
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to a decimal inputObj.</exception>
         public static decimal ToDecimal(object? inputObj)
         {
-            if (!TryToDecimal(inputObj, out decimal result))
+            if (TryToDecimal(inputObj, out decimal result) == UnboxResult.Fail)
             {
                 throw new InvalidCastException($"Cannot convert {inputObj} to decimal");
             }
@@ -198,27 +212,27 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not int is the best representation of this boxed inputObj</returns>
-        public static bool TryToInt(object inputObj, out int result)
+        public static UnboxResult TryToInt(object inputObj, out int result)
         {
             if (inputObj is int objInt)
             {
                 result = objInt;
-                return true;
+                return UnboxResult.Succeed;
             }
 
-            if (TryToLong(inputObj, out long longResult))
+            if (TryToLong(inputObj, out long longResult) != UnboxResult.Fail)
             {
                 result = (int)longResult;
                 if (longResult < int.MinValue || longResult > int.MaxValue)
                 {
-                    return false;
+                    return UnboxResult.Fail;
                 }
 
-                return true;
+                return UnboxResult.Succeed;
             }
 
             result = 0;
-            return false;
+            return UnboxResult.Fail;
         }
 
         /// <summary>
@@ -229,7 +243,7 @@ namespace Sage.Engine.Runtime
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to an int inputObj.</exception>
         public static int ToInt(object inputObj)
         {
-            if (!TryToInt(inputObj, out int intResult))
+            if (TryToInt(inputObj, out int intResult) == UnboxResult.Fail)
             {
                 throw new InvalidCastException($"{inputObj} can not be converted to an integer");
             }
@@ -237,24 +251,29 @@ namespace Sage.Engine.Runtime
             return intResult;
         }
 
-
         /// <summary>
         /// Attempts to convert the boxed inputObj to a DateTimeOffset.
         /// </summary>
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not DateTimeOffset is the best representation of this boxed inputObj</returns>
-        public static bool TryToDateTime(object? inputObj, out DateTimeOffset result)
+        public static UnboxResult TryToDateTime(object? inputObj, out DateTimeOffset result)
         {
             if (inputObj is DateTimeOffset dateTimeObj)
             {
                 result = dateTimeObj;
-                return true;
+                return UnboxResult.Succeed;
             }
 
-            DateTimeOffset.TryParse(inputObj?.ToString(), out result);
+            if (DateTimeOffset.TryParse(inputObj?.ToString(), null, DateTimeStyles.AssumeLocal, out result))
+            {
+                return UnboxResult.SucceededFromString;
+            }
 
-            return false;
+            // Failure to parse will return "0", but that will be in UTC time. For compatibility, convert it to local.
+            result = result.ToLocalTime();
+
+            return UnboxResult.Fail;
         }
 
         /// <summary>
@@ -265,7 +284,7 @@ namespace Sage.Engine.Runtime
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to an DateTimeOffset inputObj.</exception>
         public static DateTimeOffset ToDateTime(object? inputObj)
         {
-            if (!TryToDateTime(inputObj, out DateTimeOffset result))
+            if (TryToDateTime(inputObj, out DateTimeOffset result) == UnboxResult.Fail)
             {
                 throw new InvalidCastException($"Cannot convert {inputObj} to DateTimeOffset");
             }
@@ -279,21 +298,26 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not bool is the best representation of this boxed inputObj</returns>
-        public static bool TryToBoolean(object inputObj, out bool result)
+        public static UnboxResult TryToBoolean(object inputObj, out bool result)
         {
             if (inputObj is bool boolObj)
             {
                 result = boolObj;
-                return true;
+                return UnboxResult.Succeed;
             }
 
-            if (TryToInt(inputObj, out int intVal))
+            if (TryToInt(inputObj, out int intVal) != UnboxResult.Fail)
             {
                 result = intVal == 1;
-                return false;
+                return UnboxResult.SucceededFromNumber;
             }
 
-            return bool.TryParse(inputObj.ToString(), out result);
+            if (bool.TryParse(inputObj.ToString(), out result))
+            {
+                return UnboxResult.SucceededFromString;
+            }
+
+            return UnboxResult.Fail;
         }
 
         /// <summary>
@@ -304,7 +328,7 @@ namespace Sage.Engine.Runtime
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to an bool inputObj.</exception>
         public static bool ToBoolean(object inputObj)
         {
-            if (!TryToBoolean(inputObj, out bool result))
+            if (TryToBoolean(inputObj, out bool result) == UnboxResult.Fail)
             {
                 throw new InvalidCastException($"Cannot convert {inputObj} to bool");
             }
@@ -467,8 +491,8 @@ namespace Sage.Engine.Runtime
         {
             // NOTE! By-design this is not a lazily-checked or statement.  We want values for both left and right, and if this were ||,
             // then the right side may not be evaluated!
-            if (TryToDateTime(left, out DateTimeOffset leftDateTime) |
-                TryToDateTime(right, out DateTimeOffset rightDateTime))
+            if (TryToDateTime(left, out DateTimeOffset leftDateTime) != UnboxResult.Fail |
+                TryToDateTime(right, out DateTimeOffset rightDateTime) != UnboxResult.Fail)
             {
                 result = leftDateTime.CompareTo(rightDateTime);
                 return true;
@@ -485,8 +509,8 @@ namespace Sage.Engine.Runtime
         {
             // NOTE! By-design this is not a lazily-checked or statement.  We want values for both left and right, and if this were ||,
             // then the right side may not be evaluated!
-            if (TryToBoolean(left, out bool leftBool) |
-                TryToBoolean(right, out bool rightBool))
+            if (TryToBoolean(left, out bool leftBool) == UnboxResult.Succeed |
+                TryToBoolean(right, out bool rightBool) == UnboxResult.Succeed)
             {
                 result = leftBool.CompareTo(rightBool);
                 return true;
@@ -509,24 +533,13 @@ namespace Sage.Engine.Runtime
                 return false;
             }
 
-            // NOTE! By-design this is not a lazily-checked or statement.  We want values for both left and right, and if this were ||,
-            // then the right side may not be evaluated!
-            if (TryToLong(left, out long leftLong) | 
-                TryToLong(right, out long rightLong))
-            {
-                result = leftLong.CompareTo(rightLong);
-                return true;
-            }
-
-            // NOTE! By-design this is not a lazily-checked or statement.  We want values for both left and right, and if this were ||,
-            // then the right side may not be evaluated!
-            if (TryToDecimal(left, out decimal leftDecimal) | 
-                TryToDecimal(right, out decimal rightDecimal))
+            if (TryToDecimal(left, out decimal leftDecimal) != UnboxResult.Fail |
+                TryToDecimal(right, out decimal rightDecimal) != UnboxResult.Fail)
             {
                 result = leftDecimal.CompareTo(rightDecimal);
                 return true;
             }
-
+            
             result = -1;
             return false;
         }
@@ -558,5 +571,27 @@ namespace Sage.Engine.Runtime
             throw new InternalEngineException("Strings came back as not strings! What gives?");
         }
         #endregion
+
+        public static string ToString(object value, string formatString, CultureInfo cultureInfo)
+        {
+            // A DateTime from a string is not success here.
+            if (TryToDateTime(value, out DateTimeOffset date) == UnboxResult.Succeed)
+            {
+                return date.ToString(formatString, cultureInfo);
+            }
+
+            if (TryToLong(value, out long longResult) != UnboxResult.Fail)
+            {
+                return longResult.ToString(formatString, cultureInfo);
+            }
+
+            if (TryToDecimal(value, out decimal decimalResult) != UnboxResult.Fail)
+            {
+                return decimalResult.ToString(formatString, cultureInfo);
+            }
+
+            // Booleans automatically ToString correctly without formatting needs
+            return value?.ToString() ?? string.Empty;
+        }
     }
 }

@@ -1,0 +1,49 @@
+==========
+Substring(@fullName,1, Subtract(IndexOf(@fullName," "),1))
+==========
+%%[
+
+var @fullName
+var @firstName
+
+set @fullName = "Curt Harris" /* or a literal value */
+
+if indexOf(@fullName, " ") > 0 then
+  set @firstName = Substring(@fullName,1, Subtract(IndexOf(@fullName," "),1))
+endif
+
+]%%
+fullName: %%=v(@fullName)=%%
+<br>firstName: %%=v(@firstName)=%%
+++++++++++
+fullName: Curt Harris
+<br>firstName: Curt
+==========
+Substring(@fullName, Add(indexOf(@fullName, " "),1))
+==========
+%%[
+
+var @fullName
+var @lastName
+
+set @fullName = "Barb Brown" /* or a literal value */
+
+if indexOf(@fullName, " ") > 0 then
+  set @lastName = Substring(@fullName,Add(indexOf(@fullName, " "),1))
+endif
+
+]%%
+fullName: %%=v(@fullName)=%%
+<br>lastName: %%=v(@lastName)=%%
+++++++++++
+fullName: Barb Brown
+<br>lastName: Brown
+==========
+Substring('Logan',1.5)
+==========
+%%[
+set @RESULT = Substring('Logan',1.5)
+]%%
+%%=v(@RESULT)=%%
+++++++++++
+!

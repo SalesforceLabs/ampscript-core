@@ -1,0 +1,295 @@
+==========
+AmpScript_Guide Example
+==========
+%%[
+
+var @dateString, @timeString, @long, @short, @fullShortTime, @fullShortTimeFR, @fullLongTime, @generalShortTime, @generalLongTime, @monthDay, @roundTrip, @RFC1123, @sortable, @shortTime, @longTime, @universalSortable, @universalFull, @monthYear, @monthNumber, @monthShortName, @monthFullName, @dayNumber, @dayFullName, @hour, @minute, @seconds, @AMPM, @offsetHours, @offsetHoursMinutes
+
+set @dateString = "2017-09-15T06:07:08.1230000-06:00"
+set @timeString = "06:07:08.123 AM"
+
+set @offsetHours = Format(@dateString,"zz","Date")
+set @offsetHoursMinutes = Format(@dateString,"zzz","Date")
+set @long = Format(@dateString,"D", "Date")
+set @short = Format(@dateString,"d", "Date")
+set @fullShortTime = Format(@dateString,"f", "Date")
+set @fullShortTimeFR = ProperCase(Format(@dateString,"f", "Date","fr-FR"))
+set @fullLongTime = Format(@dateString,"F", "Date")
+set @generalShortTime = Format(@dateString,"g", "Date")
+set @generalLongTime = Format(@dateString,"G", "Date")
+set @monthDay = Format(@dateString,"M", "Date")
+set @roundTrip = Format(@dateString,"O", "Date")
+set @sortable = Format(@dateString,"s", "Date")
+set @shortTime = Format(@dateString,"t", "Date")
+set @longTime = Format(@dateString,"T", "Date")
+set @monthYear = Format(@dateString,"Y", "Date")
+
+set @monthNumber = Format(@dateString,"MM","Date")
+set @monthShortName = Format(@dateString,"MMM","Date")
+set @monthFullName = Format(@dateString,"MMMM","Date")
+
+set @dayNumber = Format(@dateString,"dd","Date")
+set @dayShortName = Format(@dateString,"ddd","Date")
+set @dayFullName = Format(@dateString,"ddddd","Date")
+
+set @hour = Format(@timeString,"hh","Date")
+set @minute = Format(@timeString,"mm","Date")
+set @seconds = Format(@timeString, "ss","Date")
+set @AMPM = Format(@timeString,"tt","Date")
+
+]%%
+dateString: %%=v(@dateString)=%%
+<br><br>long: %%=v(@long)=%%
+<br>short: %%=v(@short)=%%
+<br>fullShortTime: %%=v(@fullShortTime)=%%
+<br>fullShortTimeFR: %%=v(@fullShortTimeFR)=%%
+<br>fullLongTime: %%=v(@fullLongTime)=%%
+<br>generalShortTime: %%=v(@generalShortTime)=%%
+<br>generalLongTime: %%=v(@generalLongTime)=%%
+<br>monthDay: %%=v(@monthDay)=%%
+<br>roundTrip: %%=v(@roundTrip)=%%
+<br>sortable: %%=v(@sortable)=%%
+<br>shortTime: %%=v(@shortTime)=%%
+<br>longTime: %%=v(@longTime)=%%
+<br>monthYear: %%=v(@monthYear)=%%
+<br><br>monthNumber: %%=v(@monthNumber)=%%
+<br>monthShortName: %%=v(@monthShortName)=%%
+<br>monthFullName: %%=v(@monthFullName)=%%
+<br>dayNumber: %%=v(@dayNumber)=%%
+<br>dayShortName: %%=v(@dayShortName)=%%
+<br>dayFullName: %%=v(@dayFullName)=%%
+<br><br>timeString: %%=v(@timeString)=%%
+<br>hour: %%=v(@hour)=%%
+<br>minute: %%=v(@minute)=%%
+<br>seconds: %%=v(@seconds)=%%
+<br>AMPM: %%=v(@AMPM)=%%
+<br>offsetHours: %%=v(@offsetHours)=%%
+<br>offsetHoursMinutes: %%=v(@offsetHoursMinutes)=%%
+++++++++++
+dateString: 2017-09-15T06:07:08.1230000-06:00
+<br><br>long: Friday, September 15, 2017
+<br>short: 9/15/2017
+<br>fullShortTime: Friday, September 15, 2017 6:07 AM
+<br>fullShortTimeFR: Vendredi 15 Septembre 2017 06:07
+<br>fullLongTime: Friday, September 15, 2017 6:07:08 AM
+<br>generalShortTime: 9/15/2017 6:07 AM
+<br>generalLongTime: 9/15/2017 6:07:08 AM
+<br>monthDay: September 15
+<br>roundTrip: 2017-09-15T06:07:08.1230000-06:00
+<br>sortable: 2017-09-15T06:07:08
+<br>shortTime: 6:07 AM
+<br>longTime: 6:07:08 AM
+<br>monthYear: September 2017
+<br><br>monthNumber: 09
+<br>monthShortName: Sep
+<br>monthFullName: September
+<br>dayNumber: 15
+<br>dayShortName: Fri
+<br>dayFullName: Friday
+<br><br>timeString: 06:07:08.123 AM
+<br>hour: 06
+<br>minute: 07
+<br>seconds: 08
+<br>AMPM: AM
+<br>offsetHours: -06
+<br>offsetHoursMinutes: -06:00
+==========
+AmpScript_Guide Example 2
+==========
+%%[
+
+var @num
+var @Currency
+var @Currency3
+var @Decimal
+var @Exponential
+var @Fixed
+var @Fixed3
+var @General
+var @Number
+var @Number3
+var @Percent
+
+set @num = "-0.8967"
+
+set @Currency = Format(@num, "C")
+set @Currency3 = Format(@num, "C3")
+set @Decimal = Format(@num, "D")
+set @Exponential = Format(@num, "E")
+set @Fixed = Format(@num, "F")
+set @Fixed3 = Format(@num, "F3")
+set @General = Format(@num, "G")
+set @Number = Format(@num, "N")
+set @Number3 = Format(@num, "N3")
+set @Percent = Format(@num, "P")
+
+]%%
+num: %%=v(@num)=%%
+<br><br>Currency: %%=v(@Currency)=%%
+<br>Currency3: %%=v(@Currency3)=%%
+<br>Decimal: %%=v(@Decimal)=%%
+<br>Exponential: %%=v(@Exponential)=%%
+<br>Fixed: %%=v(@Fixed)=%%
+<br>Fixed3: %%=v(@Fixed3)=%%
+<br>General: %%=v(@General)=%%
+<br>Number: %%=v(@Number)=%%
+<br>Number3: %%=v(@Number3)=%%
+<br>Percent: %%=v(@Percent)=%%
+++++++++++
+num: -0.8967
+<br><br>Currency: ($0.90)
+<br>Currency3: ($0.897)
+<br>Decimal: -0.8967
+<br>Exponential: -8.967000E-001
+<br>Fixed: -0.90
+<br>Fixed3: -0.897
+<br>General: -0.8967
+<br>Number: -0.90
+<br>Number3: -0.897
+<br>Percent: -89.67%
+==========
+AmpScript_Guide Example 3
+==========
+%%[
+
+var @num
+var @ZeroPlaceholder
+var @DigitPlaceholder
+var @DecimalPoint
+var @GroupSeparator
+var @PercentagePlaceholder
+var @Exponential
+var @EscapeCharacter
+var @LiteralDelimiter
+var @SectionSeparator
+
+set @num = "-1.8967"
+
+set @ZeroPlaceholder = format(@num,"0000")
+set @DigitPlaceholder = format(@num,"###0")
+set @DecimalPoint = format(@num,"#0.00")
+set @GroupSeparator = format(@num,"0,00#.##")
+set @PercentagePlaceholder = format(@num,"#.00%")
+set @Exponential = format(@num,"#0.0e0")
+set @EscapeCharacter = format(@num,"\###0.000\#")
+set @LiteralDelimiter = format(@num,"#.##' points'")
+set @SectionSeparator = format(@num,"#0.00;(#0.00)")
+
+]%%
+num: %%=v(@num)=%%
+<br><br>ZeroPlaceholder: %%=v(@ZeroPlaceholder)=%%
+<br>DigitPlaceholder: %%=v(@DigitPlaceholder)=%%
+<br>DecimalPoint: %%=v(@DecimalPoint)=%%
+<br>GroupSeparator: %%=v(@GroupSeparator)=%%
+<br>PercentagePlaceholder: %%=v(@PercentagePlaceholder)=%%
+<br>Exponential: %%=v(@Exponential)=%%
+<br>EscapeCharacter: %%=v(@EscapeCharacter)=%%
+<br>LiteralDelimiter: %%=v(@LiteralDelimiter)=%%
+<br>SectionSeparator: %%=v(@SectionSeparator)=%%
+++++++++++
+num: -1.8967
+<br><br>ZeroPlaceholder: -0002
+<br>DigitPlaceholder: -2
+<br>DecimalPoint: -1.90
+<br>GroupSeparator: -0,001.9
+<br>PercentagePlaceholder: -189.67%
+<br>Exponential: -19.0e-1
+<br>EscapeCharacter: -#1.897#
+<br>LiteralDelimiter: -1.9 points
+<br>SectionSeparator: (1.90)
+==========
+AmpScript_Guide Example 4
+==========
+%%[
+
+var @dateString
+var @MMddyyyy1
+var @MMddyyyy2
+var @MMddyyyy3
+var @Mdyy
+var @dddMd
+var @MMdd
+var @ddMMyyyy1
+var @ddMMyyyy2
+var @dMyy
+var @yyyyMMdd1
+var @yyyyMMdd2
+var @yyyyMMdd3
+var @yyyyMMddhhmmss
+var @yyyyMMddhhmmtt
+
+set @dateString = "2017-09-15T06:07:08.1230000-06:00"
+
+set @MMddyyyy1 = format(@dateString, "MMddyyyy", "Date")
+set @MMddyyyy2 = format(@dateString, "MM/dd/yyyy", "Date")
+set @MMddyyyy3 = format(@dateString, "MMMM dd, yyyy", "Date")
+set @Mdyy = format(@dateString, "M/d/yy", "Date")
+set @dddMd = format(@dateString, "ddd M/d", "Date")
+set @MMdd = format(@dateString, "MM/dd", "Date")
+set @ddMMyyyy1 = format(@dateString, "ddMMyyyy", "Date")
+set @ddMMyyyy2 = format(@dateString, "dd/MM/yyyy", "Date")
+set @dMyy = format(@dateString, "d/M/yy", "Date")
+set @yyyyMMdd1 = format(@dateString, "yyyyMMdd", "Date")
+set @yyyyMMdd2 = format(@dateString, "yyyy/MM/dd", "Date")
+set @yyyyMMdd3 = format(@dateString, "yyyy-MM-dd", "Date")
+set @yyyyMMddhhmmss = format(@dateString, "yyyyMMddhhmmss", "Date")
+set @yyyyMMddhhmmtt = format(@dateString, "yyyy-MM-dd hh:mm tt", "Date")
+
+]%%
+dateString: %%=v(@dateString)=%%
+<br><br>MMddyyyy1: %%=v(@MMddyyyy1)=%%
+<br>MMddyyyy2: %%=v(@MMddyyyy2)=%%
+<br>MMddyyyy3: %%=v(@MMddyyyy3)=%%
+<br>Mdyy: %%=v(@Mdyy)=%%
+<br>dddMd: %%=v(@dddMd)=%%
+<br>MMdd: %%=v(@MMdd)=%%
+<br>ddMMyyyy1: %%=v(@ddMMyyyy1)=%%
+<br>ddMMyyyy2: %%=v(@ddMMyyyy2)=%%
+<br>dMyy: %%=v(@dMyy)=%%
+<br>yyyyMMdd1: %%=v(@yyyyMMdd1)=%%
+<br>yyyyMMdd2: %%=v(@yyyyMMdd2)=%%
+<br>yyyyMMdd3: %%=v(@yyyyMMdd3)=%%
+<br>yyyyMMddhhmmss: %%=v(@yyyyMMddhhmmss)=%%
+<br>yyyyMMddhhmmtt: %%=v(@yyyyMMddhhmmtt)=%%
+++++++++++
+dateString: 2017-09-15T06:07:08.1230000-06:00
+<br><br>MMddyyyy1: 09152017
+<br>MMddyyyy2: 09/15/2017
+<br>MMddyyyy3: September 15, 2017
+<br>Mdyy: 9/15/17
+<br>dddMd: Fri 9/15
+<br>MMdd: 09/15
+<br>ddMMyyyy1: 15092017
+<br>ddMMyyyy2: 15/09/2017
+<br>dMyy: 15/9/17
+<br>yyyyMMdd1: 20170915
+<br>yyyyMMdd2: 2017/09/15
+<br>yyyyMMdd3: 2017-09-15
+<br>yyyyMMddhhmmss: 20170915060708
+<br>yyyyMMddhhmmtt: 2017-09-15 06:07 AM
+==========
+AmpScript_Guide Example 5
+==========
+%%[
+
+var @phoneString
+var @phone1
+var @phone2
+var @phone3
+
+set @phoneString = "2005551212"
+
+set @phone1 = format(@phoneString, "###-###-####")
+set @phone2 = format(@phoneString, "(###) ###-####")
+set @phone3 = format(@phoneString, "###\.###\.####")
+
+]%%
+phoneString: %%=v(@phoneString)=%%
+<br><br>phone1: %%=v(@phone1)=%%
+<br>phone2: %%=v(@phone2)=%%
+<br>phone3: %%=v(@phone3)=%%
+++++++++++
+phoneString: 2005551212
+<br><br>phone1: 200-555-1212
+<br>phone2: (200) 555-1212
+<br>phone3: 200.555.1212
