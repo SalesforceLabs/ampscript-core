@@ -5,7 +5,6 @@
 
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Sage.Engine.Compiler
 {
@@ -15,6 +14,7 @@ namespace Sage.Engine.Compiler
     /// <param name="InputName">Name of the input, usually the file name of the file</param>
     /// <param name="InputFile">Path to the input ampscript file. Can be relative to the current working directory or absolute.</param>
     /// <param name="SourceCode">The AMPscript source code</param>
+    /// <param name="SourceCode">The name of the generated method in the assembly</param>
     /// <param name="OptimizationLevel">Optimization level of the generated code</param>
     /// <param name="OutputDirectory">What directory to output generated files</param>
     /// <param name="AssemblyStream">Stream for the assembly to be generated into</param>
@@ -23,23 +23,12 @@ namespace Sage.Engine.Compiler
         string InputName,
         FileInfo InputFile,
         string SourceCode,
+        string GeneratedMethodName,
         OptimizationLevel OptimizationLevel,
         DirectoryInfo OutputDirectory,
         Stream AssemblyStream,
         Stream SymbolStream)
     {
-        private static Regex AlphaNumeric = new Regex("[^a-zA-Z0-9]");
-
-        /// <summary>
-        /// Generates a method name from the provided inputs
-        /// </summary>
-        public string GeneratedMethodName
-        {
-            get
-            {
-                return CompilationOptions.AlphaNumeric.Replace(this.InputName, "_");
-            }
-        }
 
         /// <summary>
         /// Pre-defined generated assembly file

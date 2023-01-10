@@ -38,6 +38,8 @@ namespace Sage.Engine.Compiler
                 ?.Invoke(null, arguments);
 
             result.AssemblyContext!.Unload();
+            options.AssemblyStream.Close();
+            options.SymbolStream.Close();
 
             return context.FlushOutputStream();
         }
@@ -47,7 +49,7 @@ namespace Sage.Engine.Compiler
         /// </summary>
         public static CompileResult GenerateAssemblyFromSource(CompilationOptions options)
         {
-            CSharpTranspiler transpiler = CSharpTranspiler.CreateFromSource(options.InputName, options.GeneratedMethodName, options.SourceCode);
+            CSharpTranspiler transpiler = CSharpTranspiler.CreateFromSource(options.InputFile.FullName, options.GeneratedMethodName, options.SourceCode);
 
             CompilationUnitSyntax compilationUnit = transpiler.GenerateProgram();
 
@@ -93,12 +95,14 @@ namespace Sage.Engine.Compiler
             var sourceText = SourceText.From(buffer, buffer.Length, encoding, canBeEmbedded: true);
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(
                 sourceText,
-                new CSharpParseOptions(),
-                path: options.InputFile.FullName);
+                new CSharpParseOptions());
 
             var syntaxRootNode = (CSharpSyntaxNode)syntaxTree.GetRoot();
 
-            SyntaxTree encoded = CSharpSyntaxTree.Create(syntaxRootNode);
+            SyntaxTree encoded = CSharpSyntaxTree.Create(
+                syntaxRootNode,
+                path: $"{options.InputName}.generated.cs",
+                encoding: encoding);
 
             var compilation = CSharpCompilation.Create(
                 options.GeneratedAssemblyOutput.Name,
@@ -116,31 +120,28 @@ namespace Sage.Engine.Compiler
         /// </summary>
         private static (EmitResult, Assembly?, AssemblyLoadContext?) GenerateAssembly(CompilationOptions options, CSharpCompilation compilation, SourceText sourceText)
         {
-            using var assemblyStream = new MemoryStream();
-            using var symbolsStream = new MemoryStream();
-
             var emitOptions = new EmitOptions(
                 debugInformationFormat: DebugInformationFormat.PortablePdb);
 
             var embeddedTexts = new List<EmbeddedText>
             {
-                EmbeddedText.FromSource(options.InputFile.FullName, sourceText)
+                EmbeddedText.FromSource($"{options.InputName}.generated.cs", sourceText)
             };
 
             EmitResult emitResult = compilation.Emit(
-                peStream: assemblyStream,
-                pdbStream: symbolsStream,
+                peStream: options.AssemblyStream,
+                pdbStream: options.SymbolStream,
                 embeddedTexts: embeddedTexts,
                 options: emitOptions);
 
-            assemblyStream.Seek(0, SeekOrigin.Begin);
-            symbolsStream.Seek(0, SeekOrigin.Begin);
+            options.AssemblyStream.Seek(0, SeekOrigin.Begin);
+            options.SymbolStream.Seek(0, SeekOrigin.Begin);
 
             if (emitResult.Success)
             {
                 var context = new AssemblyLoadContext(options.InputName, true);
 
-                Assembly assembly = context.LoadFromStream(assemblyStream, symbolsStream);
+                Assembly assembly = context.LoadFromStream(options.AssemblyStream, options.SymbolStream);
 
                 return (emitResult, assembly, context);
             }

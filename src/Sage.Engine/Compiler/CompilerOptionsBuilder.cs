@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Text;
 using Microsoft.CodeAnalysis;
 
 namespace Sage.Engine.Compiler
@@ -119,10 +120,33 @@ namespace Sage.Engine.Compiler
                 throw new InvalidOperationException("No input has been specified");
             }
 
+            var generatedMethodName = new StringBuilder();
+            string generateFrom = Path.GetFileNameWithoutExtension(this.InputName);
+            for (int i = 0; i < generateFrom.Length; i++)
+            {
+                char thisChar = generateFrom[i];
+                string ConvertInvalid(char input) => "_" + (short)input + "_";
+
+                if (i == 0 && char.IsAsciiDigit(thisChar))
+                {
+                    generatedMethodName.Append(ConvertInvalid(thisChar));
+                    continue;
+                }
+
+                if (char.IsAsciiDigit(thisChar) || char.IsAsciiLetter(thisChar))
+                {
+                    generatedMethodName.Append(thisChar);
+                    continue;
+                }
+
+                generatedMethodName.Append(ConvertInvalid(thisChar));
+            }
+
             return new CompilationOptions(
                 this.InputName,
                 this.InputFile,
                 this.SourceCode,
+                generatedMethodName.ToString(),
                 this.OptimizationLevel,
                 this.OutputDirectory,
                 this.AssemblyStream,
