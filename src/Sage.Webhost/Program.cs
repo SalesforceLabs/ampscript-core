@@ -10,9 +10,15 @@ using Microsoft.Net.Http.Headers;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () =>
+app.MapGet("/{*page}", (string? page) =>
 {
-    return Results.Content(Sage.Engine.Renderer.Render("Page.ampscript"), MediaTypeNames.Text.Html);
+    string resolvedPage = page;
+    if (!File.Exists(page))
+    {
+        resolvedPage = "Index.ampscript";
+    }
+
+    return Results.Content(Sage.Engine.Renderer.Render(resolvedPage), MediaTypeNames.Text.Html);
 });
 
 app.Run();
