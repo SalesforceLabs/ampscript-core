@@ -59,7 +59,7 @@ If the function isn't listed here, then it's not supported.
 |[Einstein](https://ampscript.guide/einstein-email-recommendation-functions/)| ⛔ Not Supported |
 |[Encryption](https://ampscript.guide/encryption-and-encoding-functions/)| ⛔ Not Supported |
 |[HTTP](https://ampscript.guide/http-functions/)| ⛔ Not Supported |
-|[Math](https://ampscript.guide/math-functions/)| ⛔ Not Supported |
+|[Math](https://ampscript.guide/math-functions/)| ✔️ |
 |[Microsoft Dynamics](https://ampscript.guide/microsoft-dynamics-crm-functions/)| ⛔ Not Supported |
 |[Sales and Service Cloud](https://ampscript.guide/sales-and-service-cloud-functions/)| ⛔ Not Supported |
 |[Site](https://ampscript.guide/site-based-functions/)| ⛔ Not Supported |

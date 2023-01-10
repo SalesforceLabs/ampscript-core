@@ -21,11 +21,11 @@ namespace Sage.Engine.Tests.Functions
 
         [Test]
         [TestCase("Hello World", "Hello ", 1)]
-        [TestCase("Hello World", "hello ", -1)]
+        [TestCase("Hello World", "hello ", 1)]
         [TestCase("Hello", "o", 5)]
-        [TestCase(null, "o", -1)]
-        [TestCase(null, null, -1)]
-        [TestCase("Hello", null, -1)]
+        [TestCase(null, "o", 0)]
+        [TestCase(null, null, 0)]
+        [TestCase("Hello", null, 0)]
         public void TestIndexOf(string subject, string search, int expected)
         {
             int actual = this._runtimeContext.INDEXOF(subject, search);

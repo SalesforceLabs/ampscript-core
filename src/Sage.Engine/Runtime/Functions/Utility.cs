@@ -5,6 +5,14 @@
 
 using System.Globalization;
 
+// Ignore the following in this file - mostly due to enabling this codebase to adhere to these rules but AMPscript code may not.
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global
+// ReSharper disable ConstantConditionalAccessQualifier
+// ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+// ReSharper disable ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+
 namespace Sage.Engine.Runtime
 {
     public partial class RuntimeContext
@@ -22,7 +30,7 @@ namespace Sage.Engine.Runtime
 
             string? compareType = type?.ToString()?.Trim();
 
-            CultureInfo cultureInfo = null;
+            CultureInfo? cultureInfo = null;
             if (culture != null)
             {
                 string? cultureString = culture.ToString();
@@ -40,10 +48,9 @@ namespace Sage.Engine.Runtime
             {
                 if (string.Compare("date", compareType, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
-                    var dto = SageValue.ToDateTime(subject.ToString());
-                    return SageValue.ToString(dto, formatString, cultureInfo);
+                    return SageValue.ToString(SageValue.ToDateTime(subject.ToString()), formatString, cultureInfo);
                 }
-                
+
                 if (string.Compare("number", compareType, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     return SageValue.ToString(SageValue.ToDecimal(subject), formatString, cultureInfo);

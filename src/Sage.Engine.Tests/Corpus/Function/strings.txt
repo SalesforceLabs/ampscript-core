@@ -1,4 +1,4 @@
-==========
+﻿==========
 'Logan'
 ==========
 %%[
@@ -88,3 +88,99 @@ set @firstName = "Hello ""Logan"", if that's your name"
 <p>%%=v(@firstName)=%%</p>
 ++++++++++
 <p>Hello "Logan", if that's your name</p>
+==========
+Case Insensitive Replacement
+==========
+%%[
+var @original, @replace
+set @original = "THIS IS A STRING IN ALL UPPER CASE"
+set @replaced = replace(@original, "StRinG", "string")
+set @replaced = replace(@replaced, "UPPER", "MIxed")
+]%%
+Replaced: %%=v(@replaced)=%%
+++++++++++
+Replaced: THIS IS A string IN ALL MIxed CASE
+==========
+Ruble
+==========
+%%[
+var @ruble, @rubleReplaced 
+set @ruble = "₽"
+set @rubleReplaced = replace("Ruble₽Replaced", @ruble, " ")
+]%%
+RubleSign: %%=v(@ruble)=%%
+RubleReplaced: %%=v(@rubleReplaced)=%%
+++++++++++
+RubleSign: ₽
+RubleReplaced: Ruble Replaced
+==========
+REPLACELIST
+==========
+%%[
+
+var @colors
+var @colorsNew
+
+set @colors = ""
+set @colors = concat(@colors, "red/orange/yellow,green/blue,indigo/violet")
+set @colorsNew  = ReplaceList(@colors, "|", "/", ",")
+
+]%%
+colors: %%=v(@colors)=%%
+colorsNew: %%=v(@colorsNew)=%%
+++++++++++
+colors: red/orange/yellow,green/blue,indigo/violet
+colorsNew: red|orange|yellow|green|blue|indigo|violet
+==========
+REPLACE
+==========
+%%[
+
+var @blurb
+var @blurbReplaced
+
+set @blurb = "" /* or a literal value */
+set @blurb = concat(@blurb, "Enjoy rewards that you choose, like discounts on accessories<br>")
+set @blurb = concat(@blurb, "and other services. The options are only available to Members.<br><br>")
+set @blurb = concat(@blurb, "Enjoy the rewards today!<br>")
+
+set @blurbReplaced = replace(@blurb, "<br>", " ")
+
+]%%
+blurb: %%=v(@blurb)=%%
+blurbReplaced: %%=v(@blurbReplaced)=%%
+++++++++++
+blurb: Enjoy rewards that you choose, like discounts on accessories<br>and other services. The options are only available to Members.<br><br>Enjoy the rewards today!<br>
+blurbReplaced: Enjoy rewards that you choose, like discounts on accessories and other services. The options are only available to Members.  Enjoy the rewards today!
+==========
+TRIM
+==========
+%%[
+var @firstName
+var @firstNameTrimmed
+
+set @firstName = "  Dale   " /* or a literal value */
+set @firstNameTrimmed = trim(@firstName)
+
+]%%
+Hello, %%=v(@firstName)=%%!
+Hello, %%=v(@firstNameTrimmed)=%%!
+++++++++++
+Hello,   Dale   !
+Hello, Dale!
+==========
+UPPERCASE
+==========
+%%[
+var @locale, @localeUpper
+
+set @locale = "en-us" /* or a literal value */
+
+set @localeUpper = Uppercase(@locale)
+
+]%%
+locale: %%=v(@locale)=%%
+localeUpper: %%=v(@localeUpper)=%%
+++++++++++
+locale: en-us
+localeUpper: EN-US
