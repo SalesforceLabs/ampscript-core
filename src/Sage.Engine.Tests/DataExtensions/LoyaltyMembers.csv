@@ -1,0 +1,9 @@
+EmailAddress,SubscriberKey,FirstName,LastName,Created,Region,Rank
+doug@limedash.com,8473,Doug,Smith,10/21/2017 12:01:00 PM,north,1
+suzy@limedash.com,5497,Suzy,Jackson,10/20/2017 11:01:00 AM,North,3
+dale@limedash.com,7114,Dale,Cameron,10/19/2017 10:01:00 AM,West,2
+barb@limedash.com,5767,Barb,Yates,1/12/2023 12:00:00 AM,North,1
+curt@limedash.com,5152,Curt,Ward,1/1/2023 12:00:00 AM,north,2
+nora@limedash.com,7014,Nora,Reid,1/31/2023 12:00:00 AM,South,1
+leon@limedash.com,8225,Leon,Randolph,8/2/2022 12:00:00 AM,East,3
+lily@limedash.com,9496,Lily,Jensen,2/12/2025 12:00:00 AM,East,1
