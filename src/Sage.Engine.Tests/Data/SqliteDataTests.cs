@@ -79,15 +79,15 @@ namespace Sage.Engine.Tests.Data
         public async Task TestLoyaltyQueries()
         {
             await _dataExtensionClient.OpenAsync();
-            await _dataExtensionClient.LoadCsv(TestContext.CurrentContext.TestDirectory, "LoyaltyMembers");
+            await _dataExtensionClient.LoadCsv(TestContext.CurrentContext.TestDirectory, "Loyalty");
 
-            var lookupBuilder = new LookupRequestBuilder("LoyaltyMembers");
+            var lookupBuilder = new LookupRequestBuilder("Loyalty");
             lookupBuilder.WithReturnedProperty("EmailAddress");
-            lookupBuilder.WithConstraint("SubscriberKey", "5497");
+            lookupBuilder.WithConstraint("SubscriberKey", "1");
             DataTable results = await _dataExtensionClient.LookupAsync(lookupBuilder.Build());
 
             Assert.That(results.Rows.Count, Is.EqualTo(1));
-            Assert.That(results.Rows[0]["EmailAddress"], Is.EqualTo("suzy@limedash.com"));
+            Assert.That(results.Rows[0]["EmailAddress"], Is.EqualTo("donnie@northerntrailoutfitters.com"));
         }
     }
 }
