@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="DataExtensions\Loyalty.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Index.ampscript">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

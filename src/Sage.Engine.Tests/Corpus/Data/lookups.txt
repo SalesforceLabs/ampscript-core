@@ -37,6 +37,7 @@ for @i = 1 to @rowCount do
 
     OUTPUTLINE(CONCAT("Row ", @i, ", FirstName: ", @firstName, ", Email Address: ", @emailAddress))
 next @i
+]%%
 ++++++++++
 Row 1, FirstName: Collie, Email Address: collie@northerntrailoutfitters.com
 Row 2, FirstName: Burley, Email Address: burley@northerntrailoutfitters.com
@@ -55,5 +56,6 @@ for @i = 1 to @rowCount do
 
     OUTPUTLINE(CONCAT("Row ", @i, ", FirstName: ", @firstName, ", Email Address: ", @emailAddress))
 next @i
+]%%
 ++++++++++
 Row 1, FirstName: Collie, Email Address: collie@northerntrailoutfitters.com
