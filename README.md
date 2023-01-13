@@ -54,7 +54,7 @@ If the function isn't listed here, then it's not supported.
 |[Marketing Cloud API](https://ampscript.guide/marketing-cloud-api-functions/)| ⛔ Not Supported |
 |[Contact Model](https://ampscript.guide/content-model-functions/)| ⛔ Not Supported |
 |[Content](https://ampscript.guide/content-functions/)| ⛔ Not Supported |
-|[Data Extensions](https://ampscript.guide/data-extension-functions/)| ⛔ Not Supported |
+|[Data Extensions](https://ampscript.guide/data-extension-functions/)| ⚠️ Partial Support |
 |[Date and Time](https://ampscript.guide/date-and-time-functions/)| ⚠️ Partial Support |
 |[Einstein](https://ampscript.guide/einstein-email-recommendation-functions/)| ⛔ Not Supported |
 |[Encryption](https://ampscript.guide/encryption-and-encoding-functions/)| ⛔ Not Supported |
