@@ -13,17 +13,17 @@ namespace Sage.Engine.Tests.Data
         [Test]
         [TestCase("", "[]")]
         [TestCase("]", "[]]]")]
-        [TestCase("[Hello world]", "[Hello world]")]
-        [TestCase("[Hello world]]", "[[Hello world]]]]]")]
-        [TestCase("[[[Hello world", "[[[[Hello world]")]
+        [TestCase("[Hello world]", "[HELLO WORLD]")]
+        [TestCase("[Hello world]]", "[[HELLO WORLD]]]]]")]
+        [TestCase("[[[Hello world", "[[[[HELLO WORLD]")]
         public void Quote(string input, string expected)
         {
             Assert.That(QuotedIdentifier.Create(input).ToString(), Is.EqualTo(expected));
         }
 
         [Test]
-        [TestCase("[Hello world]", "Hello world")]
-        [TestCase("Hello world", "Hello world")]
+        [TestCase("[Hello world]", "HELLO WORLD")]
+        [TestCase("Hello world", "HELLO WORLD")]
         [TestCase("[]", "")]
         [TestCase("", "")]
         [TestCase("[]]", "[]]")]

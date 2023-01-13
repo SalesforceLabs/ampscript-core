@@ -30,7 +30,7 @@ namespace Sage.Engine.Compiler
                 throw new CompileCodeException(result);
             }
 
-            var context = new RuntimeContext();
+            using var context = new RuntimeContext();
             object[] arguments = { context };
             result.Assembly
                 ?.GetType("Sage.Engine.Runtime.AmpProgram")

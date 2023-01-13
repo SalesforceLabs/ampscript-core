@@ -72,6 +72,7 @@ namespace Sage.Engine.Data.Sqlite
         public async Task CreateTable(string dataExtension, IEnumerable<string> columns)
         {
             SqliteCommand command = SqliteCreateTableBuilder.FromColumns(Connection, dataExtension, columns);
+            _loadedTables.Add(QuotedIdentifier.Create(dataExtension));
 
             await command.ExecuteNonQueryAsync();
         }

@@ -4,6 +4,7 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.Text;
+using Sage.Engine.Data;
 
 namespace Sage.Engine.Runtime
 {
@@ -14,14 +15,16 @@ namespace Sage.Engine.Runtime
     /// Things that belong here are variables, details about the subscriber being rendered
     /// or details about the HTTP request if this were in a cloud page context.
     /// </remarks>
-    public partial class RuntimeContext
+    public partial class RuntimeContext : IDisposable
     {
         readonly StringBuilder _outputStream = new();
         private readonly Dictionary<string, object?> _variables = new();
+        private IDataExtensionClient _dataExtensionClient;
 
         public RuntimeContext()
         {
             this.Random = new Random();
+            _dataExtensionClient = DataExtensionClientFactory.CreateInMemoryDataExtensions().Result;
         }
 
         /// <summary>
@@ -69,6 +72,16 @@ namespace Sage.Engine.Runtime
             string results = _outputStream.ToString();
             _outputStream.Clear();
             return results;
+        }
+
+        public IDataExtensionClient GetDataExtensionClient()
+        {
+            return _dataExtensionClient;
+        }
+
+        public void Dispose()
+        {
+            _dataExtensionClient.Dispose();
         }
     }
 }

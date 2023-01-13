@@ -68,7 +68,7 @@ namespace Sage.Engine.Tests.Data
         }
 
         [Test]
-        [TestCase("LoyaltyMembers")]
+        [TestCase("Loyalty")]
         public async Task LoadCsv(string dataExtension)
         {
             await _dataExtensionClient.OpenAsync();

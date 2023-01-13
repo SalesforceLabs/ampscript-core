@@ -1,0 +1,59 @@
+==========
+LOOKUP One constraint
+==========
+%%[
+set @lookupValue = "1"
+set @EmailAddress = Lookup("Loyalty","EmailAddress","SubscriberKey", @lookupValue)
+
+]%%
+EmailAddress: %%=v(@EmailAddress)=%%
+++++++++++
+EmailAddress: donnie@northerntrailoutfitters.com
+==========
+LOOKUP Two constraints
+==========
+%%[
+set @lookupValue1 = "1"
+set @lookupValue2 = "Donnie"
+
+set @EmailAddress = Lookup("Loyalty","EmailAddress","SubscriberKey", @lookupValue1, "FirstName", @lookupValue2)
+]%%
+EmailAddress: %%=v(@EmailAddress)=%%
+++++++++++
+EmailAddress: donnie@northerntrailoutfitters.com
+==========
+LOOKUPROWS
+==========
+%%[
+@loyaltyLevel = "None"
+SET @loyaltyLevel = "None"
+set @rows = LookupRows("Loyalty","loyaltylevel", @loyaltyLevel)
+set @rowCount = rowcount(@rows)
+
+for @i = 1 to @rowCount do
+    set @row = row(@rows, @i)
+    set @firstName = field(@row,"firstName")
+    set @emailAddress = field(@row,"emailAddress")
+
+    OUTPUTLINE(CONCAT("Row ", @i, ", FirstName: ", @firstName, ", Email Address: ", @emailAddress))
+next @i
+++++++++++
+Row 1, FirstName: Collie, Email Address: collie@northerntrailoutfitters.com
+Row 2, FirstName: Burley, Email Address: burley@northerntrailoutfitters.com
+==========
+LOOKUPROWSCS
+==========
+%%[
+SET @loyaltyLevel = "None"
+set @rows = LookupRowsCS("Loyalty","loyaltylevel", @loyaltyLevel)
+set @rowCount = rowcount(@rows)
+
+for @i = 1 to @rowCount do
+    set @row = row(@rows, @i)
+    set @firstName = field(@row,"firstName")
+    set @emailAddress = field(@row,"emailAddress")
+
+    OUTPUTLINE(CONCAT("Row ", @i, ", FirstName: ", @firstName, ", Email Address: ", @emailAddress))
+next @i
+++++++++++
+Row 1, FirstName: Collie, Email Address: collie@northerntrailoutfitters.com

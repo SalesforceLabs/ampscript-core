@@ -52,7 +52,7 @@ namespace Sage.Engine.Data.Sqlite
             string unquotedValue = Unquote(objectName);
             var roundTrip = new QuotedIdentifier(unquotedValue);
 
-            if (string.CompareOrdinal(roundTrip._name, objectName) == 0)
+            if (string.Compare(roundTrip._name, objectName, StringComparison.OrdinalIgnoreCase) == 0)
             {
                 return roundTrip;
             }
