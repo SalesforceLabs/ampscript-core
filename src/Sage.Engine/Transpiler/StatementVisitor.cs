@@ -255,4 +255,61 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
                 .WithLineDirective(context.Start, context.Stop, _transpiler.SourceFileName)
         };
     }
+
+    /// <summary>
+    /// A constant expression in the statement visitor means something like any of the following lines:
+    /// %%[
+    /// @var
+    /// 3
+    /// 7
+    /// ]%%
+    /// A constant expression statement doesn't make sense in the grammar, but the existing Marketing Cloud AMPscript interpreter ignores these lines.
+    /// </summary>
+    public override IEnumerable<StatementSyntax> VisitConstantExpression(SageParser.ConstantExpressionContext context)
+    {
+        // TODO: Add to warning stream that this will not do what the user expects.
+        return Enumerable.Empty<StatementSyntax>();
+    }
+
+    /// <summary>
+    /// A comparision expression in the statement visitor means something like any of the following lines:
+    /// %%[
+    /// 5 < 5
+    /// @foo < "bar"
+    /// ]%%
+    /// A compression expression statement doesn't make sense in the grammar, but the existing Marketing Cloud AMPscript interpreter ignores these lines.
+    /// </summary>
+    public override IEnumerable<StatementSyntax> VisitComparisionExpression(SageParser.ComparisionExpressionContext context)
+    {
+        // TODO: Add to warning stream that this will not do what the user expects.
+        return Enumerable.Empty<StatementSyntax>();
+    }
+
+    /// <summary>
+    /// A logical expression in the statement visitor means something like any of the following lines:
+    /// %%[
+    /// 4 || 5
+    /// 6 && 10
+    /// ]%%
+    /// A logical expression statement doesn't make sense in the grammar, but the existing Marketing Cloud AMPscript interpreter ignores these lines.
+    /// </summary>
+    public override IEnumerable<StatementSyntax> VisitLogicalExpression(SageParser.LogicalExpressionContext context)
+    {
+        // TODO: Add to warning stream that this will not do what the user expects.
+        return Enumerable.Empty<StatementSyntax>();
+    }
+
+    /// <summary>
+    /// A parenthesis expression in the statement visitor means something like any of the following lines:
+    /// %%[
+    /// (4 || 5)
+    /// (6 < 10)
+    /// ]%%
+    /// A parenthesis expression statement doesn't make sense in the grammar, but the existing Marketing Cloud AMPscript interpreter ignores these lines.
+    /// </summary>
+    public override IEnumerable<StatementSyntax> VisitParenthesisExpression(SageParser.ParenthesisExpressionContext context)
+    {
+        // TODO: Add to warning stream that this will not do what the user expects.
+        return Enumerable.Empty<StatementSyntax>();
+    }
 }

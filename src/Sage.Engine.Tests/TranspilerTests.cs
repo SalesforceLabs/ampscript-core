@@ -1,4 +1,4 @@
-// Copyright (c) 2022, salesforce.com, inc.
+﻿// Copyright (c) 2022, salesforce.com, inc.
 // All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
@@ -254,6 +254,28 @@ namespace Sage.Engine.Tests
         }}
     }}
 }}"));
+        }
+
+        /// <summary>
+        /// Some expression statements do not make sense in the grammar and are ignored by the existing interpreter.
+        /// To implement this, I have enabled them in the parse tree, but they are then ignored when transpiled.
+        /// I probably should just update the grammar to ignore this ¯\_(ツ)_/¯
+        /// </summary>
+        [Test]
+        [TestCase("5<5")]
+        [TestCase("5||5")]
+        [TestCase("@foo")]
+        [TestCase("@foo='bar'")]
+        [TestCase("(5<5)")]
+        [TestCase("(5||5)")]
+        [TestCase("(@foo)")]
+        [TestCase("(@foo=('bar'))")]
+        public void NonSensicalStatements(string statement)
+        {
+            SageParser parser = GetParserInAmpMode(statement);
+            var transpiler = new CSharpTranspiler(parser);
+
+            TestAmpCodeGeneratesExpectedCSharpCode(new string[] { }, parser.ampStatement(), transpiler.StatementVisitor);
         }
     }
 }

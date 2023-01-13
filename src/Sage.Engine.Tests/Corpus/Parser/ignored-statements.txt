@@ -1,0 +1,41 @@
+﻿===========
+Statements that are not evaluated are still parsed
+===========
+%%[
+5<5
+@foo
+@foo='bar'
+(5<5)
+]%%
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (ComparisionExpressionContext
+              (ConstantExpressionContext
+                (ConstantContext))
+              (ConstantExpressionContext
+                (ConstantContext)))))
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (ConstantExpressionContext)))
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (NotanassignmentExpressionContext
+              (VariableAssignmentContext
+                (ConstantExpressionContext
+                  (ConstantContext
+                    (StringContext
+                      (SingleQuoteStringContext))))))))
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (ParenthesisExpressionContext
+              (ParenthesesContext
+                (ComparisionExpressionContext
+                  (ConstantExpressionContext
+                    (ConstantContext))
+                  (ConstantExpressionContext
+                    (ConstantContext)))))))))))
