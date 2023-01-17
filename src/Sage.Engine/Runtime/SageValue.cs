@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Sage.Engine.Runtime
@@ -54,6 +55,8 @@ namespace Sage.Engine.Runtime
         /// <returns>Whether or not long is the best representation of this boxed inputObj</returns>
         public static UnboxResult TryToLong(object? inputObj, out long result)
         {
+            inputObj = UnboxVariable(inputObj);
+
             if (inputObj == null)
             {
                 result = default;
@@ -117,6 +120,8 @@ namespace Sage.Engine.Runtime
         /// <returns>Whether or not long is the best representation of this boxed inputObj</returns>
         public static UnboxResult TryToDouble(object? inputObj, out double result)
         {
+            inputObj = UnboxVariable(inputObj);
+
             if (inputObj == null)
             {
                 result = 0;
@@ -171,6 +176,8 @@ namespace Sage.Engine.Runtime
         /// <returns>Whether or not decimal is the best representation of this boxed inputObj</returns>
         public static UnboxResult TryToDecimal(object? inputObj, out decimal result)
         {
+            inputObj = UnboxVariable(inputObj);
+
             if (inputObj is decimal or double)
             {
                 result = (decimal)inputObj;
@@ -212,8 +219,10 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not int is the best representation of this boxed inputObj</returns>
-        public static UnboxResult TryToInt(object inputObj, out int result)
+        public static UnboxResult TryToInt(object? inputObj, out int result)
         {
+            inputObj = UnboxVariable(inputObj);
+
             if (inputObj is int objInt)
             {
                 result = objInt;
@@ -259,6 +268,8 @@ namespace Sage.Engine.Runtime
         /// <returns>Whether or not DateTimeOffset is the best representation of this boxed inputObj</returns>
         public static UnboxResult TryToDateTime(object? inputObj, out DateTimeOffset result)
         {
+            inputObj = UnboxVariable(inputObj);
+
             if (inputObj is DateTimeOffset dateTimeObj)
             {
                 result = dateTimeObj;
@@ -298,8 +309,10 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not bool is the best representation of this boxed inputObj</returns>
-        public static UnboxResult TryToBoolean(object inputObj, out bool result)
+        public static UnboxResult TryToBoolean(object? inputObj, out bool result)
         {
+            inputObj = UnboxVariable(inputObj);
+
             if (inputObj is bool boolObj)
             {
                 result = boolObj;
@@ -312,7 +325,7 @@ namespace Sage.Engine.Runtime
                 return UnboxResult.SucceededFromNumber;
             }
 
-            if (bool.TryParse(inputObj.ToString(), out result))
+            if (bool.TryParse(inputObj?.ToString(), out result))
             {
                 return UnboxResult.SucceededFromString;
             }
@@ -421,6 +434,9 @@ namespace Sage.Engine.Runtime
         }
         public static bool CompareTo(object? left, object? right, CompareOperator op)
         {
+            left = UnboxVariable(left);
+            right = UnboxVariable(right);
+
             if (TryCompareNulls(left, right, out int nullResult))
             {
                 if (op.IsEqualToken())
@@ -539,7 +555,7 @@ namespace Sage.Engine.Runtime
                 result = leftDecimal.CompareTo(rightDecimal);
                 return true;
             }
-            
+
             result = -1;
             return false;
         }
@@ -549,10 +565,10 @@ namespace Sage.Engine.Runtime
         ///
         /// String comparisons are case-insensitive in the language.
         /// </summary>
-        private static bool TryCompareStrings(object left, object right, CompareOperator op, out int result)
+        private static bool TryCompareStrings(object? left, object? right, CompareOperator op, out int result)
         {
-            string leftResult = left.ToString()?.ToLower() ?? string.Empty;
-            string rightResult = right.ToString()?.ToLower() ?? string.Empty;
+            string leftResult = left?.ToString()?.ToLower() ?? string.Empty;
+            string rightResult = right?.ToString()?.ToLower() ?? string.Empty;
 
             switch (op)
             {
@@ -572,8 +588,10 @@ namespace Sage.Engine.Runtime
         }
         #endregion
 
-        public static string ToString(object value, string formatString, CultureInfo cultureInfo)
+        public static string ToString(object? value, string formatString, CultureInfo cultureInfo)
         {
+            value = UnboxVariable(value);
+
             // A DateTime from a string is not success here.
             if (TryToDateTime(value, out DateTimeOffset date) == UnboxResult.Succeed)
             {
@@ -592,6 +610,19 @@ namespace Sage.Engine.Runtime
 
             // Booleans automatically ToString correctly without formatting needs
             return value?.ToString() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// If the object is a SageVariable, returns the boxed object to do the comparision.
+        /// </summary>
+        public static object? UnboxVariable(object? input)
+        {
+            if (input is SageVariable variable)
+            {
+                return variable.Value;
+            }
+
+            return input;
         }
     }
 }

@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using Sage.Engine.Runtime;
+
 namespace Sage.Engine;
 
 /// <summary>
@@ -24,9 +26,10 @@ internal class RuntimeArgumentException : RuntimeException
 
     public RuntimeArgumentException(
         string message,
+        RuntimeContext context,
         string function,
         string name) 
-        : base(FormatExceptionMessageWithArgumentAndFunction(message, function, name), function)
+        : base(FormatExceptionMessageWithArgumentAndFunction(message, context, function, name), context, function)
     {
         ArgumentName = name;
         CallingFunction = function;

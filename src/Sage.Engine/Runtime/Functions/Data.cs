@@ -27,8 +27,8 @@ namespace Sage.Engine.Runtime
         /// <param name="queryConstraints">Repeating pairs of parameters for which rows to retrieve. Must be even. i==attribute i+1==attributeValue</param>
         public object LOOKUP(object dataExtension, object returnAttribute, params object[] queryConstraints)
         {
-            string dataExtensionString = ArgumentValidator.ThrowIfStringNullOrEmpty(dataExtension);
-            string returnAttributeString = ArgumentValidator.ThrowIfStringNullOrEmpty(returnAttribute);
+            string dataExtensionString = this.ThrowIfStringNullOrEmpty(dataExtension);
+            string returnAttributeString = this.ThrowIfStringNullOrEmpty(returnAttribute);
 
             LookupRequestBuilder lookup = new LookupRequestBuilder(dataExtensionString)
                 .WithLimit(1)
@@ -49,7 +49,7 @@ namespace Sage.Engine.Runtime
             object dataExtension,
             params object[] queryConstraints)
         {
-            LookupRequestBuilder lookup = new LookupRequestBuilder(ArgumentValidator.ThrowIfStringNullOrEmpty(dataExtension))
+            LookupRequestBuilder lookup = new LookupRequestBuilder(this.ThrowIfStringNullOrEmpty(dataExtension))
                 .WithLimit(2000);
             AddConstraints(lookup, queryConstraints);
 
@@ -65,7 +65,7 @@ namespace Sage.Engine.Runtime
             object dataExtension,
             params object[] queryConstraints)
         {
-            LookupRequestBuilder lookup = new LookupRequestBuilder(ArgumentValidator.ThrowIfStringNullOrEmpty(dataExtension))
+            LookupRequestBuilder lookup = new LookupRequestBuilder(this.ThrowIfStringNullOrEmpty(dataExtension))
                 .WithLimit(2000)
                 .WithCaseSensitivity(true);
             AddConstraints(lookup, queryConstraints);
@@ -80,7 +80,7 @@ namespace Sage.Engine.Runtime
         /// <returns>The number of rows in the rowset</returns>
         public int ROWCOUNT(object rowset)
         {
-            DataTable dataTable = ArgumentValidator.ThrowIfNotDataTable(rowset);
+            DataTable dataTable = this.ThrowIfNotDataTable(rowset);
 
             return dataTable.Rows.Count;
         }
@@ -95,7 +95,7 @@ namespace Sage.Engine.Runtime
             object rowset,
             object row)
         {
-            DataTable dataTable = ArgumentValidator.ThrowIfNotDataTable(rowset);
+            DataTable dataTable = this.ThrowIfNotDataTable(rowset);
 
             int rowOffset = SageValue.ToInt(row) - 1;
             return dataTable.Rows[rowOffset];
@@ -131,7 +131,7 @@ namespace Sage.Engine.Runtime
             object missingIsFailure)
         {
             // TODO: The input may also be an API object, but that is not supported yet, so for now it must be a DataRow.
-            DataRow dataRow = ArgumentValidator.ThrowIfNotDataRow(row);
+            DataRow dataRow = this.ThrowIfNotDataRow(row);
 
             object? returnResult = null;
 
@@ -144,12 +144,12 @@ namespace Sage.Engine.Runtime
             }
             else
             {
-                returnResult = dataRow[ArgumentValidator.ThrowIfStringNullOrEmpty(index)];
+                returnResult = dataRow[this.ThrowIfStringNullOrEmpty(index)];
             }
 
             if (returnResult == null && SageValue.ToBoolean(missingIsFailure))
             {
-                throw new RuntimeException("Invalid attribute name passed to the FIELD function.  No attribute exists.");
+                throw new RuntimeException("Invalid attribute name passed to the FIELD function.  No attribute exists.", this);
             }
 
             return returnResult ?? string.Empty;
@@ -168,7 +168,7 @@ namespace Sage.Engine.Runtime
         {
             if (constraints.Length % 2 != 0)
             {
-                throw new RuntimeException("Dynamic parameter length must have an even number of parameters", caller);
+                throw new RuntimeException("Dynamic parameter length must have an even number of parameters", this, caller);
             }
 
             for (int i = 0; i < constraints.Length; i += 2)
@@ -177,8 +177,8 @@ namespace Sage.Engine.Runtime
                 object attributeValue = constraints[i + 1];
 
                 lookup.WithConstraint(
-                    ArgumentValidator.ThrowIfStringNullOrEmpty(attributeName),
-                    ArgumentValidator.ThrowIfStringNullOrEmpty(attributeValue));
+                    this.ThrowIfStringNullOrEmpty(attributeName),
+                    this.ThrowIfStringNullOrEmpty(attributeValue));
             }
         }
     }

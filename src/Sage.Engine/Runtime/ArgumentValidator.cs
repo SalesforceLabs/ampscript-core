@@ -18,6 +18,7 @@ namespace Sage.Engine.Runtime
         /// Invokes ToString on the object, throws <see cref="RuntimeArgumentException"/> if the result was null or empty
         /// </summary>
         public static string ThrowIfStringNullOrEmpty(
+            this RuntimeContext context,
             [NotNull] object? input,
             [CallerMemberName] string callerFunction = "",
             [CallerArgumentExpression("input")] string callerArgument = "")
@@ -26,13 +27,13 @@ namespace Sage.Engine.Runtime
 
             if (input == null)
             {
-                throw new RuntimeArgumentException(StringIsNullOrEmpty, callerFunction, callerArgument);
+                throw new RuntimeArgumentException(StringIsNullOrEmpty, context, callerFunction, callerArgument);
             }
 
             string? result = input.ToString();
             if (string.IsNullOrEmpty(result))
             {
-                throw new RuntimeArgumentException(StringIsNullOrEmpty, callerFunction, callerArgument);
+                throw new RuntimeArgumentException(StringIsNullOrEmpty, context, callerFunction, callerArgument);
             }
 
             return result;
@@ -42,36 +43,40 @@ namespace Sage.Engine.Runtime
         /// Casts the object to a <see cref="DataTable"/>, throws if it is not that type
         /// </summary>
         public static DataTable ThrowIfNotDataTable(
+            this RuntimeContext context,
             [NotNull] object? input,
             [CallerMemberName] string callerFunction = "",
             [CallerArgumentExpression("input")] string callerArgument = "")
         {
-            return ThrowIfNotType<DataTable>(input, "ROWSET", callerFunction, callerArgument);
+            return context.ThrowIfNotType<DataTable>(input, "ROWSET", callerFunction, callerArgument);
         }
 
         /// <summary>
         /// Casts the object to a <see cref="DataRow"/>, throws if it is not that type
         /// </summary>
         public static DataRow ThrowIfNotDataRow(
+            this RuntimeContext context,
             [NotNull] object? input,
             [CallerMemberName] string callerFunction = "",
             [CallerArgumentExpression("input")] string callerArgument = "")
         {
-            return ThrowIfNotType<DataRow>(input, "FIELD", callerFunction, callerArgument);
+            return context.ThrowIfNotType<DataRow>(input, "FIELD", callerFunction, callerArgument);
         }
 
         /// <summary>
         /// Casts the object to a <see cref="T"/>, throws if it is not that type
         /// </summary>
         public static T ThrowIfNotType<T>(
+            this RuntimeContext context,
             [NotNull] object? input,
             string typeName,
             [CallerMemberName] string callerFunction = "",
             [CallerArgumentExpression("input")] string callerArgument = "") where T : class
         {
-            if (input is not T convertedType || convertedType == null)
+            object? unboxedInput = SageValue.UnboxVariable(input);
+            if (unboxedInput is not T convertedType || convertedType == null)
             {
-                throw new RuntimeArgumentException($"The provided value is not a {typeName}", callerFunction, callerArgument);
+                throw new RuntimeArgumentException($"The provided value is not a {typeName}", context, callerFunction, callerArgument);
             }
 
             return convertedType;
