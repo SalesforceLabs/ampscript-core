@@ -32,7 +32,7 @@ namespace Sage.Engine.Runtime
         /// </summary>
         public object? GetVariable(string name)
         {
-            if (!_variables.TryGetValue(name, out object? result))
+            if (!_variables.TryGetValue(name, out SageVariable? result))
             {
                 return null;
             }
@@ -45,7 +45,9 @@ namespace Sage.Engine.Runtime
         /// </summary>
         public void SetVariable(string name, object? value)
         {
-            _variables[name] = value;
+            SageVariable existingVariable = GetVariable(name) ?? new SageVariable(name);
+
+            existingVariable.Value = value;
         }
 
         /// <summary>

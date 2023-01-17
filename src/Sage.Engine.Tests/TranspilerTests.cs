@@ -125,7 +125,7 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("%%= V(@FOO) =%%", new[]
         {
-            $"{Runtime.RuntimeVariable}.V({Runtime.RuntimeVariable}.GetVariable(\"@foo\"));",
+            $"{Runtime.RuntimeVariable}.Output({Runtime.RuntimeVariable}.V({Runtime.RuntimeVariable}.GetVariable(\"@foo\")));",
         })]
         public void TestInlineAmpBlock(string code, string[] expectedCode)
         {
@@ -161,7 +161,7 @@ namespace Sage.Engine.Tests
 #line (1, 19) - (1, 27) ""TEST.cs""
     {Runtime.RuntimeVariable}.SetVariable(""@var"", null);
 #line (1, 28) - (1, 32) ""TEST.cs""
-    {Runtime.RuntimeVariable}.SetVariable(""@i"", ((long){Runtime.RuntimeVariable}.GetVariable(""@i"")) + 1);
+    {Runtime.RuntimeVariable}.SetVariable(""@i"", ((long){Runtime.RuntimeVariable}.GetVariable(""@i"").Value) + 1);
 #line hidden
     if (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) == long.MaxValue)
     {{
@@ -178,7 +178,7 @@ namespace Sage.Engine.Tests
 #line (1, 23) - (1, 31) ""TEST.cs""
     {Runtime.RuntimeVariable}.SetVariable(""@var"", null);
 #line (1, 32) - (1, 36) ""TEST.cs""
-    {Runtime.RuntimeVariable}.SetVariable(""@i"", ((long){Runtime.RuntimeVariable}.GetVariable(""@i"")) - 1);
+    {Runtime.RuntimeVariable}.SetVariable(""@i"", ((long){Runtime.RuntimeVariable}.GetVariable(""@i"").Value) - 1);
 #line hidden
     if (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) == long.MinValue)
     {{

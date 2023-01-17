@@ -136,17 +136,17 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
         // __variables["@var"] = ((long)__variables["@var"]) + 1; // (or -1, if it's going down)
         statements
             .Add(_transpiler.Runtime.AssignToRuntime(
-                assignmentVariableName,
-                BinaryExpression(
-                    kindIncrement,
-                    ParenthesizedExpression(
-                        CastExpression(
-                            PredefinedType(
-                                Token(SyntaxKind.LongKeyword)),
-                            _transpiler.Runtime.GetFromRuntime(assignmentVariableName))),
-                    LiteralExpression(
-                        SyntaxKind.NumericLiteralExpression,
-                        Literal(1))))
+                    assignmentVariableName,
+                    BinaryExpression(
+                        kindIncrement,
+                        ParenthesizedExpression(CastExpression(PredefinedType(Token(SyntaxKind.LongKeyword)),
+                            MemberAccessExpression(
+                                SyntaxKind.SimpleMemberAccessExpression,
+                                _transpiler.Runtime.GetFromRuntime(assignmentVariableName),
+                                IdentifierName("Value")))),
+                        LiteralExpression(
+                            SyntaxKind.NumericLiteralExpression,
+                            Literal(1))))
                 .WithLineDirective(context.Next(), _transpiler.SourceFileName));
 
         // Break if we hit the bounds.
