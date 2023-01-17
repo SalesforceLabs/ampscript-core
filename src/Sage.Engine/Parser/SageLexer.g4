@@ -13,6 +13,7 @@ HtmlText:       ~[%]+;
 SeaWhitespace:  [ \t\r\n]+ -> channel(HIDDEN);
 AmpBlockStart:          '%%['  -> mode(AMP), channel(HIDDEN);
 InlineAmpBlockStart:    '%%='  -> mode(AMP);
+AttributeNameAtSea:    '%%' [a-z_][a-z_0-9 ]* '%%';
 PercentSign:    '%';
 
 mode AMP;

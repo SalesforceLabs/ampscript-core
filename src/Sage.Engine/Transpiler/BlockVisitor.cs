@@ -54,7 +54,7 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
     {
         return new[]
         {
-            ExpressionStatement(_transpiler.ExpressionVisitor.Visit(context.expression()))
+            _transpiler.Runtime.EmitToOutputStream(_transpiler.ExpressionVisitor.Visit(context.expression()))
         };
     }
 
@@ -69,6 +69,23 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
         return new[]
         {
             _transpiler.Runtime.EmitToOutputStream(context.GetText())
+        };
+    }
+
+    public override IEnumerable<StatementSyntax> VisitAttributeNameAtSea(SageParser.AttributeNameAtSeaContext context)
+    {
+        string attributeName = context.GetText().TrimStart('%').TrimEnd('%');
+
+        // This does not add any #line directives, since it's just an expression.
+        // The invocation of the function as an ExpressionStatement adds the #line directive, since usually you want to break
+        // and debug on a statement and not an expression.
+        //
+        // For example, debugging a function call like this:
+        // OUTPUT(CONCAT("A","B"))
+        // Do you want to F10 into each and every argument? Probably not - so don't put line directives on the expressions or arguments.
+        return new[]
+        {
+            _transpiler.Runtime.EmitToOutputStream(TranspilerExtensions.GetAttributeValue(attributeName))
         };
     }
 }

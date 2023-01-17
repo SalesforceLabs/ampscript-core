@@ -86,9 +86,21 @@ namespace Sage.Engine.Runtime
         /// Outputs a variable where this appears in the content
         /// </summary>
         /// <param name="data">The data to add to the output stream</param>
-        public void V(object data)
+        public string V(object? data)
         {
-            Output(data);
+            return data?.ToString() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Provides the value of the attribute
+        /// </summary>
+        /// <param name="attributeName">Name of the attribute to obtain</param>
+        /// <returns>The value of the attribute</returns>
+        public object? ATTRIBUTEVALUE(object? attributeName)
+        {
+            string attributeNameString = this.ThrowIfStringNullOrEmpty(attributeName);
+
+            return GetSubscriberContext().GetAttribute(attributeNameString);
         }
     }
 }

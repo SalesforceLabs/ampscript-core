@@ -4,6 +4,7 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.Text;
+using Sage.Engine.Runtime;
 
 // ReSharper disable once CheckNamespace
 namespace Sage.Engine.Tests
@@ -43,16 +44,53 @@ namespace Sage.Engine.Tests
         /// <returns>Key=filename, Value=Tests</returns>
         public static IEnumerable<KeyValuePair<string, IEnumerable<CorpusData>>> LoadFromDirectory(string directory)
         {
-            foreach (string filename in Directory.GetFiles(Path.Combine("corpus", directory)))
+            string thisCorpusDirectory = Path.Combine("corpus", directory);
+            foreach (string filename in Directory.GetFiles(thisCorpusDirectory))
             {
+                if (Path.GetExtension(filename).ToLowerInvariant() == ".json")
+                {
+                    continue;
+                }
+
                 var corpusForFile = new List<CorpusData>();
+
+                SubscriberContext? subscriberContext = GetSubscriberContext(thisCorpusDirectory, filename);
+
                 foreach (CorpusData data in CorpusLoader.LoadFromFile(Path.GetFullPath(filename)))
                 {
+                    data.SubscriberContext = subscriberContext;
                     corpusForFile.Add(data);
                 }
 
                 yield return new KeyValuePair<string, IEnumerable<CorpusData>>(Path.GetFileName(filename), corpusForFile);
             }
+        }
+
+        /// <summary>
+        /// Searches for either a file-local, or directory-local subscriber context.
+        /// A file-local subscriber context is named '{corpus}.subscribercontext.json', in the same directory as the corpus file
+        /// A directory-local subscriber context is named 'subscribercontext.json' and applies to all corpus in the directory.
+        /// If both a directory-local and file-local file exists, the file-local wins.
+        /// </summary>
+        /// <param name="corpusDirectory">The corpus directory</param>
+        /// <param name="corpusFilename">The corpus to load</param>
+        /// <returns>The subscriber context to use for this test, if one exists.</returns>
+        private static SubscriberContext? GetSubscriberContext(string corpusDirectory, string corpusFilename)
+        {
+            string testSubscriberContextPath = Path.ChangeExtension(corpusFilename, ".subscribercontext.json");
+            string corpusSubscriberContextPath = Path.Combine(corpusDirectory, "subscribercontext.json");
+
+            SubscriberContext? LoadContextIfExists(string path)
+            {
+                if (Path.Exists(path))
+                {
+                    return new SubscriberContext(File.ReadAllText(testSubscriberContextPath));
+                }
+
+                return null;
+            }
+
+            return LoadContextIfExists(testSubscriberContextPath) ?? LoadContextIfExists(corpusSubscriberContextPath);
         }
 
         private static IEnumerable<CorpusData> GetTestsFromFileUsingHandmadeParser(string file)

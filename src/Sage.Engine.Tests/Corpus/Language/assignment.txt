@@ -1,0 +1,13 @@
+﻿===========
+Variables
+===========
+%%[
+    VAR @VAR, @VAR2
+
+	SET @VAR=1
+    VAR @VAR
+    SET @VAR=2
+]%%
+%%=V(@VAR)=%%
+++++++++++
+2

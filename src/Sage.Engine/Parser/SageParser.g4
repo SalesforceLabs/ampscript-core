@@ -15,6 +15,10 @@ contentBlock
     : ampOrEmbeddedContent*
     ;
 
+attributeNameAtSea
+    : AttributeNameAtSea
+    ;
+
 inlineHtml
     : HtmlText 
     | PercentSign
@@ -40,6 +44,7 @@ ampOrEmbeddedContent
     : ampBlock
     | inlineHtml
     | inlineAmpBlock
+    | attributeNameAtSea
     ;
 
 varDeclaration

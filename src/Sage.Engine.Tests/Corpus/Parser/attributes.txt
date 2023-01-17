@@ -1,0 +1,27 @@
+﻿===========
+Sea Attribute
+===========
+HELLO %%FOO%%
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (AttributeNameAtSeaContext))))
+===========
+Amp Attribute
+===========
+%%[
+	SET @VAR = [Foo]
+]%%
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (SetVariableContext
+            (VariableAssignmentContext
+              (AttributeExpressionContext
+                (AttributeContext)))))))))

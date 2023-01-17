@@ -222,4 +222,11 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
             SyntaxKind.LogicalNotExpression,
             ParenthesizedExpression(expression));
     }
+
+    public override ExpressionSyntax VisitAttribute(SageParser.AttributeContext context)
+    {
+        string attributeName = context.GetText().TrimStart('[').TrimEnd(']');
+
+        return TranspilerExtensions.GetAttributeValue(attributeName);
+    }
 }

@@ -79,6 +79,15 @@ namespace Sage.Engine.Runtime
             return _dataExtensionClient;
         }
 
+        /// <summary>
+        /// The subscriber context is the set of attributes that are unique to the
+        /// subscriber that this message is being personalized for. This gets a pointer
+        /// to that context.
+        /// </summary>
+        public SubscriberContext GetSubscriberContext()
+        {
+            return _subscriberContext;
+        }
         public void Dispose()
         {
             _dataExtensionClient.Dispose();

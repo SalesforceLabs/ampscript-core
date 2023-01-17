@@ -205,6 +205,23 @@ namespace Sage.Engine.Tests
         }
 
         [Test]
+        [TestCase("%%[ SET @VAR = [Foo] ]%%", new[]
+        {
+            $"{Runtime.RuntimeVariable}.SetVariable(\"@var\", {Runtime.RuntimeVariable}.ATTRIBUTEVALUE(\"Foo\"));"
+        })]
+        [TestCase("HELLO %%Foo%%", new[]
+        {
+            "__runtime.Output(\"HELLO \");",
+            "__runtime.Output(__runtime.ATTRIBUTEVALUE(\"Foo\"));"
+        })]
+        public void TestAttributes(string ampCode, string[] cSharpStatements)
+        {
+            SageParser parser = GetParserInContentMode(ampCode);
+            var transpiler = new CSharpTranspiler(parser);
+            TestAmpCodeGeneratesExpectedCSharpCode(cSharpStatements, parser.contentBlock(), transpiler.BlockVisitor);
+        }
+
+        [Test]
         public void TestGeneratedMethod()
         {
             var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");

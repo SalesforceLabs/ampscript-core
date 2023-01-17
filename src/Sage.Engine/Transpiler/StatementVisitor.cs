@@ -312,4 +312,17 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
         // TODO: Add to warning stream that this will not do what the user expects.
         return Enumerable.Empty<StatementSyntax>();
     }
+
+    /// <summary>
+    /// An attribute expression in the statement visitor means something like any of the following lines:
+    /// %%[
+    /// [First name]
+    /// ]%%
+    /// An attribute expression statement doesn't make sense in the grammar, but the existing Marketing Cloud AMPscript interpreter ignores these lines.
+    /// </summary>
+    public override IEnumerable<StatementSyntax> VisitAttributeExpression(SageParser.AttributeExpressionContext context)
+    {
+        // TODO: Add to warning stream that this will not do what the user expects.
+        return Enumerable.Empty<StatementSyntax>();
+    }
 }

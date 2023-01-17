@@ -5,6 +5,7 @@
 
 // ReSharper disable once CheckNamespace
 using System.Text.RegularExpressions;
+using Sage.Engine.Runtime;
 
 namespace Sage.Engine.Tests
 {
@@ -79,6 +80,8 @@ namespace Sage.Engine.Tests
                 return Output == "!";
             }
         }
+
+        public SubscriberContext? SubscriberContext { get; set; }
 
         public CorpusData(string originalName, string code, string file, int lineNumber)
         {

@@ -1,0 +1,42 @@
+﻿===========
+Amp Attributes
+===========
+Hello %%FIRSTNAME%%
+++++++++++
+Hello Logan
+===========
+Block Attributes
+===========
+%%[
+    SET @FIRSTNAME = [First Name]
+]%%
+Hello %%=V(@FIRSTNAME)=%%
+++++++++++
+Hello Logan
+===========
+Names with spaces Amp
+===========
+%%[
+    SET @FIRSTNAME = [First Name]
+]%%
+Hello %%=V(@FIRSTNAME)=%%
+++++++++++
+Hello Logan
+===========
+Names with spaces Block
+===========
+Hello %%First Name%%
+++++++++++
+Hello Logan
+===========
+Name does not exist
+===========
+Hello %%Last Name%%
+++++++++++
+Hello 
+===========
+Attributes case insensitive
+===========
+Hello %%FIRST Name%%
+++++++++++
+Hello Logan

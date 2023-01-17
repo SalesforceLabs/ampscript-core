@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using Microsoft.CodeAnalysis;
 using Antlr4.Runtime.Tree;
+using SyntaxKind = Microsoft.CodeAnalysis.CSharp.SyntaxKind;
 
 namespace Sage.Engine.Transpiler;
 
@@ -94,6 +95,17 @@ internal static class TranspilerExtensions
                 SyntaxKind.SimpleMemberAccessExpression,
                 IdentifierName(className),
                 IdentifierName(method)));
+    }
+
+    public static InvocationExpressionSyntax GetAttributeValue(string attributeName)
+    {
+        return InvocationExpression(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    IdentifierName(Runtime.RuntimeVariable),
+                    IdentifierName("ATTRIBUTEVALUE")))
+            .WithArgumentList(ArgumentList(SingletonSeparatedList(Argument(LiteralExpression(
+                SyntaxKind.StringLiteralExpression, Literal(attributeName))))));
     }
 
     /// <summary>
