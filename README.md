@@ -3,6 +3,31 @@ Sage is a set of tools for Salesforce Marketing Cloud content development, analy
 
 The goal of this project is to make writing, debugging and analyzing content easier.
 
+Questions? Follow up on slack [#sage-discussion](https://salesforce-internal.slack.com/archives/C04H9CDV5RD)
+
+## Subscriber Attributes
+Subscriber attributes `%%Foo%%`/`[Foo]` are supported through a JSON file named `subscriber.json` in the working directory.
+
+Supported within the JSON file is a key/value pair of the attribute name and value.
+
+Example:
+```json
+{
+    "FirstName": "Logan"
+}
+```
+
+The attribute values can be referenced via:
+```ampscript
+%%[
+    SET @FIRSTNAME = [FirstName]
+]%%
+
+Hello %%=V(@FIRSTNAME)=%%
+or
+Hello %%FirstName%%
+```
+
 ## Referencing Content
 Content functions can reference content local on disk.  The files must exist in a `Content` subdirectory of the working directory.
 

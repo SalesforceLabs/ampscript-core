@@ -1,0 +1,5 @@
+﻿<p>This is embedded content that outputs loyalty levels</p>
+%%[
+SET @loyaltyLevel = "Gold"
+OUTPUT(CONTENTBLOCKBYNAME("OutputLoyalty"))
+]%%
