@@ -16,7 +16,7 @@ namespace Sage.Engine.Tests.Functions
         public void TestOutputAndV(object data, string expected)
         {
             this._runtimeContext.OUTPUT(data);
-            Assert.That(this._runtimeContext.FlushOutputStream(), Is.EqualTo(expected));
+            Assert.That(this._runtimeContext.PopContext(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Sage.Engine.Tests.Functions
         {
             this._runtimeContext.OUTPUTLINE(data);
 
-            Assert.That(this._runtimeContext.FlushOutputStream(), Is.EqualTo(expected + Environment.NewLine));
+            Assert.That(this._runtimeContext.PopContext(), Is.EqualTo(expected + Environment.NewLine));
         }
 
         [Test]
@@ -38,8 +38,8 @@ namespace Sage.Engine.Tests.Functions
         [TestCase(true, "True")]
         public void TestV(object data, string expected)
         {
-            this._runtimeContext.V(data);
-            Assert.That(this._runtimeContext.FlushOutputStream(), Is.EqualTo(expected));
+            string result = this._runtimeContext.V(data);
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

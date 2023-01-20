@@ -5,11 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
+    <Configurations>Debug;Release;CustomerTesting</Configurations>
   </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="Antlr4BuildTasks" Version="12.1.0" PrivateAssets="all" />
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.11.1" />
+    <PackageReference Include="Basic.Reference.Assemblies.Net70" Version="1.4.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.2" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />

@@ -34,15 +34,16 @@ namespace Sage.Engine.Tests
             {
                 Assert.Fail(string.Join("\n", result.EmitResult.Diagnostics.Select(d => d.ToString())));
             }
+
             Assert.IsNotNull(result.Assembly);
 
-            var context = new RuntimeContext();
+            var context = new RuntimeContext(options);
             object[] variables = new object[] { context };
-            object? results = result.Assembly
+            result.Assembly
                 ?.GetType("Sage.Engine.Runtime.AmpProgram")
                 ?.GetMethod(options.GeneratedMethodName)
                 ?.Invoke(null, variables);
-            Assert.That(context.FlushOutputStream(), Is.EqualTo("Hello  World"));
+            Assert.That(context.PopContext(), Is.EqualTo("Hello  World"));
         }
     }
 }

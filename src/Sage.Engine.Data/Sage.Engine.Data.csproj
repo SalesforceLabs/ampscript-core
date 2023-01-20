@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Library</OutputType>
+    <Configurations>Debug;Release;CustomerTesting</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

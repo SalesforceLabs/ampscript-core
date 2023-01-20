@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Webhost", "Sage.Webhos
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateComparisonCorpusTesting", "GenerateComparisonCorpusTesting\GenerateComparisonCorpusTesting.csproj", "{901F09B5-E27E-4E94-9CC3-560784D73E53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sage.Engine.Data", "Sage.Engine.Data\Sage.Engine.Data.csproj", "{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Engine.Data", "Sage.Engine.Data\Sage.Engine.Data.csproj", "{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,48 @@
+﻿==========
+CONTENTBLOCKBYNAME
+==========
+%%=CONTENTBLOCKBYNAME("StaticContent")=%%
+++++++++++
+Hello World
+==========
+CONTENTBLOCKBYNAME Not Exist DoNotThrow
+==========
+%%=CONTENTBLOCKBYNAME("StaticContentDoesNotExist", "", false)=%%
+++++++++++
+
+==========
+CONTENTBLOCKBYNAME Not Exsist Throws
+==========
+%%=CONTENTBLOCKBYNAME("StaticContentDoesNotExist", "", true)=%%
+++++++++++
+!
+==========
+CONTENTBLOCKBYNAME Default Content
+==========
+%%=CONTENTBLOCKBYNAME("StaticContentDoesNotExist", "", false, "Default")=%%
+++++++++++
+Default
+==========
+CONTENTBLOCKBYNAME Default Content
+==========
+%%=CONTENTBLOCKBYNAME("StaticContent", "", false, "Default")=%%
+++++++++++
+Hello World
+==========
+CONTENTBLOCKBYNAME Return Param 0
+==========
+%%[ VAR @RESULT
+CONTENTBLOCKBYNAME("StaticContent", "", false, "Default", @RESULT)
+]%%
+%%=V(@RESULT)=%%
+++++++++++
+0
+==========
+CONTENTBLOCKBYNAME Return Param -1
+==========
+%%[ VAR @RESULT
+CONTENTBLOCKBYNAME("StaticContentDoesNotExist", "", false, "Default", @RESULT)
+]%%
+%%=V(@RESULT)=%%
+++++++++++
+-1

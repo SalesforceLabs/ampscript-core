@@ -99,9 +99,14 @@ namespace Sage.Engine.Data.Sqlite
                 return;
             }
 
-            await this.LoadCsv(Environment.CurrentDirectory, table.Unquote());
-
             _loadedTables.Add(table);
+
+            DataTable schema = await GetSchemaAsync(table.ToString());
+
+            if (schema.Rows.Count == 0)
+            {
+                await this.LoadCsv(Environment.CurrentDirectory, table.Unquote());
+            }
         }
 
         public void Dispose()

@@ -18,7 +18,8 @@ namespace Sage.Engine.Tests
         [TestCase("")]
         public void AssertStringThrowsCorrectInformation(string? value)
         {
-            RuntimeArgumentException exception = Assert.Throws<RuntimeArgumentException>(() => ArgumentValidator.ThrowIfStringNullOrEmpty(value))!;
+            var context = new RuntimeContext();
+            RuntimeArgumentException exception = Assert.Throws<RuntimeArgumentException>(() => context.ThrowIfStringNullOrEmpty(value))!;
             Assert.That(exception.ArgumentName == nameof(value));
             Assert.That(exception.CallingFunction == nameof(AssertStringThrowsCorrectInformation));
         }
@@ -29,11 +30,12 @@ namespace Sage.Engine.Tests
             int intVal = 0;
             var dataTable = new DataTable();
 
-            RuntimeArgumentException exception = Assert.Throws<RuntimeArgumentException>(() => ArgumentValidator.ThrowIfNotDataTable(intVal))!;
+            var context = new RuntimeContext();
+            RuntimeArgumentException exception = Assert.Throws<RuntimeArgumentException>(() => context.ThrowIfNotDataTable(intVal))!;
             Assert.That(exception.ArgumentName == nameof(intVal));
             Assert.That(exception.CallingFunction == nameof(AssertDataRowAndDataType));
 
-            exception = Assert.Throws<RuntimeArgumentException>(() => ArgumentValidator.ThrowIfNotDataRow(dataTable))!;
+            exception = Assert.Throws<RuntimeArgumentException>(() => context.ThrowIfNotDataRow(dataTable))!;
             Assert.That(exception.ArgumentName == nameof(dataTable));
             Assert.That(exception.CallingFunction == nameof(AssertDataRowAndDataType));
         }

@@ -4,8 +4,7 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 namespace Sage.Engine.Tests
-{
-    using Antlr4.Runtime;
+{ using Antlr4.Runtime;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NUnit.Framework;
@@ -31,7 +30,7 @@ namespace Sage.Engine.Tests
         private static SageParser GetParserInMode(string code, int mode)
         {
             ICharStream stream = new AntlrInputStream(code);
-            SageLexer lexer = new SageLexer(stream);
+            var lexer = new SageLexer(stream);
             lexer.Mode(mode);
             ITokenStream tokens = new CommonTokenStream(lexer);
             return new SageParser(tokens);
@@ -255,7 +254,7 @@ namespace Sage.Engine.Tests
         public void TestGenerateCompilationUnit()
         {
             var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");
-            string methodText = transpiler.GenerateProgram().NormalizeWhitespace().ToString();
+            string methodText = transpiler.GenerateCode().NormalizeWhitespace().ToString();
             Assert.That(methodText, Is.EqualTo(@$"namespace Sage.Engine.Runtime
 {{
     using System.Collections.Generic;

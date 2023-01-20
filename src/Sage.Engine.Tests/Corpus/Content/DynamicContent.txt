@@ -1,0 +1,28 @@
+﻿==========
+CONTENTBLOCKBYNAME
+==========
+%%=CONTENTBLOCKBYNAME("PrintFirstName")=%%
+++++++++++
+Hello Logan
+==========
+Invoke but throw away
+==========
+%%[
+CONTENTBLOCKBYNAME("PrintFirstName")
+]%%
+++++++++++
+
+==========
+Invoke but throw away - content With Output
+==========
+%%[
+CONTENTBLOCKBYNAME("Output")
+]%%
+++++++++++
+
+==========
+Invoke And Output content with output
+==========
+%%=CONTENTBLOCKBYNAME("Output")=%%
+++++++++++
+Dynamic Hello World Output

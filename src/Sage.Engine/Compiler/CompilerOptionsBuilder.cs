@@ -54,7 +54,8 @@ namespace Sage.Engine.Compiler
         public CompilerOptionsBuilder WithSourceCode(string name, string sourceCode)
         {
             this.InputName = name;
-            this.InputFile = new FileInfo(name + ".dynamic");
+            this.InputFile = new FileInfo(Path.Combine(this.OutputDirectory.FullName, name + ".generated.ampscript"));
+            File.WriteAllText(InputFile.FullName, this.SourceCode);
             this.SourceCode = sourceCode;
 
             return this;

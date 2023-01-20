@@ -33,11 +33,11 @@ namespace Sage.Engine.Runtime
 
             string? executionResults =
                 CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentarea://{id}",
+                    $"contentareaid__{id}",
                     async () =>
                         await GetClassicContentClient()
                             .GetContentByIdAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
-            
+
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
 
@@ -57,7 +57,7 @@ namespace Sage.Engine.Runtime
 
             string? executionResults =
                 CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentareabyname://{id}",
+                    $"contentareaname__{id}",
                     async () =>
                         await GetClassicContentClient()
                             .GetContentByNameAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
@@ -81,7 +81,7 @@ namespace Sage.Engine.Runtime
 
             string? executionResults =
                 CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentblockbyname://{id}",
+                    $"contentblockname__{id}",
                     async () =>
                         await GetContentBuilderContentClient()
                             .GetContentByNameAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
@@ -105,11 +105,11 @@ namespace Sage.Engine.Runtime
 
             string? executionResults =
                 CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentblockbyid://{id}",
+                    $"contentblockid__{id}",
                     async () =>
                         await GetContentBuilderContentClient()
                             .GetContentByIdAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
-            
+
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
 
@@ -129,7 +129,7 @@ namespace Sage.Engine.Runtime
 
             string? executionResults =
                 CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentblockbykey://{id}",
+                    $"contentblockkey__{id}",
                     async () =>
                         await GetContentBuilderContentClient()
                             .GetContentByCustomerKeyAsync(this.ThrowIfStringNullOrEmpty(id))).Result;

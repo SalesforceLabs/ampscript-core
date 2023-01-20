@@ -55,6 +55,7 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
         return new[]
         {
             _transpiler.Runtime.EmitToOutputStream(_transpiler.ExpressionVisitor.Visit(context.expression()))
+                .WithLineDirective(context, _transpiler.SourceFileName)
         };
     }
 

@@ -4,20 +4,24 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Configurations>Debug;Release;CustomerTesting</Configurations>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Sage.Engine\Sage.Engine.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Content\EmbeddedContent.ampscript">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\OutputLoyalty.ampscript">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DataExtensions\Loyalty.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Index.ampscript">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Page.ampscript">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -116,7 +116,7 @@ internal class CSharpTranspiler
     /// <summary>
     /// Generates the namespace, usings and static class with all methods for the executable
     /// </summary>
-    internal CompilationUnitSyntax GenerateProgram()
+    internal CompilationUnitSyntax GenerateCode()
     {
         var methods = new List<MemberDeclarationSyntax>
         {
@@ -188,6 +188,7 @@ internal class CSharpTranspiler
                                 .WithType(
                                     IdentifierName("RuntimeContext")))))
             .WithBody(
-                Block(statements));
+                Block(statements))
+            .WithHiddenLineDirective();
     }
 }
