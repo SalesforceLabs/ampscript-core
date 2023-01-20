@@ -3,24 +3,63 @@ Sage is a set of tools for Salesforce Marketing Cloud content development, analy
 
 The goal of this project is to make writing, debugging and analyzing content easier.
 
+## Referencing Content
+Content functions can reference content local on disk.  The files must exist in a `Content` subdirectory of the working directory.
+
+Example, if you have a file at `Content\EmbeddedContent.ampscript`, then you can reference it via:
+```ampscript
+%%=CONTENTBLOCKBYNAME("EmbeddedContent")=%%
+```
+
+## Data Extensions
+Data Extension support is provided through CSV files on disk.  The files must exist in a `DataExtensions` subdirectory of the working directory. The CSV file must contain headers which represent the columns.
+
+Example, if you have a file at `DataExtensions\Loyalty.csv`, then it will use this CSV file as the data extension.
+
+`DataExtensions\Loyalty.csv`
+```csv
+EmailAddress,SubscriberKey,FirstName,LastName,LoyaltyLevel
+donnie@northerntrailoutfitters.com,1,Donnie,Stanton,Silver
+```
+
+`Index.ampscript`
+```ampscript
+Hello %%=LOOKUP("Loyalty", "FirstName", "emailAddress", "donnie@northerntrailoutfitters.com")=%%
+```
+
+Outputs:
+```ampscript
+Hello Donnie
+```
+
 ## Debugging AMPscript using Sage
-In Visual Studio, modify the [launchsettings.json](src/Sage.Engine/Properties/launchSettings.json) file to point to your ampscript file.
+There is an example at [Index.ampscript](src/Sage.Webhost/Index.ampscript) that you may modify and test.
 
 In VSCode, create a `launch.json` file which launches the sage engine. Example:
 ```json
     "configurations": [
         {
-            "name": "Debug AMPscript",
+            "name": "Launch (web)",
             "type": "coreclr",
             "request": "launch",
-            "program": "Sage.Engine.exe",
-            "args": ["${file}", "-d"],
+            "program": "<path to release>\\Sage.Webhost.dll",
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}"
+            }
         }
     ]
 ```
+
+Future editor plugins (VSCode) are on the roadmap
 
 ## Marketing Cloud Supported Languages
 
@@ -31,8 +70,6 @@ In VSCode, create a `launch.json` file which launches the sage engine. Example:
 | GTL | ⛔ Not Supported |
 
 ### ⚠️ AMPScript Support
-The language has full grammar support, but very little runtime support at the moment.
-
 | Feature | Summary |
 |----------|---------|
 | Ampscript Blocks `%%[]%%` | ✔️ |
@@ -41,9 +78,9 @@ The language has full grammar support, but very little runtime support at the mo
 | If `if`| ✔️ |
 | Logic Operators `==`, `!=`, `&&`, etc | ✔️ |
 | Inline Ampscript `%%= =%%`| ✔️ |
+| Personalization Strings `[Foo]` or `%%Foo%%` | ✔️ |
 | Tag Syntax `<script language="ampscript">` | ⛔ Not Supported |
 | System Strings `xtmonth, jobid, subscriberkey, etc` | ⛔ Not Supported |
-| Personalization Strings `[Foo]` or `%%Foo%%` | ⛔ Not Supported |
 
 
 ## Supported Functions
@@ -53,7 +90,7 @@ If the function isn't listed here, then it's not supported.
 |----------|---------|
 |[Marketing Cloud API](https://ampscript.guide/marketing-cloud-api-functions/)| ⛔ Not Supported |
 |[Contact Model](https://ampscript.guide/content-model-functions/)| ⛔ Not Supported |
-|[Content](https://ampscript.guide/content-functions/)| ⛔ Not Supported |
+|[Content](https://ampscript.guide/content-functions/)| ⚠️ Partial support |
 |[Data Extensions](https://ampscript.guide/data-extension-functions/)| ⚠️ Partial Support |
 |[Date and Time](https://ampscript.guide/date-and-time-functions/)| ⚠️ Partial Support |
 |[Einstein](https://ampscript.guide/einstein-email-recommendation-functions/)| ⛔ Not Supported |
@@ -70,7 +107,8 @@ If the function isn't listed here, then it's not supported.
 
 
 ## Roadmap
-* Increase supported feature set for both static analysis and runtime execution
+* VSCode plugin
+* Increase supported feature
 * A 95% compatibility target for supporting ampscript functions, with mockability for local execution.
 * SSJS & GTL
 * Static code analysis tools to identify and remediate performance or security issues
