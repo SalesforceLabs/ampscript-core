@@ -24,13 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Content\Output">
+    <None Update="Content\Output.ampscript">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Content\StaticContent">
+    <None Update="Content\StaticContent.ampscript">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Content\PrintFirstName">
+    <None Update="Content\PrintFirstName.ampscript">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Corpus\Comparisons\comparisons.bool.txt">

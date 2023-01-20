@@ -263,6 +263,7 @@ namespace Sage.Engine.Tests
 
     public static class AmpProgram
     {{
+#line hidden
         public static void TEST(RuntimeContext __runtime)
         {{
 #line (1, 4) - (1, 12) ""TEST""
