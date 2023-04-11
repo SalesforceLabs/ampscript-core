@@ -4,39 +4,20 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.CommandLine;
+using System.CommandLine.IO;
 using Microsoft.CodeAnalysis;
 using Sage.Engine;
 using Sage.Engine.Compiler;
 using CommandHandler = System.CommandLine.NamingConventionBinder.CommandHandler;
 using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 
-Argument<string> sourceFile = new Argument<string>(name: "--source", description: "Path to the AMPscript program to debug").LegalFilePathsOnly();
-Option<bool> debugOption = new(new[] { "--debug", "-d" }, "Whether or not to build debug information and debug the output");
-
-Command runCommand = new("run", description: "Execute AMPscript and write the results to stdout")
-{
-    sourceFile,
-    debugOption
-};
-
-Command compileCommand = new("compile", description: "Compile AMPscript and write any errors to STDOUT")
-{
-    sourceFile,
-    debugOption
-};
-
-RootCommand rootCommand = new("Compile or execute AMPscript code");
-rootCommand.AddCommand(runCommand);
-rootCommand.AddCommand(compileCommand);
-
-var commandHandler = (string source, bool debug, bool execute, IConsole console) =>
+int RunMain(string source, bool debug, bool execute, IConsole console)
 {
     DirectoryInfo tempPath = Directory.CreateTempSubdirectory("Sage");
 
-    var optimizeLevel = debug ? OptimizationLevel.Debug : OptimizationLevel.Release;
+    OptimizationLevel optimizeLevel = debug ? OptimizationLevel.Debug : OptimizationLevel.Release;
 
-    CompilationOptions options = new CompilerOptionsBuilder()
-        .WithInputFile(new FileInfo(source))
+    CompilationOptions options = new CompilerOptionsBuilder().WithInputFile(new FileInfo(source))
         .WithOptimizationLevel(optimizeLevel)
         .Build();
 
@@ -58,19 +39,33 @@ var commandHandler = (string source, bool debug, bool execute, IConsole console)
     }
     catch (CompileCodeException e)
     {
-        Console.Error.WriteLine(e);
+        console.Error.WriteLine(e.ToString());
         return 0;
     }
     catch (Exception e)
     {
-        Console.Error.WriteLine(e);
+        console.Error.WriteLine(e.ToString());
         return -1;
     }
 
     return 0;
+}
+
+var commandLine = new CommandLine
+{
+    LaunchCommand =
+    {
+        Handler = CommandHandler.Create(
+            (string source, bool debug, IConsole console) => RunMain(source, debug, true, console))
+    },
+    CompileCommand =
+    {
+        Handler = CommandHandler.Create(
+            (string source, bool debug, IConsole console) => RunMain(source, debug, false, console))
+    }
 };
 
-runCommand.Handler = CommandHandler.Create((string source, bool debug, IConsole console) => commandHandler(source, debug, true, console));
-compileCommand.Handler = CommandHandler.Create((string source, bool debug, IConsole console) => commandHandler(source, debug, false, console));
-
+RootCommand rootCommand = new("Compile or execute AMPscript code");
+rootCommand.AddCommand(commandLine.LaunchCommand);
+rootCommand.AddCommand(commandLine.CompileCommand);
 rootCommand.Invoke(args);

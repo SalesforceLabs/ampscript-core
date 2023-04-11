@@ -10,6 +10,7 @@
   "profiles": {
     "http": {
       "commandName": "Project",
+      "commandLineArgs": "Index.ampscript",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5276",
@@ -18,6 +19,7 @@
       }
     },
     "https": {
+      "commandLineArgs": "Index.ampscript",
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -28,6 +30,7 @@
     },
     "IIS Express": {
       "commandName": "IISExpress",
+      "commandLineArgs": "Index.ampscript",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
