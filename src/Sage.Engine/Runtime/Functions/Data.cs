@@ -182,8 +182,8 @@ namespace Sage.Engine.Runtime
                 object attributeValue = constraints[i + 1];
 
                 lookup.WithConstraint(
-                    this.ThrowIfStringNullOrEmpty(attributeName),
-                    this.ThrowIfStringNullOrEmpty(attributeValue));
+                    this.ThrowIfStringNullOrEmpty(attributeName, caller),
+                    this.ThrowIfStringNullOrEmpty(attributeValue, caller));
             }
         }
     }
