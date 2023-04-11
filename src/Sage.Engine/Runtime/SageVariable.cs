@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Diagnostics;
+
 namespace Sage.Engine.Runtime
 {
     /// <summary>
@@ -25,6 +27,7 @@ namespace Sage.Engine.Runtime
     /// and then the variable can be updated as part of executing this function so that when it returns, it has
     /// the correct value.
     /// </remarks>
+    [DebuggerDisplay("{Value}", Name = "{Name}", Type = "Variable")]
     public class SageVariable
     {
         public string Name { get; }

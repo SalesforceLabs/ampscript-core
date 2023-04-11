@@ -3,10 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using System.Data;
-using System.Runtime.CompilerServices;
+using System.Diagnostics;
 using System.Text;
-using Antlr4.Runtime.Misc;
 
 namespace Sage.Engine.Runtime
 {
@@ -15,6 +13,7 @@ namespace Sage.Engine.Runtime
     /// </summary>
     /// <remarks>The AMPscript stack is unique, in that there is no variable scoping changes, but just an output scoping</remarks>
     /// <remarks>This is also used for any compilation errors</remarks>
+    [DebuggerDisplay("{OutputStream}", Name = "{Name}")]
     internal class StackFrame
     {
         public StringBuilder OutputStream

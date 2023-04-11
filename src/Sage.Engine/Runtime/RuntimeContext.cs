@@ -8,6 +8,7 @@ using Sage.Engine.Content;
 using Sage.Engine.Data;
 using Sage.Engine.Compiler;
 using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
+using System.Diagnostics;
 
 namespace Sage.Engine.Runtime
 {
@@ -18,6 +19,8 @@ namespace Sage.Engine.Runtime
     /// Things that belong here are variables, details about the subscriber being rendered
     /// or details about the HTTP request if this were in a cloud page context.
     /// </remarks>
+    [DebuggerDisplay("Variables and Current Content", Name = "", Type = "")]
+    [DebuggerTypeProxy(typeof(RuntimeContextDebugView))]
     public partial class RuntimeContext : IDisposable
     {
         private readonly Stack<StackFrame> _stackFrame = new();
@@ -61,6 +64,22 @@ namespace Sage.Engine.Runtime
 
             _rootCompilationOptions = rootCompileOptions;
             _stackFrame.Push(new StackFrame(_rootCompilationOptions?.GeneratedMethodName ?? "TEST"));
+        }
+
+        /// <summary>
+        /// Returns the current stack frames for this runtime
+        /// </summary>
+        internal IEnumerable<StackFrame> GetStackFrames()
+        {
+            return _stackFrame;
+        }
+
+        /// <summary>
+        /// Returns the current variables for this runtime
+        /// </summary>
+        internal IEnumerable<SageVariable> GetVariables()
+        {
+            return _variables.Values;
         }
 
         /// <summary>
