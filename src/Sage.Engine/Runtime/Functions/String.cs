@@ -102,6 +102,14 @@ namespace Sage.Engine.Runtime
         }
 
         /// <summary>
+        /// If the input evaluates to NULL or empty, it will output `true`, otherwise it outputs `false`.
+        /// </summary>
+        public bool EMPTY(object input)
+        {
+            return string.IsNullOrEmpty(input?.ToString());
+        }
+
+        /// <summary>
         /// This function capitalizes the first letter in the specified string and any other letters in the string that follow any character other than a letter. It converts all other letters into lowercase.
         /// </summary>
         public string PROPERCASE(object input)

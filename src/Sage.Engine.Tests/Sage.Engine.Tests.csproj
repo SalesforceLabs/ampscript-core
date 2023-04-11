@@ -54,6 +54,9 @@
     <None Update="Corpus\Content\DynamicContent.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Corpus\Function\utility.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Corpus\Language\attributes.subscribercontext.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

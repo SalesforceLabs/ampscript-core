@@ -65,6 +65,33 @@ namespace Sage.Engine.Runtime
         }
 
         /// <summary>
+        /// Similar to a ternary operator - evaluates <see cref="expression"/> and if it evaluates to true, returns <see cref="leftResult"/>.  Otherwise, returns <see cref="rightResult"/>
+        /// </summary>
+        /// <param name="expression">The expression to be evaluated</param>
+        /// <param name="leftResult">The result to be returned if the expression evaluates to true</param>
+        /// <param name="rightResult">The result to be returned if the expression evaluates to false</param>
+        /// <returns>Either <see cref="leftResult"/> or <see cref="rightResult"/>, depending on the result of <see cref="expression"/></returns>
+        public object IIF(object expression, object leftResult, object rightResult)
+        {
+            bool expressionResult = SageValue.ToBoolean(expression);
+
+            if (expressionResult)
+            {
+                return leftResult;
+            }
+
+            return rightResult;
+        }
+
+        /// <summary>
+        /// Returns a true value if the specified parameter is null.
+        /// </summary>
+        public bool ISNULL(object expression)
+        {
+            return SageValue.IsNull(expression);
+        }
+
+        /// <summary>
         /// Outputs to where this block appears in the content.
         /// </summary>
         /// <param name="data">The data to add to the output stream</param>
@@ -96,6 +123,7 @@ namespace Sage.Engine.Runtime
         /// </summary>
         /// <param name="attributeName">Name of the attribute to obtain</param>
         /// <returns>The value of the attribute</returns>
+        
         public object? ATTRIBUTEVALUE(object? attributeName)
         {
             string attributeNameString = this.ThrowIfStringNullOrEmpty(attributeName);

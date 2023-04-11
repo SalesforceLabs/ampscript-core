@@ -1,0 +1,31 @@
+﻿==========
+IIF
+==========
+%%[
+var @name
+]%%
+%%=IIF(EMPTY(@name), "Pass", "Fail")=%%
+++++++++++
+Pass
+==========
+IIF NOT
+==========
+%%[
+var @name
+]%%
+%%=IIF(NOT EMPTY(@name), "Fail", "Pass")=%%
+++++++++++
+Pass
+==========
+ISNULL
+==========
+%%[
+var @name, @name2
+
+SET @name2=""
+]%%
+%%=ISNULL(@name)=%%
+%%=ISNULL(@name2)=%%
+++++++++++
+True
+False

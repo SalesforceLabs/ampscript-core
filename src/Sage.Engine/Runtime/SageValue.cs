@@ -348,6 +348,16 @@ namespace Sage.Engine.Runtime
 
             return result;
         }
+
+        /// <summary>
+        /// Returns whether or not the boxed value is null
+        /// </summary>
+        public static bool IsNull(object? inputObj)
+        {
+            inputObj = UnboxVariable(inputObj);
+
+            return inputObj == null;
+        }
         #endregion
 
         #region COMPARE

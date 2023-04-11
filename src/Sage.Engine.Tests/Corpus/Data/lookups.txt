@@ -59,3 +59,16 @@ next @i
 ]%%
 ++++++++++
 Row 1, FirstName: Collie, Email Address: collie@northerntrailoutfitters.com
+==========
+LOOKUP MISSING RESULT
+==========
+%%[
+set @EmailAddress123 = Lookup("Loyalty","EmailAddress","SubscriberKey", "123")
+set @EmailAddress1 = Lookup("Loyalty","EmailAddress","SubscriberKey", "1")
+
+]%%
+%%=ISNULL(@EmailAddress1)=%%
+%%=ISNULL(@EmailAddress123)=%%
+++++++++++
+False
+True

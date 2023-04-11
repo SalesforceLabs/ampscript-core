@@ -25,7 +25,7 @@ namespace Sage.Engine.Runtime
         /// <param name="dataExtension">The name of the data extension</param>
         /// <param name="returnAttribute">The name of the attribute to return</param>
         /// <param name="queryConstraints">Repeating pairs of parameters for which rows to retrieve. Must be even. i==attribute i+1==attributeValue</param>
-        public object LOOKUP(object dataExtension, object returnAttribute, params object[] queryConstraints)
+        public object? LOOKUP(object dataExtension, object returnAttribute, params object[] queryConstraints)
         {
             string dataExtensionString = this.ThrowIfStringNullOrEmpty(dataExtension);
             string returnAttributeString = this.ThrowIfStringNullOrEmpty(returnAttribute);
@@ -37,7 +37,12 @@ namespace Sage.Engine.Runtime
 
             DataTable dataTable = GetDataExtensionClient().LookupAsync(lookup.Build()).Result;
 
-            return dataTable.Rows[0][returnAttribute.ToString() ?? string.Empty];
+            if (dataTable.Rows.Count > 0)
+            {
+                return dataTable.Rows[0][returnAttribute.ToString() ?? string.Empty];
+            }
+
+            return null;
         }
 
         /// <summary>

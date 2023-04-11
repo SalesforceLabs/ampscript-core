@@ -85,3 +85,24 @@ ADD(ADD(1,2),ADD(3,4))
                           (ConstantContext))
                         (ConstantExpressionContext
                           (ConstantContext))))))))))))))
+===========
+NOT EXPRESSION IN ARGUMENT
+===========
+%%[
+OUTPUT(NOT EMPTY(@arg))
+]%%
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (ExpressionStatementContext
+            (FunctionExpressionContext
+              (FunctionCallContext
+                (ArgumentsContext
+                  (NegateExpressionContext
+                    (FunctionExpressionContext
+                      (FunctionCallContext
+                        (ArgumentsContext
+                          (ConstantExpressionContext))))))))))))))

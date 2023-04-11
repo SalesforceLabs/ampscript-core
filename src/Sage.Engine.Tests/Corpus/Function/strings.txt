@@ -184,3 +184,20 @@ localeUpper: %%=v(@localeUpper)=%%
 ++++++++++
 locale: en-us
 localeUpper: EN-US
+==========
+EMPTY
+==========
+%%[
+var @empty, @notEmpty, @nullValue
+
+set @empty = ""
+set @notEmpty = "Not Empty"
+
+]%%
+empty: %%=EMPTY(@empty)=%%
+notEmpty: %%=EMPTY(@notEmpty)=%%
+nullValue: %%=EMPTY(@nullValue)=%%
+++++++++++
+empty: True
+notEmpty: False
+nullValue: True
