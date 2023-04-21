@@ -59,6 +59,7 @@ string RenderContent(FileInfo contentPath)
     {
         subscriberExceptionContext["ExceptionType"] = compileException.GetType().Name;
         subscriberExceptionContext["Message"] = compileException.Message;
+        throw;
     }
     catch (RuntimeException runtimeException)
     {
@@ -84,9 +85,10 @@ string RenderContent(FileInfo contentPath)
         subscriberExceptionContext["Stack"] = callstack;
         subscriberExceptionContext["ExceptionType"] = runtimeException.GetType().Name;
         subscriberExceptionContext["Message"] = runtimeException.Message;
+        throw;
     }
 
-    string pathToExceptionHtml = Path.Join(new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath, "Exception.ampscript");
+    string pathToExceptionHtml = Path.Join(Path.GetDirectoryName(typeof(RuntimeContext).Assembly.Location), "Exception.ampscript");
 
     return Renderer.Render(new FileInfo(pathToExceptionHtml), new SubscriberContext(subscriberExceptionContext.ToJsonString()));
 }
