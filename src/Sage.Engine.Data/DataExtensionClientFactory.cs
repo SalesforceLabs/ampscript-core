@@ -14,9 +14,9 @@ namespace Sage.Engine.Data
         ///
         /// Any changes or updates made to SQLite are lost when the connection is severed.
         /// </summary>
-        public static async Task<IDataExtensionClient> CreateInMemoryDataExtensions()
+        public static async Task<IDataExtensionClient> CreateInMemoryDataExtensions(DirectoryInfo workingDirectory)
         {
-            var client = new SqliteDataExtensionClient("Data Source=:memory:");
+            var client = new SqliteDataExtensionClient("Data Source=:memory:", workingDirectory);
 
             await client.OpenAsync();
 

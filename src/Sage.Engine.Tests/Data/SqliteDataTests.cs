@@ -18,7 +18,7 @@ namespace Sage.Engine.Tests.Data
         [SetUp]
         public void TestSetup()
         {
-            _dataExtensionClient = (SqliteDataExtensionClient)DataExtensionClientFactory.CreateInMemoryDataExtensions().Result;
+            _dataExtensionClient = (SqliteDataExtensionClient)DataExtensionClientFactory.CreateInMemoryDataExtensions(new DirectoryInfo(Environment.CurrentDirectory)).Result;
         }
 
         [TearDown]

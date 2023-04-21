@@ -32,16 +32,18 @@ namespace Sage.Engine.Runtime
         private IContentClient _contentBuilderContentClient;
         private SubscriberContext _subscriberContext;
 
+        private DirectoryInfo WorkingDirectory => _rootCompilationOptions?.InputFile.Directory ?? new DirectoryInfo(Environment.CurrentDirectory);
+
         public RuntimeContext(
             CompilationOptions rootCompilationOptions,
             IDataExtensionClient dataExtensionClient,
             SubscriberContext? subscriberContext)
         {
-            _dataExtensionClient = dataExtensionClient;
-            _classicContentClient = ContentClientFactory.CreateLocalDiskContentClient("Content");
-            _contentBuilderContentClient = _classicContentClient;
-            _subscriberContext = subscriberContext ?? new SubscriberContext(null);
             _rootCompilationOptions = rootCompilationOptions;
+            _subscriberContext = subscriberContext ?? new SubscriberContext(null);
+            _dataExtensionClient = dataExtensionClient;
+            _classicContentClient = ContentClientFactory.CreateLocalDiskContentClient(Path.Combine(WorkingDirectory.FullName, "Content"));
+            _contentBuilderContentClient = _classicContentClient;
             _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName, _rootCompilationOptions.InputFile));
         }
 
@@ -50,25 +52,25 @@ namespace Sage.Engine.Runtime
             SubscriberContext? subscriberContext = null)
         {
             this.Random = new Random();
-            _dataExtensionClient = DataExtensionClientFactory.CreateInMemoryDataExtensions().Result;
-            _classicContentClient = ContentClientFactory.CreateLocalDiskContentClient(Path.Combine(Environment.CurrentDirectory, "Content"));
+            _rootCompilationOptions = rootCompileOptions;
+            _classicContentClient = ContentClientFactory.CreateLocalDiskContentClient(Path.Combine(WorkingDirectory.FullName, "Content"));
             _contentBuilderContentClient = _classicContentClient;
+            _dataExtensionClient = DataExtensionClientFactory.CreateInMemoryDataExtensions(WorkingDirectory).Result;
 
-
+            string subscriberContextFile = Path.Combine(WorkingDirectory.FullName, "subscriber.json");
             if (subscriberContext != null)
             {
                 _subscriberContext = subscriberContext;
             }
-            else if (Path.Exists("subscriber.json"))
+            else if (Path.Exists(subscriberContextFile))
             {
-                _subscriberContext = new SubscriberContext(File.ReadAllText("subscriber.json"));
+                _subscriberContext = new SubscriberContext(File.ReadAllText(subscriberContextFile));
             }
             else
             {
                 _subscriberContext = new SubscriberContext(null);
             }
 
-            _rootCompilationOptions = rootCompileOptions;
             _stackFrame.Push(new StackFrame(_rootCompilationOptions?.GeneratedMethodName ?? "TEST", _rootCompilationOptions?.InputFile ?? null));
         }
 

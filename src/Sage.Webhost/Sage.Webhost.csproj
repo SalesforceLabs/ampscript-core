@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sage.Engine\Sage.Engine.csproj" />
+    <ProjectReference Include="..\Sage.PackageManager\Sage.PackageManager.csproj" />
   </ItemGroup>
 
   <ItemGroup>

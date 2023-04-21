@@ -5,12 +5,13 @@
 
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
-using System.Diagnostics;
 using System.Net.Mime;
+using System.Reflection;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.FileProviders;
 using Sage.Engine;
 using Sage.Engine.Runtime;
+using Sage.PackageManager;
 using StackFrame = Sage.Engine.Runtime.StackFrame;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,10 +29,18 @@ if (Path.Exists(assetsPath))
 
 var commandLine = new CommandLine()
 {
-    LaunchCommand =
+    Ampscript =
     {
         Handler = CommandHandler.Create(RunAmpscriptFile)
     },
+    PackageJson =
+    {
+        Handler = CommandHandler.Create(RunPackageJson)
+    },
+    PackageZip =
+    {
+        Handler = CommandHandler.Create(RunPackageZip)
+    }
 };
 
 /// <summary>
@@ -68,7 +77,7 @@ string RenderContent(FileInfo contentPath)
             JsonNode jsonFrame = new JsonObject();
             jsonFrame["Name"] = frame.Name;
             jsonFrame["CurrentLineNumber"] = frame.CurrentLineNumber;
-            jsonFrame["Code"] = GetLinesFromCode(frame.CurrentLineNumber, frame.Code);
+            jsonFrame["Code"] = GetLinesFromCode(frame.CurrentLineNumber, frame.Code ?? throw new FileNotFoundException());
             callstack.Add(jsonFrame);
         }
 
@@ -77,19 +86,9 @@ string RenderContent(FileInfo contentPath)
         subscriberExceptionContext["Message"] = runtimeException.Message;
     }
 
-    return Renderer.Render(new FileInfo(Path.Join(Environment.CurrentDirectory, "Exception.ampscript")), new SubscriberContext(subscriberExceptionContext.ToJsonString()));
-}
+    string pathToExceptionHtml = Path.Join(new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath, "Exception.ampscript");
 
-/// <summary>
-/// Gets lines of code near the given line number
-/// </summary>
-string GetLinesFromCode(int lineNumber, FileInfo code)
-{
-    string[] lines = File.ReadAllLines(code.FullName);
-
-    int start = Math.Max(lineNumber - 3, 0);
-    int end = Math.Min(lineNumber + 3, lines.Length);
-    return string.Join(Environment.NewLine, lines[new Range(start, end)]);
+    return Renderer.Render(new FileInfo(pathToExceptionHtml), new SubscriberContext(subscriberExceptionContext.ToJsonString()));
 }
 
 int RunAmpscriptFile(FileInfo source, IConsole console)
@@ -103,6 +102,63 @@ int RunAmpscriptFile(FileInfo source, IConsole console)
 
     app.Run();
     return 0;
+}
+
+int RunPackage(PackageGraph graph, CommandLine.EntityType type, string sourceId, DirectoryInfo outputDirectory)
+{
+    if (outputDirectory == null)
+    {
+        outputDirectory = new DirectoryInfo("out");
+    }
+
+    if (!outputDirectory.Exists)
+    {
+        Directory.CreateDirectory(outputDirectory.FullName);
+    }
+
+    FileInfo flattenedContentPath = new FileInfo(Path.Join(outputDirectory.FullName, "sourceId.ampscript"));
+
+    switch (type)
+    {
+        case CommandLine.EntityType.Asset:
+            Asset? asset = graph.GetAsset(int.Parse(sourceId));
+
+            if (asset == null)
+            {
+                throw new InvalidDataException($"Cannot find asset {sourceId}");
+            }
+
+            File.WriteAllText(flattenedContentPath.FullName, asset.Compile());
+            break;
+    }
+
+    app.MapGet("/", () => Results.Content(RenderContent(flattenedContentPath), MediaTypeNames.Text.Html));
+
+    app.Run();
+
+    return 0;
+}
+
+int RunPackageZip(DirectoryInfo packageDir, CommandLine.EntityType type, string sourceId, DirectoryInfo outputDirectory, IConsole console)
+{
+    return RunPackage(PackageGraph.FromZip(packageDir), type, sourceId, outputDirectory);
+}
+
+int RunPackageJson(FileInfo source, CommandLine.EntityType type, string sourceId, DirectoryInfo outputDirectory, IConsole console)
+{
+    return RunPackage(PackageGraph.FromJson(source), type, sourceId, outputDirectory);
+}
+
+/// <summary>
+/// Gets lines of code near the given line number
+/// </summary>
+string GetLinesFromCode(int lineNumber, FileInfo code)
+{
+    string[] lines = File.ReadAllLines(code.FullName);
+
+    int start = Math.Max(lineNumber - 3, 0);
+    int end = Math.Min(lineNumber + 3, lines.Length);
+    return string.Join(Environment.NewLine, lines[new Range(start, end)]);
 }
 
 commandLine.LaunchCommand.Invoke(args);

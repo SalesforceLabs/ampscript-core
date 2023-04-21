@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -8,33 +8,35 @@
     }
   },
   "profiles": {
-    "http": {
+    "PackageZip": {
       "commandName": "Project",
-      "commandLineArgs": "<<Insert path to AMPScript file>>",
-      "dotnetRunMessages": true,
+      "commandLineArgs": "packagezip --packageDir \"<<Insert path to PackageManager unzipped directory>>\" -t Asset --sourceId <<Insert ID of asset to be debugged>>",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5276",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7194"
     },
-    "https": {
-      "commandLineArgs": "<<Insert path to AMPScript file>>",
+    "PackageJson": {
       "commandName": "Project",
+      "commandLineArgs": "packagejson --source \"<<Insert path to JSON file to be debugged>>\" -t Asset --sourceId <<Insert ID of asset to be debugged>>",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
       "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:7194;http://localhost:5276",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      "applicationUrl": "https://localhost:7194"
     },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "commandLineArgs": "<<Insert path to AMPScript file>>",
+    "Ampscript ": {
+      "commandName": "Project",
+      "commandLineArgs": "ampscript --source \"<<Insert path to JSON file to be debugged>>\"",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7194"
     }
   }
 }

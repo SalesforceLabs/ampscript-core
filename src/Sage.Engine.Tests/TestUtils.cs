@@ -36,7 +36,7 @@ public static class TestUtils
     {
         return new RuntimeContext(
             options,
-            await DataExtensionClientFactory.CreateInMemoryDataExtensions(),
+            await DataExtensionClientFactory.CreateInMemoryDataExtensions(new DirectoryInfo(Environment.CurrentDirectory)),
             test.SubscriberContext);
     }
 

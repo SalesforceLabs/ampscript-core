@@ -33,15 +33,18 @@ namespace Sage.Engine.Data.Sqlite
             get;
         }
 
-        public SqliteDataExtensionClient(string connectionString)
+        public SqliteDataExtensionClient(string connectionString, DirectoryInfo workingDirectory)
         {
             Connection = new SqliteConnection(connectionString);
+            WorkingDirectory = workingDirectory;
         }
 
         public async Task OpenAsync()
         {
             await Connection.OpenAsync();
         }
+
+        public DirectoryInfo WorkingDirectory { get; }
 
         public async Task<DataTable> LookupAsync(LookupRequest lookup)
         {
@@ -105,7 +108,7 @@ namespace Sage.Engine.Data.Sqlite
 
             if (schema.Rows.Count == 0)
             {
-                await this.LoadCsv(Environment.CurrentDirectory, table.Unquote());
+                await this.LoadCsv(WorkingDirectory.FullName, table.Unquote());
             }
         }
 

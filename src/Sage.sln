@@ -18,6 +18,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateComparisonCorpusTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Engine.Data", "Sage.Engine.Data\Sage.Engine.Data.csproj", "{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.PackageManager", "Sage.PackageManager\Sage.PackageManager.csproj", "{19767037-EBDC-46F2-B017-8B5EC6A04802}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sage.PackageManager.Tests", "Sage.PackageManager.Tests\Sage.PackageManager.Tests.csproj", "{DC2F94A6-8CA2-4DE6-860D-3E711FBAC769}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19767037-EBDC-46F2-B017-8B5EC6A04802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19767037-EBDC-46F2-B017-8B5EC6A04802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19767037-EBDC-46F2-B017-8B5EC6A04802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19767037-EBDC-46F2-B017-8B5EC6A04802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2F94A6-8CA2-4DE6-860D-3E711FBAC769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2F94A6-8CA2-4DE6-860D-3E711FBAC769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2F94A6-8CA2-4DE6-860D-3E711FBAC769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2F94A6-8CA2-4DE6-860D-3E711FBAC769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

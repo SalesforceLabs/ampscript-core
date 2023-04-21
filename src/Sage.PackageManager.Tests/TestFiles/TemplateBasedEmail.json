@@ -1,0 +1,34 @@
+{
+  "assetType": {
+    "id": 207
+  },
+  "name": "NTO Welcome Series Email",
+  "views": {
+    "subjectline": {
+      "content": "Welcome %%First_Name%% to Northern Trail Outfitters"
+    },
+    "preheader": {},
+    "html": {
+      "content": "<html><head></head><body><div><div data-type=\"slot\" data-key=\"myslot\"></div></div></body></html>",
+      "slots": {
+        "myslot": {
+          "content": "",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>"
+        }
+      },
+      "template": {
+        "id": 108494,
+        "assetType": {
+          "id": 4
+        }
+      }
+    }
+  },
+  "data": {
+    "email": {
+      "options": {
+        "characterEncoding": "utf-8"
+      }
+    }
+  }
+}

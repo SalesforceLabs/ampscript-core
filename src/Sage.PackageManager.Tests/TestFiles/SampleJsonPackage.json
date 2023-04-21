@@ -1,0 +1,208 @@
+{
+  "appVersion": "240.3.42",
+  "id": "11111111-1111-1111-1111-111111111111",
+  "name": "Sample Json Package",
+  "version": 1,
+  "modelVersion": "4",
+  "references": {
+    "assets/1234": [
+      {
+        "identifier": "categories/5678",
+        "relationship": "required"
+      }
+    ],
+    "categories/5678": []
+  },
+  "input": [],
+  "config": {
+    "preserveCategories": true,
+    "storeImagesAsReferences": false
+  },
+  "entities": {
+    "assets": {
+      "1234": {
+        "issues": [],
+        "originID": "111111",
+        "originEID": "TSE",
+        "data": {
+          "assetType": {
+            "id": 208,
+            "name": "htmlemail"
+          },
+          "data": {
+            "email": {
+              "options": {
+                "characterEncoding": "utf-8"
+              },
+              "attributes": [
+                {
+                  "displayName": "__AdditionalEmailAttribute1",
+                  "name": "__AdditionalEmailAttribute1",
+                  "value": "",
+                  "order": 1,
+                  "channel": "email",
+                  "attributeType": "AdditionalEmailAttribute"
+                }
+              ]
+            }
+          },
+          "description": "",
+          "name": "Sample Html Email",
+          "category": {
+            "id": "{{mcpm#/entities/categories/5678/data/id}}"
+          },
+          "contentType": "application/vnd.etmc.email.Message; kind=paste",
+          "views": {
+            "subjectline": {
+              "contentType": "application/vnd.etmc.email.View; kind=subjectline",
+              "content": "Sample subject line",
+              "meta": {},
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            },
+            "preheader": {
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            },
+            "html": {
+              "content": "Content",
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            },
+            "text": {
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": "html"
+                  }
+                }
+              },
+              "generateFrom": "html",
+              "modelVersion": 2
+            },
+            "viewAsAWebPage": {
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            },
+            "subscriptioncenter": {
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            },
+            "forwardHTML": {
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            },
+            "forwardText": {
+              "availableViews": [],
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            }
+          }
+        }
+      }
+    },
+    "attributeGroups": {},
+    "attributeRelationships": {},
+    "attributeSets": {},
+    "automations": {},
+    "categories": {
+      "5678": {
+        "issues": [],
+        "originID": "111111",
+        "originEID": "TSE",
+        "data": {
+          "description": "The root folder for assets",
+          "categoryType": "asset",
+          "parentId": 0,
+          "name": "Content Builder",
+          "editable": 0,
+          "extendable": 1
+        }
+      }
+    },
+    "cloudPageCollections": {},
+    "codeResources": {},
+    "dataExtensions": {},
+    "dataExtractActivities": {},
+    "dataFilterDefinitions": {},
+    "dataFilters": {},
+    "eventDefinitions": {},
+    "fileTransferActivities": {},
+    "importActivities": {},
+    "journeys": {},
+    "journeyTemplates": {},
+    "landingPages": {},
+    "microsites": {},
+    "micrositePages": {},
+    "micrositePageVersions": {},
+    "primaryLandingPages": {},
+    "queryActivities": {},
+    "scriptActivities": {},
+    "sendDefinitions": {},
+    "sharedDataExtensions": {},
+    "siteMapVersions": {},
+    "subscriberLists": {},
+    "verificationActivities": {}
+  },
+  "selectedEntities": {
+    "assets": [
+      1234
+    ],
+    "attributeGroups": [],
+    "automations": [],
+    "cloudPageCollections": [],
+    "dataExtensions": [],
+    "journeys": [],
+    "journeyTemplates": [],
+    "sharedDataExtensions": []
+  }
+}

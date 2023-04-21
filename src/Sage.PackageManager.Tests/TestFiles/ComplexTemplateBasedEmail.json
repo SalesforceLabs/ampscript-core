@@ -1,0 +1,614 @@
+{
+  "id": 108495,
+  "customerKey": "090c69e7-59ac-4286-8733-f8f7613ab470",
+  "objectID": "1cd57450-3f4a-46a8-9177-068f031ff56f",
+  "contentType": "application/vnd.etmc.email.Message; kind=template",
+  "assetType": {
+    "id": 207,
+    "name": "templatebasedemail",
+    "displayName": "Template-Based Email"
+  },
+  "name": "NTO Welcome Series Email",
+  "description": "",
+  "owner": {
+    "id": 10817573,
+    "email": "user@example.com",
+    "name": "User"
+  },
+  "createdDate": "2016-12-05T21:28:43.317-06:00",
+  "createdBy": {
+    "id": 10817573,
+    "email": "user@example.com",
+    "name": "User"
+  },
+  "modifiedDate": "2016-12-07T07:43:15.17-06:00",
+  "modifiedBy": {
+    "id": 10817573,
+    "email": "user@example.com",
+    "name": "User"
+  },
+  "enterpriseId": 10806781,
+  "memberId": 10806781,
+  "status": {
+    "id": 1,
+    "name": "Draft"
+  },
+  "sharingProperties": {
+    "sharedWith": [
+      333,
+      555
+    ],
+    "sharingType": "view"
+  },
+  "category": {
+    "id": 1467802,
+    "parentId": 0,
+    "name": "Content Builder"
+  },
+  "views": {
+    "subjectline": {
+      "contentType": "application/vnd.etmc.email.View; kind=subjectline",
+      "thumbnail": {
+        "thumbnailHtml": "Welcome %%First_Name%% to Northern Trail Outfitters"
+      },
+      "content": "Welcome %%First_Name%% to Northern Trail Outfitters",
+      "meta": {},
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": ""
+          }
+        }
+      },
+      "modelVersion": 2
+    },
+    "preheader": {
+      "thumbnail": {
+        "thumbnailHtml": ""
+      },
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": ""
+          }
+        }
+      },
+      "modelVersion": 2
+    },
+    "text": {
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": "html"
+          }
+        }
+      },
+      "generateFrom": "html",
+      "modelVersion": 2
+    },
+    "viewAsAWebPage": {
+      "thumbnail": {
+        "thumbnailHtml": ""
+      },
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": ""
+          }
+        }
+      },
+      "modelVersion": 2
+    },
+    "subscriptioncenter": {
+      "thumbnail": {
+        "thumbnailHtml": ""
+      },
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": ""
+          }
+        }
+      },
+      "modelVersion": 2
+    },
+    "forwardHTML": {
+      "thumbnail": {
+        "thumbnailHtml": ""
+      },
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": ""
+          }
+        }
+      },
+      "modelVersion": 2
+    },
+    "forwardText": {
+      "thumbnail": {
+        "thumbnailHtml": ""
+      },
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": ""
+          }
+        }
+      },
+      "modelVersion": 2
+    },
+    "html": {
+      "content": "<!DOCTYPE html> \n<html> \n  <head> \n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\" /> \n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> \n    <style type=\"text/css\"> .ReadMsgBody {\n      width: 100%;\n    }\n      .ExternalClass {\n        width: 100%;\n      }\n      div, p, a, li, td {\n        -webkit-text-size-adjust:none;\n      }\n      body {\n        -webkit-text-size-adjust:100%;\n        -ms-text-size-adjust:100%;\n        margin:0 !important;\n        padding:0 !important;\n      }\n      table td {\n        border-collapse: collapse;\n      }\n      img {\n        outline:0;\n      }\n      a img {\n        border:none;\n      }\n      @media screen and (max-width: 480px) {\n        td[class=\"headercell-phone\"] {\n          display:none;\n        }\n        table[class=\"container\"] {\n          width:360px !important;\n        }\n        table[class=\"hero\"] {\n          width:100% !important;\n        }\n        table[class=\"full-width\"], td[class=\"full-width\"] {\n          width:100% !important;\n          float:left !important;\n          padding:10px 15px 10px 15px !important;\n        }\n        table[class=\"full-width-hero-content\"], td[class=\"full-width-hero-content\"] {\n          width:90% !important;\n          float:left !important;\n          padding: 0 5% 0 5% !important;\n          display: block !important;\n        }\n        table[class=\"full-width-hero-image\"], td[class=\"full-width-hero-image\"] {\n          float:left !important;\n          display: block !important;\n        }\n        img[class=\"photo\"] {\n          width:100% !important;\n          height:auto !important;\n          display: block;\n        }\n        td[id=\"preheader\"]{\n          width:auto !important;\n        }\n        td[class=\"row\"]{\n          width:100% !important;\n        }\n        td[class=\"hide\"] {\n          display:none !important;\n        }\n        td[class=\"headercell-phone\"] {\n          display:inline !important;\n        }\n        td[class=\"headercell-desktop\"] img {\n          display: none !important;\n        }\n        span[class=\"center-text\"]{\n          text-align:center !important;\n        }\n      }\n    </style> \n  </head> \n  <body bgcolor=\"#e8e8e8\"> \n    <!-- ============================== --> \n    <!-- Flexible Branding Template --> \n    <!-- ============================== --> \n    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#e8e8e8\"> \n      <tr> \n        <td> \n          <!-- ============================== --> \n          <!-- White background wrapper --> \n          <!-- ============================== --> \n          <table class=\"container\" bgcolor=\"#ffffff\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"background-color:#ffffff !important;\"> \n            <tr> \n              <td> \n                <!-- ============================== --> \n                <!-- Logo and Preheader --> \n                <!-- ============================== --> \n                <table class=\"container\" bgcolor=\"#6ccdf0\" style=\"padding: 20px 0 0 0;\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td width=\"195\" style=\"padding:0 15px 15px 0px;\"> \n                      <center>\n                        <a href=\"http://ntoutfitters.com\" alias=\"NTO Logo\" style=\"outline:none\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-nto-logo-white.png\"></a>\n                      </center> \n                    </td> \n                    <td class=\"hide\" width=\"225\" style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#ffffff; font-size:13px; line-height:12px; text-align:right; padding:0 25px 0 0;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"preheader\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Hero Image --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 0 25px 0;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"heroimage\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"cell01\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"cell02\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"cell03\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      </td> \n                  </tr> \n                </table>\n              </td> \n            </tr> \n          </table> \n        </td> \n      </tr> \n    </table> \n    <!-- ============================== --> \n    <!-- Footer --> \n    <!-- ============================== --> \n    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#393939\"> \n      <tr> \n        <td height=\"7px\" bgcolor=\"#6ccdf0\"> \n        </td> \n      </tr> \n      <tr> \n        <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; text-align:center; color:#a5a5a5; font-size:9px; line-height:10px; padding:0 50px 35px 50px;\"> \n          <a href=\"http://ntoutfitters.com/\" target=\"_blank\" alias=\"NTO Logo\" style=\"outline:none\"><img style=\"padding:35px 0 25px 0;\" src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-nto-logo-footer.png\"></a>\n          <br> \n          <span style=\"display:block;font-weight:bold; font-size:14px;\">Northern Trail Outfitters</span>\n          <br> %%Member_Busname%% registered address: \n          <br /> %%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%.\n          <br /> \n        </td> \n      </tr> \n      <tr> \n        <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; text-align:center; color:#a5a5a5; font-size:12px; font-weight:bold; line-height:16px; padding:0 55px 25px 55px;\"> \n          <a href=\"http://www.ntoutfitters.com\" alias=\"Contact Us\" target=\"_blank\" style=\"color:#a5a5a5;text-decoration:none;\">Contact Us</a> | \n          <a href=\"http://www.ntoutfitters.com\" alias=\"Store Locator\" target=\"_blank\" style=\"color:#a5a5a5;text-decoration:none;\">Store Locator</a> | \n          <a href=\"%%subscription_center_url%%\" alias=\"Manage Subscriptions\" target=\"_blank\" style=\"color:#a5a5a5;text-decoration:none;\">Manage Subscriptions</a> | \n          <a href=\"%%profile_center_url%%\" target=\"_blank\" alias=\"Profile Center\" style=\"color:#a5a5a5;text-decoration:none;\">Update Profile</a> | \n          <a class=\"mod_click\" target=\"_blank\" href=\"%%unsub_center_url%%\" alias=\"Unsubscribe\" title=\"Unsubscribe\" style=\"color:#a5a5a5;text-decoration:none;\">Unsubscribe</a> \n          <br> \n        </td> \n      </tr> \n      <tr> \n        <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; text-align:center; color:#a5a5a5; font-size:12px; line-height:14px; padding:0 100px 25px 100px; text-align: center;\"> \n          <a href=\"https://www.facebook.com/NTOutfitters\" alias=\"NTO Facebook\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-facebook.png\" style=\"padding:0 10px 0 0;\"/></a> \n          <a href=\"https://twitter.com/NTOutfitters\" alias=\"NTO Twitter\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-twitter.png\" style=\"padding:0 10px 0 0;\"/></a> \n          <a href=\"https://www.pinterest.com/ntoutfitters/\" alias=\"NTO Pinterest\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-pinterest.png\" style=\"padding:0 10px 0 0;\"/></a> \n          <a href=\"http://www.ntoutfitters.com\" alias=\"NTO Email\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-email.png\" /></a> \n        </td> \n      </tr> \n    </table> \n    <div id=\"tracking_pixel\"> \n      <custom name=\"opencounter\" type=\"tracking\"> \n        </div> \n      <div id=\"campaign_pixel\"> \n      </div> \n      </body> \n    </html>",
+      "slots": {
+        "preheader": {
+          "content": "<div data-type=\"block\" data-key=\"szcm0z6zm01hp015izi2akyb9\" data-original-key=\"none\"></div>",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "blocks": {
+            "szcm0z6zm01hp015izi2akyb9": {
+              "assetType": {
+                "id": 197,
+                "name": "htmlblock"
+              },
+              "content": "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\" style=\"\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">  <tr> <td style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #ffffff; font-size: 13px; line-height: 12px; text-align: right;\"> Welcome aboard!<br> <a alias=\"View as a Web Page\" class=\"view_link\" style=\"color: #393939; text-decoration: none; font-size: 11px; line-height: 24px;\" target=\"_blank\" href=\"%%view_email_url%%\">WEB VERSION</a> </td> </tr>  </table></td></tr></table>",
+              "design": "<div class=\"default-design\"><div style=\"width:100%;height:150px;\"></div></div>",
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            }
+          },
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "heroimage": {
+          "content": "<div data-type=\"block\" data-key=\"j0amkj3nxauswhdnyr4b73nmi\" data-original-key=\"none\"></div>",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "blocks": {
+            "j0amkj3nxauswhdnyr4b73nmi": {
+              "assetType": {
+                "id": 199,
+                "name": "imageblock"
+              },
+              "content": "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\" style=\"\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\"><tr><td><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/campaign-toolkits/welcome-series/welcome-step-1/welcome-step1-hero.png\" height=\"auto\" width=\"100%\" class=\"photo\" style=\"height:auto;width:100%;display: block;padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px;\"></td></tr></table></td></tr></table>",
+              "design": "<div class=\"default-design\"><div style=\"width:100%;height:150px;\"></div></div>",
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            }
+          },
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "cell01": {
+          "content": "<div data-type=\"block\" data-key=\"2p58k7y5gk7g0kcnb6jgeklnmi\" data-original-key=\"none\"></div>",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "blocks": {
+            "2p58k7y5gk7g0kcnb6jgeklnmi": {
+              "assetType": {
+                "id": 197,
+                "name": "htmlblock"
+              },
+              "content": "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\" style=\"\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">  <tr> <td style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; text-align: left; font-size: 16px; line-height: 22px; padding: 0px 0px 15px;\"> %%First_Name%%,<br> <br> Hello and welcome! Thanks for signing up by %%Opt_in_Source%% - you're officially registered with NTO. Expect to hear from us about the latest outdoor news and all of our best offers and discounts. In the meantime, here's a few things to get you started... </td> </tr>  </table></td></tr></table>",
+              "design": "<div class=\"default-design\"><div style=\"width:100%;height:150px;\"></div></div>",
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            }
+          },
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "cell02": {
+          "content": "<div data-type=\"block\" data-key=\"bxfltwledxksb8ozl95n91wcdi\" data-original-key=\"none\"></div>",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "blocks": {
+            "bxfltwledxksb8ozl95n91wcdi": {
+              "assetType": {
+                "id": 197,
+                "name": "htmlblock"
+              },
+              "content": "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\" style=\"\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 10px 0px;\">  <tr> <td width=\"15%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 16px; line-height: 22px; padding: 0px; text-align: center;\" class=\"full-width\"> <img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/campaign-toolkits/welcome-series/welcome-step-1/welcome-step1-icon1.png\"> </td> <td width=\"85%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 14px; line-height: 22px; padding: 5px;\" class=\"full-width\"> <b>Let's get to know each other.</b><br> Take a minute to fill out your profile and communications preferences so we can send you the most relevant and timely offers and discounts. <!-- ============================== --> <!-- Blue CTA BTN --> <!-- ============================== --> <table width=\"40%\" class=\"full-width\">  <tr> <td style=\"padding: 10px 0px 0px;\"> <a style=\"color: #ffffff; text-decoration: none;\" target=\"_blank\" class=\"mod_click\" href=\"%%profile_center_url%%\"><span style=\"font-family: Gotham,Helvetica,Arial,sans-serif; display: block; color: #ffffff; text-align: center; font-size: 12px; padding: 7px 0px; border-radius: 20px; background-color: #6ccdf0;\">Complete Profile</span></a> </td> </tr>  </table> </td> </tr>  </table></td></tr></table>",
+              "design": "<div class=\"default-design\"><div style=\"width:100%;height:150px;\"></div></div>",
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            }
+          },
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "cell03": {
+          "content": "<div data-type=\"block\" data-key=\"nnrzge987d6b1jqk2n4b1emi\" data-original-key=\"none\"></div>",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "blocks": {
+            "nnrzge987d6b1jqk2n4b1emi": {
+              "assetType": {
+                "id": 201,
+                "name": "dynamicblock"
+              },
+              "content": "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\" style=\"\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\">{{#=if (([isNTOMember] == true))}}\n{{= BeginImpressionRegion(\"NTO Start Earning Rewards\")}}<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 10px 0px;\"> \n   \n    <tr> \n      <td width=\"15%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 16px; line-height: 22px; padding: 0px; text-align: center;\" class=\"full-width\"> \n        <img src=\"http://image.s4.exct.net/lib/fe901570726d037d72/m/1/welcome-step1-icon2.png\"> \n      </td> \n      <td width=\"85%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 14px; line-height: 22px; padding: 5px;\" class=\"full-width\"> \n        <b>Start earning rewards with myNTO.\n        </b>\n        <br> As an exclusive member of myNTO, you're on your way to earning points on every NTO purchase. Keep it up! \n        <!-- ============================== --> \n        <!-- Blue CTA BTN --> \n        <!-- ============================== --> \n        <table width=\"40%\" class=\"full-width\"> \n           \n            <tr> \n              <td width=\"175\" style=\"padding: 10px 0px 0px;\"> \n                <a style=\"color: #ffffff; text-decoration: none;\" target=\"_blank\" class=\"mod_click\" href=\"http://ntoretail.com\"><span style=\"font-family: Gotham,Helvetica,Arial,sans-serif; display: block; color: #ffffff; text-align: center; font-size: 12px; padding: 7px 0px; border-radius: 20px; background-color: #6ccdf0;\">Learn More</span></a> \n              </td> \n            </tr> \n           \n        </table> \n      </td> \n    </tr> \n   \n</table></td></tr></table>{{= EndImpressionRegion()}}\n{{.else}}\n{{= BeginImpressionRegion(\"NTO Join for Discounts\")}}<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 10px 0px;\"> \n   \n    <tr> \n      <td width=\"15%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 16px; line-height: 22px; padding: 0px; text-align: center;\" class=\"full-width\"> \n        <img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/campaign-toolkits/welcome-series/welcome-step-1/welcome-step1-icon2.png\"> \n      </td> \n      <td width=\"85%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 14px; line-height: 22px; padding: 5px;\" class=\"full-width\"> \n        <b>Join myNTO for exclusive discounts.\n        </b>\n        <br> Exclusive offers and rewards have never been so easy! Join myNTO and start earning points on every purchase. \n        <!-- ============================== --> \n        <!-- Blue CTA BTN --> \n        <!-- ============================== --> \n        <table width=\"40%\" class=\"full-width\"> \n           \n            <tr> \n              <td style=\"padding: 10px 0px 0px;\"> \n                <a style=\"color: #ffffff; text-decoration: none;\" target=\"_blank\" class=\"mod_click\" href=\"http://ntoretail.com\"><span style=\"font-family: Gotham,Helvetica,Arial,sans-serif; display: block; color: #ffffff; text-align: center; font-size: 12px; padding: 7px 0px; border-radius: 20px; background-color: #6ccdf0;\">Learn More</span></a> \n              </td> \n            </tr> \n           \n        </table> \n      </td> \n    </tr> \n   \n</table></td></tr></table>{{= EndImpressionRegion()}}\n{{/if}}</td></tr></table>",
+              "superContent": "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"stylingblock-content-wrapper\"><tr><td class=\"stylingblock-content-wrapper camarker-inner\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 10px 0px;\"> \n   \n    <tbody><tr> \n      <td width=\"15%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 16px; line-height: 22px; padding: 0px; text-align: center;\" class=\"full-width\"> \n        <img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/campaign-toolkits/welcome-series/welcome-step-1/welcome-step1-icon2.png\"> \n      </td> \n      <td width=\"85%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 14px; line-height: 22px; padding: 5px;\" class=\"full-width\"> \n        <b>Join myNTO for exclusive discounts.\n        </b>\n        <br> Exclusive offers and rewards have never been so easy! Join myNTO and start earning points on every purchase. \n        <!-- ============================== --> \n        <!-- Blue CTA BTN --> \n        <!-- ============================== --> \n        <table width=\"40%\" class=\"full-width\"> \n           \n            <tbody><tr> \n              <td style=\"padding: 10px 0px 0px;\"> \n                <a style=\"color: #ffffff; text-decoration: none;\" target=\"_blank\" class=\"mod_click\" href=\"http://ntoretail.com\"><span style=\"font-family: Gotham,Helvetica,Arial,sans-serif; display: block; color: #ffffff; text-align: center; font-size: 12px; padding: 7px 0px; border-radius: 20px; background-color: #6ccdf0;\">Learn More</span></a> \n              </td> \n            </tr> \n           \n        </tbody></table> \n      </td> \n    </tr> \n   \n</tbody></table></td></tr></table>",
+              "meta": {
+                "options": {
+                  "dynamicContent": {
+                    "views": {
+                      "html": {
+                        "name": "",
+                        "defaultContent": {
+                          "id": 108497,
+                          "name": "NTO Join for Discounts",
+                          "type": {
+                            "id": 197,
+                            "name": "htmlblock",
+                            "displayName": "HTML Block"
+                          },
+                          "textContent": "<div data-marker=\"wrapper\" class=\"stylingblock-content-wrapper\" style=\"\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 10px 0px;\"> \n   \n    <tr> \n      <td width=\"15%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 16px; line-height: 22px; padding: 0px; text-align: center;\" class=\"full-width\"> \n        <img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/campaign-toolkits/welcome-series/welcome-step-1/welcome-step1-icon2.png\"> \n      </td> \n      <td width=\"85%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 14px; line-height: 22px; padding: 5px;\" class=\"full-width\"> \n        <b>Join myNTO for exclusive discounts.\n        </b>\n        <br> Exclusive offers and rewards have never been so easy! Join myNTO and start earning points on every purchase. \n        <!-- ============================== --> \n        <!-- Blue CTA BTN --> \n        <!-- ============================== --> \n        <table width=\"40%\" class=\"full-width\"> \n           \n            <tr> \n              <td style=\"padding: 10px 0px 0px;\"> \n                <a style=\"color: #ffffff; text-decoration: none;\" target=\"_blank\" class=\"mod_click\" href=\"http://ntoretail.com\"><span style=\"font-family: Gotham,Helvetica,Arial,sans-serif; display: block; color: #ffffff; text-align: center; font-size: 12px; padding: 7px 0px; border-radius: 20px; background-color: #6ccdf0;\">Learn More</span></a> \n              </td> \n            </tr> \n           \n        </table> \n      </td> \n    </tr> \n   \n</table></div>",
+                          "thumbnail": "http://image.example.com"
+                        },
+                        "dataSource": {
+                          "type": "profileattribute",
+                          "name": "Profile Attributes"
+                        },
+                        "variants": [
+                          {
+                            "name": "Rule 1",
+                            "content": {
+                              "id": 108496,
+                              "name": "NTO Start Earning Rewards",
+                              "asset": {
+                                "id": 108496,
+                                "customerKey": "391fa72d-d3a5-47c8-8cb0-9aa18d5e805d",
+                                "objectID": "1e91f142-b6c7-45b0-acfc-8df0925ddb9f",
+                                "assetType": {
+                                  "id": 197,
+                                  "name": "htmlblock",
+                                  "displayName": "HTML Block"
+                                },
+                                "name": "NTO Start Earning Rewards",
+                                "owner": {
+                                  "id": 10817573,
+                                  "email": "user@example.com",
+                                  "name": "User"
+                                },
+                                "createdDate": "2016-12-05T21:34:41-06:00",
+                                "createdBy": {
+                                  "id": 10817573,
+                                  "email": "user@example.com",
+                                  "name": "User"
+                                },
+                                "modifiedDate": "2016-12-05T21:34:41-06:00",
+                                "modifiedBy": {
+                                  "id": 10817573,
+                                  "email": "user@example.com",
+                                  "name": "User"
+                                },
+                                "enterpriseId": 10806781,
+                                "memberId": 10806781,
+                                "status": {
+                                  "id": 1,
+                                  "name": "Draft"
+                                },
+                                "thumbnailUrl": "/v1/assets/108496/thumbnail",
+                                "category": {
+                                  "id": 1467802,
+                                  "parentId": 0,
+                                  "name": "Content Builder"
+                                },
+                                "options": {
+                                  "generateFrom": null
+                                },
+                                "content": "<div data-marker=\"wrapper\" class=\"stylingblock-content-wrapper\" style=\"\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 10px 0px;\"> \n   \n    <tr> \n      <td width=\"15%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 16px; line-height: 22px; padding: 0px; text-align: center;\" class=\"full-width\"> \n        <img src=\"http://image.s4.exct.net/lib/fe901570726d037d72/m/1/welcome-step1-icon2.png\"> \n      </td> \n      <td width=\"85%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 14px; line-height: 22px; padding: 5px;\" class=\"full-width\"> \n        <b>Start earning rewards with myNTO.\n        </b>\n        <br> As an exclusive member of myNTO, you're on your way to earning points on every NTO purchase. Keep it up! \n        <!-- ============================== --> \n        <!-- Blue CTA BTN --> \n        <!-- ============================== --> \n        <table width=\"40%\" class=\"full-width\"> \n           \n            <tr> \n              <td width=\"175\" style=\"padding: 10px 0px 0px;\"> \n                <a style=\"color: #ffffff; text-decoration: none;\" target=\"_blank\" class=\"mod_click\" href=\"http://ntoretail.com\"><span style=\"font-family: Gotham,Helvetica,Arial,sans-serif; display: block; color: #ffffff; text-align: center; font-size: 12px; padding: 7px 0px; border-radius: 20px; background-color: #6ccdf0;\">Learn More</span></a> \n              </td> \n            </tr> \n           \n        </table> \n      </td> \n    </tr> \n   \n</table></div>",
+                                "modelVersion": 1,
+                                "model": {
+                                  "id": 197,
+                                  "fileExtension": "",
+                                  "name": "HTML Block",
+                                  "key": "htmlblock",
+                                  "parentAssetTypeID": 3,
+                                  "createdDate": "2015-07-31T20:17:59-06:00",
+                                  "modifiedDate": "2016-05-20T18:11:48-06:00",
+                                  "businessUnitAvailability": {},
+                                  "definitionData": {
+                                    "filters": {
+                                      "types": [
+                                        "Code",
+                                        "Content Block"
+                                      ]
+                                    },
+                                    "listingType": "HTML Block"
+                                  }
+                                }
+                              },
+                              "textContent": "<div data-marker=\"wrapper\" class=\"stylingblock-content-wrapper\" style=\"\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 10px 0px;\"> \n   \n    <tr> \n      <td width=\"15%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 16px; line-height: 22px; padding: 0px; text-align: center;\" class=\"full-width\"> \n        <img src=\"http://image.s4.exct.net/lib/fe901570726d037d72/m/1/welcome-step1-icon2.png\"> \n      </td> \n      <td width=\"85%\" style=\"font-family: Gotham,Helvetica,Arial,sans-serif; color: #6d6d6d; font-size: 14px; line-height: 22px; padding: 5px;\" class=\"full-width\"> \n        <b>Start earning rewards with myNTO.\n        </b>\n        <br> As an exclusive member of myNTO, you're on your way to earning points on every NTO purchase. Keep it up! \n        <!-- ============================== --> \n        <!-- Blue CTA BTN --> \n        <!-- ============================== --> \n        <table width=\"40%\" class=\"full-width\"> \n           \n            <tr> \n              <td width=\"175\" style=\"padding: 10px 0px 0px;\"> \n                <a style=\"color: #ffffff; text-decoration: none;\" target=\"_blank\" class=\"mod_click\" href=\"http://ntoretail.com\"><span style=\"font-family: Gotham,Helvetica,Arial,sans-serif; display: block; color: #ffffff; text-align: center; font-size: 12px; padding: 7px 0px; border-radius: 20px; background-color: #6ccdf0;\">Learn More</span></a> \n              </td> \n            </tr> \n           \n        </table> \n      </td> \n    </tr> \n   \n</table></div>"
+                            },
+                            "expression": {
+                              "operand": "AND",
+                              "conditions": [
+                                {
+                                  "name": "isNTOMember",
+                                  "displayName": "isNTOMember",
+                                  "dataType": "boolean",
+                                  "uiID": 8676,
+                                  "operator": "Equals",
+                                  "value": true
+                                }
+                              ]
+                            },
+                            "expressionText": "<span class=\"ft-grouping\"><span class=\"ft-name\">isNTOMember</span><span class=\"ft-operator\">is</span><span class=\"ft-value\">true</span></span>",
+                            "thumbnail": "http://image.example.com"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "email": {
+                  "options": {
+                    "generateFrom": ""
+                  }
+                }
+              },
+              "modelVersion": 2
+            }
+          },
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        }
+      }
+    },
+    "template": {
+      "id": 108494,
+      "customerKey": "9422321d-1ec4-452e-a407-9dc6657025d9",
+      "objectID": "83db8cbc-5cbd-49b4-b0ce-7993e03fff94",
+      "assetType": {
+        "id": 4,
+        "name": "template",
+        "displayName": "Template"
+      },
+      "name": "NTO Example Template",
+      "owner": {
+        "id": 10817573,
+        "email": "user@example.com",
+        "name": "User"
+      },
+      "createdDate": "2016-12-05T21:28:17-06:00",
+      "createdBy": {
+        "id": 10817573,
+        "email": "user@example.com",
+        "name": "User"
+      },
+      "modifiedDate": "2016-12-05T21:38:07-06:00",
+      "modifiedBy": {
+        "id": 10817573,
+        "email": "user@example.com",
+        "name": "User"
+      },
+      "enterpriseId": 10806781,
+      "memberId": 10806781,
+      "status": {
+        "id": 1,
+        "name": "Draft"
+      },
+      "category": {
+        "id": 1467802,
+        "parentId": 0,
+        "name": "Content Builder"
+      },
+      "content": "<!DOCTYPE html> \n<html> \n  <head> \n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\" /> \n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> \n    <style type=\"text/css\"> .ReadMsgBody {\n      width: 100%;\n    }\n      .ExternalClass {\n        width: 100%;\n      }\n      div, p, a, li, td {\n        -webkit-text-size-adjust:none;\n      }\n      body {\n        -webkit-text-size-adjust:100%;\n        -ms-text-size-adjust:100%;\n        margin:0 !important;\n        padding:0 !important;\n      }\n      table td {\n        border-collapse: collapse;\n      }\n      img {\n        outline:0;\n      }\n      a img {\n        border:none;\n      }\n      @media screen and (max-width: 480px) {\n        td[class=\"headercell-phone\"] {\n          display:none;\n        }\n        table[class=\"container\"] {\n          width:360px !important;\n        }\n        table[class=\"hero\"] {\n          width:100% !important;\n        }\n        table[class=\"full-width\"], td[class=\"full-width\"] {\n          width:100% !important;\n          float:left !important;\n          padding:10px 15px 10px 15px !important;\n        }\n        table[class=\"full-width-hero-content\"], td[class=\"full-width-hero-content\"] {\n          width:90% !important;\n          float:left !important;\n          padding: 0 5% 0 5% !important;\n          display: block !important;\n        }\n        table[class=\"full-width-hero-image\"], td[class=\"full-width-hero-image\"] {\n          float:left !important;\n          display: block !important;\n        }\n        img[class=\"photo\"] {\n          width:100% !important;\n          height:auto !important;\n          display: block;\n        }\n        td[id=\"preheader\"]{\n          width:auto !important;\n        }\n        td[class=\"row\"]{\n          width:100% !important;\n        }\n        td[class=\"hide\"] {\n          display:none !important;\n        }\n        td[class=\"headercell-phone\"] {\n          display:inline !important;\n        }\n        td[class=\"headercell-desktop\"] img {\n          display: none !important;\n        }\n        span[class=\"center-text\"]{\n          text-align:center !important;\n        }\n      }\n    </style> \n  </head> \n  <body bgcolor=\"#e8e8e8\"> \n    <!-- ============================== --> \n    <!-- Flexible Branding Template --> \n    <!-- ============================== --> \n    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#e8e8e8\"> \n      <tr> \n        <td> \n          <!-- ============================== --> \n          <!-- White background wrapper --> \n          <!-- ============================== --> \n          <table class=\"container\" bgcolor=\"#ffffff\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"background-color:#ffffff !important;\"> \n            <tr> \n              <td> \n                <!-- ============================== --> \n                <!-- Logo and Preheader --> \n                <!-- ============================== --> \n                <table class=\"container\" bgcolor=\"#6ccdf0\" style=\"padding: 20px 0 0 0;\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td width=\"195\" style=\"padding:0 15px 15px 0px;\"> \n                      <center>\n                        <a href=\"http://ntoutfitters.com\" alias=\"NTO Logo\" style=\"outline:none\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-nto-logo-white.png\"></a>\n                      </center> \n                    </td> \n                    <td class=\"hide\" width=\"225\" style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#ffffff; font-size:13px; line-height:12px; text-align:right; padding:0 25px 0 0;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"preheader\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Hero Image --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 0 25px 0;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"heroimage\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"cell01\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"cell02\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      <!-- CONTENT AREA --> \n                      <div data-type=\"slot\" data-key=\"cell03\" data-allowed-blocks=\"\" data-max-blocks=\"\" data-label=\"\">\n                      </div> \n                      <!-- END CONTENT AREA --> \n                    </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      </td> \n                  </tr> \n                </table> \n                <!-- ============================== --> \n                <!-- Section --> \n                <!-- ============================== --> \n                <table class=\"container\" width=\"600\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> \n                  <tr> \n                    <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; color:#4f4f4f; font-size:16px; line-height:22px; padding:0 25px 0 25px;\"> \n                      </td> \n                  </tr> \n                </table>\n              </td> \n            </tr> \n          </table> \n        </td> \n      </tr> \n    </table> \n    <!-- ============================== --> \n    <!-- Footer --> \n    <!-- ============================== --> \n    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#393939\"> \n      <tr> \n        <td height=\"7px\" bgcolor=\"#6ccdf0\"> \n        </td> \n      </tr> \n      <tr> \n        <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; text-align:center; color:#a5a5a5; font-size:9px; line-height:10px; padding:0 50px 35px 50px;\"> \n          <a href=\"http://ntoutfitters.com/\" target=\"_blank\" alias=\"NTO Logo\" style=\"outline:none\"><img style=\"padding:35px 0 25px 0;\" src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-nto-logo-footer.png\"></a>\n          <br> \n          <span style=\"display:block;font-weight:bold; font-size:14px;\">Northern Trail Outfitters</span>\n          <br> %%Member_Busname%% registered address: \n          <br /> %%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%.\n          <br /> \n        </td> \n      </tr> \n      <tr> \n        <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; text-align:center; color:#a5a5a5; font-size:12px; font-weight:bold; line-height:16px; padding:0 55px 25px 55px;\"> \n          <a href=\"http://www.ntoutfitters.com\" alias=\"Contact Us\" target=\"_blank\" style=\"color:#a5a5a5;text-decoration:none;\">Contact Us</a> | \n          <a href=\"http://www.ntoutfitters.com\" alias=\"Store Locator\" target=\"_blank\" style=\"color:#a5a5a5;text-decoration:none;\">Store Locator</a> | \n          <a href=\"%%subscription_center_url%%\" alias=\"Manage Subscriptions\" target=\"_blank\" style=\"color:#a5a5a5;text-decoration:none;\">Manage Subscriptions</a> | \n          <a href=\"%%profile_center_url%%\" target=\"_blank\" alias=\"Profile Center\" style=\"color:#a5a5a5;text-decoration:none;\">Update Profile</a> | \n          <a class=\"mod_click\" target=\"_blank\" href=\"%%unsub_center_url%%\" alias=\"Unsubscribe\" title=\"Unsubscribe\" style=\"color:#a5a5a5;text-decoration:none;\">Unsubscribe</a> \n          <br> \n        </td> \n      </tr> \n      <tr> \n        <td style=\"font-family:Gotham, Helvetica, Arial, sans-serif; text-align:center; color:#a5a5a5; font-size:12px; line-height:14px; padding:0 100px 25px 100px; text-align: center;\"> \n          <a href=\"https://www.facebook.com/NTOutfitters\" alias=\"NTO Facebook\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-facebook.png\" style=\"padding:0 10px 0 0;\"/></a> \n          <a href=\"https://twitter.com/NTOutfitters\" alias=\"NTO Twitter\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-twitter.png\" style=\"padding:0 10px 0 0;\"/></a> \n          <a href=\"https://www.pinterest.com/ntoutfitters/\" alias=\"NTO Pinterest\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-pinterest.png\" style=\"padding:0 10px 0 0;\"/></a> \n          <a href=\"http://www.ntoutfitters.com\" alias=\"NTO Email\" target=\"_blank\"><img src=\"https://s3-us-west-2.amazonaws.com/rd-industry-emails/retail/nto/brand-assets/email-templates/branding-social-icon-email.png\" /></a> \n        </td> \n      </tr> \n    </table> \n    <div id=\"tracking_pixel\"> \n      <custom name=\"opencounter\" type=\"tracking\"> \n        </div> \n      <div id=\"campaign_pixel\"> \n      </div> \n      </body> \n    </html>",
+      "slots": {
+        "preheader": {
+          "content": "",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "heroimage": {
+          "content": "",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "cell01": {
+          "content": "",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "cell02": {
+          "content": "",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        },
+        "cell03": {
+          "content": "",
+          "design": "<p style=\"font-family: arial; color: #CCCCCC; font-size: 12px; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 150px; padding: 10px; margin: 0; border: 1px dashed #CCCCCC;\">Drop blocks or content here</p>",
+          "maxBlocks": 0,
+          "allowedBlocks": [],
+          "data": {
+            "email": {
+              "options": {
+                "generateFrom": ""
+              }
+            }
+          },
+          "modelVersion": 2
+        }
+      },
+      "data": {
+        "email": {
+          "options": {
+            "generateFrom": ""
+          }
+        }
+      },
+      "modelVersion": 2
+    },
+    "data": {
+      "email": {
+        "options": {
+          "generateFrom": ""
+        }
+      }
+    },
+    "modelVersion": 2
+  },
+  "data": {
+    "campaigns": {
+      "campaigns": [
+        {
+          "CampaignId": 14263,
+          "CampaignAssociationId": 39882
+        }
+      ]
+    },
+    "email": {
+      "options": {
+        "characterEncoding": "utf-8"
+      },
+      "attributes": [
+        {
+          "DisplayName": "sample_attribute",
+          "Name": "__AdditionalEmailAttribute1",
+          "Value": "your_tracking",
+          "Order": 1,
+          "Channel": "email",
+          "AttributeType": "AdditionalEmailAttribute"
+        },
+        {
+          "DisplayName": "utm_medium",
+          "Name": "__AdditionalEmailAttribute2",
+          "Value": "salesforce",
+          "Order": 2,
+          "Channel": "email",
+          "AttributeType": "AdditionalEmailAttribute"
+        },
+        {
+          "DisplayName": "utm_campaign",
+          "Name": "__AdditionalEmailAttribute3",
+          "Value": "newsletter",
+          "Order": 3,
+          "Channel": "email",
+          "AttributeType": "AdditionalEmailAttribute"
+        },
+        {
+          "DisplayName": "utm_source",
+          "Name": "__AdditionalEmailAttribute4",
+          "Value": "email",
+          "Order": 4,
+          "Channel": "email",
+          "AttributeType": "AdditionalEmailAttribute"
+        },
+        {
+          "DisplayName": "__AdditionalEmailAttribute5",
+          "Name": "__AdditionalEmailAttribute5",
+          "Value": "50_percent_off",
+          "Order": 5,
+          "Channel": "email",
+          "AttributeType": "AdditionalEmailAttribute"
+        }
+      ],
+      "legacy": {
+        "legacyId": 3272283,
+        "legacyKey": "090c69e7-59ac-4286-8733-f8f7613ab470",
+        "legacyType": "email",
+        "legacyCategoryId": 1609187
+      }
+    }
+  },
+  "modelVersion": 2
+}
