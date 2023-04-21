@@ -29,10 +29,4 @@
     <ProjectReference Include="..\Sage.Engine.Data\Sage.Engine.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Examples\HelloWorld.ampscript">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
