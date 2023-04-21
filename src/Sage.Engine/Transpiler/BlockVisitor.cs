@@ -3,9 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using Sage.Engine.Parser;
 
 namespace Sage.Engine.Transpiler;
@@ -45,15 +43,20 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
         {
             foreach (StatementSyntax statement in _transpiler.StatementVisitor.Visit(context.ampStatement(i)))
             {
+                _transpiler.Runtime.SetCurrentLineNumber(context.Start.Line);
                 yield return statement;
             }
         }
     }
 
+    /// <summary>
+    /// An inline AmpBlock is AMPScript of the form %%= -- for example, %%=V(Firstname)=%%.
+    /// </summary>
     public override IEnumerable<StatementSyntax> VisitInlineAmpBlock(SageParser.InlineAmpBlockContext context)
     {
         return new[]
         {
+            _transpiler.Runtime.SetCurrentLineNumber(context.Start.Line),
             _transpiler.Runtime.EmitToOutputStream(_transpiler.ExpressionVisitor.Visit(context.expression()))
                 .WithLineDirective(context, _transpiler.SourceFileName)
         };
@@ -73,6 +76,9 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
         };
     }
 
+    /// <summary>
+    /// An attribute name in the sea is an attribute name in the middle of HTML, such as %%FirstName%%
+    /// </summary>
     public override IEnumerable<StatementSyntax> VisitAttributeNameAtSea(SageParser.AttributeNameAtSeaContext context)
     {
         string attributeName = context.GetText().TrimStart('%').TrimEnd('%');

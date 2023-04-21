@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using Antlr4.Runtime.Tree;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -84,6 +83,31 @@ internal class Runtime
                                 LiteralExpression(
                                     SyntaxKind.StringLiteralExpression,
                                     Literal(ConvertAmpVariableNameToCSharpVariableName(variableName)))))));
+    }
+
+    /// <summary>
+    /// As the code executes, it needs to inform the runtime what line number it's on
+    /// in the AMPScript content.  This aids in providing debugging information when
+    /// an error is encountered and the engine can provide a stack trace exclusively from the
+    /// AMPScript content.
+    /// </summary>
+    /// <param name="lineNumber">The line number it's executing on, beginning with "1"</param>
+    /// <returns>Invoking RuntimeContext.SetCurrentContextLineNumber to set the line</returns>
+    internal StatementSyntax SetCurrentLineNumber(int lineNumber)
+    {
+        return ExpressionStatement(
+            InvocationExpression(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    IdentifierName(RuntimeVariable),
+                    IdentifierName("SetCurrentContextLineNumber")))
+            .WithArgumentList(
+                ArgumentList(
+                    SingletonSeparatedList<ArgumentSyntax>(
+                        Argument(
+                            LiteralExpression(
+                                SyntaxKind.NumericLiteralExpression,
+                                Literal(lineNumber)))))));
     }
 
     /// <summary>

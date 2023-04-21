@@ -25,40 +25,40 @@ namespace Sage.Engine.Content
         /// <summary>
         /// Returns content from a file with the specified name
         /// </summary>
-        public async Task<FileInfo?> GetContentByNameAsync(string name)
+        public FileInfo? GetContentByName(string name)
         {
-            return await GetContentFromPath(name);
+            return GetContentFromPath(name);
         }
 
         /// <summary>
         /// Returns content from a file with the specified name
         /// </summary>
-        public async Task<FileInfo?> GetContentByIdAsync(string id)
+        public FileInfo? GetContentById(string id)
         {
-            return await GetContentFromPath(id);
+            return GetContentFromPath(id);
         }
 
         /// <summary>
         /// Returns content from a file with the specified name
         /// </summary>
-        public async Task<FileInfo?> GetContentByCustomerKeyAsync(string customerKey)
+        public FileInfo? GetContentByCustomerKey(string customerKey)
         {
-            return await GetContentFromPath(customerKey);
+            return GetContentFromPath(customerKey);
         }
 
         /// <summary>
         /// Returns content from a file with the specified name in the directory provided at the construction of this object.
         /// </summary>,
-        private Task<FileInfo?> GetContentFromPath(string path)
+        private FileInfo? GetContentFromPath(string path)
         {
             string finalPath = Path.Combine(_contentDirectory, $"{path}.ampscript");
 
             if (!File.Exists(finalPath))
             {
-                return Task.FromResult<FileInfo?>(null);
+                return null;
             }
 
-            return Task.FromResult<FileInfo?>(new FileInfo(finalPath));
+            return new FileInfo(finalPath);
         }
     }
 }

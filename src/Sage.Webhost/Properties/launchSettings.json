@@ -10,7 +10,7 @@
   "profiles": {
     "http": {
       "commandName": "Project",
-      "commandLineArgs": "Index.ampscript",
+      "commandLineArgs": "<<Insert path to AMPScript file>>",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5276",
@@ -19,7 +19,7 @@
       }
     },
     "https": {
-      "commandLineArgs": "Index.ampscript",
+      "commandLineArgs": "<<Insert path to AMPScript file>>",
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -30,7 +30,7 @@
     },
     "IIS Express": {
       "commandName": "IISExpress",
-      "commandLineArgs": "Index.ampscript",
+      "commandLineArgs": "<<Insert path to AMPScript file>>",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

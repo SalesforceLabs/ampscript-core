@@ -1,9 +1,0 @@
-﻿<html lang="en">
-<head>
-    <title>AMPscript Demo Page</title>
-</head>
-<body>
-    <p>This is an example of content</p>
-    %%=CONTENTBLOCKBYNAME("EmbeddedContent")=%%
-</body>
-</html>

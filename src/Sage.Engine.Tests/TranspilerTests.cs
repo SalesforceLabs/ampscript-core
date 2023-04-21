@@ -124,6 +124,7 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("%%= V(@FOO) =%%", new[]
         {
+            $"{Runtime.RuntimeVariable}.SetCurrentContextLineNumber(1);",
             $"{Runtime.RuntimeVariable}.Output({Runtime.RuntimeVariable}.V({Runtime.RuntimeVariable}.GetVariable(\"@foo\")));",
         })]
         public void TestInlineAmpBlock(string code, string[] expectedCode)

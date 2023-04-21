@@ -42,18 +42,24 @@ namespace Sage.Engine.Runtime
             _contentBuilderContentClient = _classicContentClient;
             _subscriberContext = subscriberContext ?? new SubscriberContext(null);
             _rootCompilationOptions = rootCompilationOptions;
-            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName));
+            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName, _rootCompilationOptions.InputFile));
         }
 
         public RuntimeContext(
-            CompilationOptions? rootCompileOptions = null)
+            CompilationOptions? rootCompileOptions = null,
+            SubscriberContext? subscriberContext = null)
         {
             this.Random = new Random();
             _dataExtensionClient = DataExtensionClientFactory.CreateInMemoryDataExtensions().Result;
             _classicContentClient = ContentClientFactory.CreateLocalDiskContentClient(Path.Combine(Environment.CurrentDirectory, "Content"));
             _contentBuilderContentClient = _classicContentClient;
 
-            if (Path.Exists("subscriber.json"))
+
+            if (subscriberContext != null)
+            {
+                _subscriberContext = subscriberContext;
+            }
+            else if (Path.Exists("subscriber.json"))
             {
                 _subscriberContext = new SubscriberContext(File.ReadAllText("subscriber.json"));
             }
@@ -63,7 +69,7 @@ namespace Sage.Engine.Runtime
             }
 
             _rootCompilationOptions = rootCompileOptions;
-            _stackFrame.Push(new StackFrame(_rootCompilationOptions?.GeneratedMethodName ?? "TEST"));
+            _stackFrame.Push(new StackFrame(_rootCompilationOptions?.GeneratedMethodName ?? "TEST", _rootCompilationOptions?.InputFile ?? null));
         }
 
         /// <summary>
@@ -131,9 +137,19 @@ namespace Sage.Engine.Runtime
             return results;
         }
 
-        public void PushContext(string name)
+        /// <summary>
+        /// Gets the context ready for a new content stack frame
+        /// </summary>
+        /// <param name="name">The name of the content</param>
+        /// <param name="code">The file where the content exists</param>
+        public void PushContext(string name, FileInfo code)
         {
-            _stackFrame.Push(new StackFrame(name));
+            _stackFrame.Push(new StackFrame(name, code));
+        }
+
+        public void SetCurrentContextLineNumber(int lineNumber)
+        {
+            _stackFrame.Peek().CurrentLineNumber = lineNumber;
         }
 
         public IDataExtensionClient GetDataExtensionClient()
@@ -167,9 +183,9 @@ namespace Sage.Engine.Runtime
         /// <param name="id">The identifier of this particular code.  Can be the content ID, or an identifier to the TREATASCONTENT line of code</param>
         /// <param name="getCode">A delegate which produces the code.  This interface is a delegate which allows for future caching of content retrieval.</param>
         /// <returns>The result of executing the code</returns>
-        internal async Task<string?> CompileAndExecuteEmbeddedCodeAsync(string id, Func<Task<FileInfo?>> getCode)
+        internal string? CompileAndExecuteEmbeddedCodeAsync(string id, Func<FileInfo?> getCode)
         {
-            FileInfo? code = await getCode();
+            FileInfo? code = getCode();
             if (code == null)
             {
                 return null;
@@ -183,9 +199,18 @@ namespace Sage.Engine.Runtime
 
             CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(generatedOptions);
 
-            PushContext(generatedOptions.GeneratedMethodName);
-            compileResult.Execute(this);
-            return PopContext();
+            string poppedContext;
+            PushContext(generatedOptions.GeneratedMethodName, code);
+            try
+            {
+                compileResult.Execute(this);
+            }
+            finally
+            {
+                poppedContext = PopContext();
+            }
+
+            return poppedContext;
         }
 
         public void Dispose()

@@ -32,11 +32,8 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentAreaId);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentareaid__{id}",
-                    async () =>
-                        await GetClassicContentClient()
-                            .GetContentByIdAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
+                CompileAndExecuteEmbeddedCodeAsync($"contentareaid__{id}",
+                    () => GetClassicContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -56,11 +53,8 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentAreaName);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentareaname__{id}",
-                    async () =>
-                        await GetClassicContentClient()
-                            .GetContentByNameAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
+                CompileAndExecuteEmbeddedCodeAsync($"contentareaname__{id}",
+                    () => GetClassicContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -80,11 +74,8 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentBlockName);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentblockname__{id}",
-                    async () =>
-                        await GetContentBuilderContentClient()
-                            .GetContentByNameAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
+                CompileAndExecuteEmbeddedCodeAsync($"contentblockname__{id}",
+                    () => GetContentBuilderContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -104,11 +95,8 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentBlockId);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentblockid__{id}",
-                    async () =>
-                        await GetContentBuilderContentClient()
-                            .GetContentByIdAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
+                CompileAndExecuteEmbeddedCodeAsync($"contentblockid__{id}",
+                    () => GetContentBuilderContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -128,11 +116,8 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentBlockKey);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync(
-                    $"contentblockkey__{id}",
-                    async () =>
-                        await GetContentBuilderContentClient()
-                            .GetContentByCustomerKeyAsync(this.ThrowIfStringNullOrEmpty(id))).Result;
+                CompileAndExecuteEmbeddedCodeAsync($"contentblockkey__{id}",
+                    () => GetContentBuilderContentClient().GetContentByCustomerKey(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -170,8 +155,9 @@ namespace Sage.Engine.Runtime
                 if (throwIfNotFoundBool)
                 {
                     throw new RuntimeException(
-                        $"Content block {id} does not exist and 'throwIfNotFound' was evaluated as true",
-                        this);
+                        $"Content block '{id}' does not exist and 'throwIfNotFound' was evaluated as true",
+                        this,
+                        caller);
                 }
 
                 return defaultContentString;

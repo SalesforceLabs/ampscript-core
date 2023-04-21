@@ -14,7 +14,7 @@ namespace Sage.Engine
     /// </summary>
     public class CommandLine
     {
-        public readonly Argument<string> sourceFile = new Argument<string>(name: "--source", description: "Path to the AMPscript program to debug").LegalFilePathsOnly();
+        public readonly Argument<FileInfo> sourceFile = new Argument<FileInfo>(name: "--source", description: "Path to the AMPscript program to debug").LegalFilePathsOnly();
         public readonly Option<bool> debugOption = new(new[] { "--debug", "-d" }, "Whether or not to build debug information and debug the output");
 
         public readonly Command LaunchCommand;

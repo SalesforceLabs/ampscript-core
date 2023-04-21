@@ -11,13 +11,13 @@ using Sage.Engine.Compiler;
 using CommandHandler = System.CommandLine.NamingConventionBinder.CommandHandler;
 using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 
-int RunMain(string source, bool debug, bool execute, IConsole console)
+int RunMain(FileInfo source, bool debug, bool execute, IConsole console)
 {
     DirectoryInfo tempPath = Directory.CreateTempSubdirectory("Sage");
 
     OptimizationLevel optimizeLevel = debug ? OptimizationLevel.Debug : OptimizationLevel.Release;
 
-    CompilationOptions options = new CompilerOptionsBuilder().WithInputFile(new FileInfo(source))
+    CompilationOptions options = new CompilerOptionsBuilder().WithInputFile(source)
         .WithOptimizationLevel(optimizeLevel)
         .Build();
 
@@ -56,12 +56,12 @@ var commandLine = new CommandLine
     LaunchCommand =
     {
         Handler = CommandHandler.Create(
-            (string source, bool debug, IConsole console) => RunMain(source, debug, true, console))
+            (FileInfo source, bool debug, IConsole console) => RunMain(source, debug, true, console))
     },
     CompileCommand =
     {
         Handler = CommandHandler.Create(
-            (string source, bool debug, IConsole console) => RunMain(source, debug, false, console))
+            (FileInfo source, bool debug, IConsole console) => RunMain(source, debug, false, console))
     }
 };
 

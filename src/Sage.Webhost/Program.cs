@@ -5,9 +5,13 @@
 
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
+using System.Diagnostics;
 using System.Net.Mime;
+using System.Text.Json.Nodes;
 using Microsoft.Extensions.FileProviders;
 using Sage.Engine;
+using Sage.Engine.Runtime;
+using StackFrame = Sage.Engine.Runtime.StackFrame;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -26,24 +30,76 @@ var commandLine = new CommandLine()
 {
     LaunchCommand =
     {
-        Handler = CommandHandler.Create(RunMain)
+        Handler = CommandHandler.Create(RunAmpscriptFile)
     },
 };
 
-int RunMain(string source, bool debug, IConsole console)
+/// <summary>
+/// Attempts to render the given content.
+///
+/// If rendering fails due to content issues, it renders the "Exception.ampscript" exception handler page.
+/// </summary>
+string RenderContent(FileInfo contentPath)
 {
-    string fullPath = source;
-    if (!Path.IsPathRooted(source))
+    JsonNode subscriberExceptionContext = new JsonObject();
+    try
     {
-        fullPath = Path.Join(Environment.CurrentDirectory, source);
+        return Renderer.Render(contentPath);
+    }
+    catch (CompileCodeException compileException)
+    {
+        subscriberExceptionContext["ExceptionType"] = compileException.GetType().Name;
+        subscriberExceptionContext["Message"] = compileException.Message;
+    }
+    catch (RuntimeException runtimeException)
+    {
+        // Creates a JSON array like the following:
+        // [
+        //   {
+        //     "Name": Name_Of_Content,
+        //     "CurrentLineNumber": Line_Number_In_Content
+        //     "Code": Code_Near_That_Line_Number
+        //   },
+        //   { ... },
+        // ]
+        var callstack = new JsonArray();
+        foreach (StackFrame frame in runtimeException.AmpscriptCallstack)
+        {
+            JsonNode jsonFrame = new JsonObject();
+            jsonFrame["Name"] = frame.Name;
+            jsonFrame["CurrentLineNumber"] = frame.CurrentLineNumber;
+            jsonFrame["Code"] = GetLinesFromCode(frame.CurrentLineNumber, frame.Code);
+            callstack.Add(jsonFrame);
+        }
+
+        subscriberExceptionContext["Stack"] = callstack;
+        subscriberExceptionContext["ExceptionType"] = runtimeException.GetType().Name;
+        subscriberExceptionContext["Message"] = runtimeException.Message;
     }
 
-    if (!File.Exists(fullPath))
+    return Renderer.Render(new FileInfo(Path.Join(Environment.CurrentDirectory, "Exception.ampscript")), new SubscriberContext(subscriberExceptionContext.ToJsonString()));
+}
+
+/// <summary>
+/// Gets lines of code near the given line number
+/// </summary>
+string GetLinesFromCode(int lineNumber, FileInfo code)
+{
+    string[] lines = File.ReadAllLines(code.FullName);
+
+    int start = Math.Max(lineNumber - 3, 0);
+    int end = Math.Min(lineNumber + 3, lines.Length);
+    return string.Join(Environment.NewLine, lines[new Range(start, end)]);
+}
+
+int RunAmpscriptFile(FileInfo source, IConsole console)
+{
+    if (!source.Exists)
     {
-        throw new FileNotFoundException($"Cannot find {Path.Join(Environment.CurrentDirectory, fullPath)}");
+        throw new FileNotFoundException($"Cannot find {source.FullName}");
     }
 
-    app.MapGet("/", () => Results.Content(Renderer.Render(fullPath), MediaTypeNames.Text.Html));
+    app.MapGet("/", () => Results.Content(RenderContent(source), MediaTypeNames.Text.Html));
 
     app.Run();
     return 0;

@@ -12,20 +12,20 @@ namespace Sage.Engine.Content
         /// </summary>
         /// <param name="name">Name of the content area to return, including the path within the my contents folder if necessary</param>
         /// <returns>A local cached file on disk that contains the content</returns>
-        Task<FileInfo?> GetContentByNameAsync(string name);
+        FileInfo? GetContentByName(string name);
 
         /// <summary>
         /// Obtains a piece of content by a given ID
         /// </summary>
         /// <param name="name">The ID of the specified content</param>
         /// <returns>A local cached file on disk that contains the content</returns>
-        Task<FileInfo?> GetContentByIdAsync(string id);
+        FileInfo? GetContentById(string id);
 
         /// <summary>
         /// Obtains a piece of content by a given customer key
         /// </summary>
         /// <param name="name">The customer key of the specified content</param>
         /// <returns>A local cached file on disk that contains the content</returns>
-        Task<FileInfo?> GetContentByCustomerKeyAsync(string customerKey);
+        FileInfo? GetContentByCustomerKey(string customerKey);
     }
 }

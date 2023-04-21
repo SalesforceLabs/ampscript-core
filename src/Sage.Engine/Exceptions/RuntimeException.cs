@@ -13,13 +13,37 @@ namespace Sage.Engine;
 ///
 /// All runtime exceptions are issues with the authored content.
 /// </summary>
-internal class RuntimeException : Exception
+public class RuntimeException : Exception
 {
+    private RuntimeContext _context;
+
+    /// <summary>
+    /// This is the AMPSCRIPT function that threw the exception
+    /// </summary>
+    public string Function { get; }
+
+    /// <summary>
+    /// This is the string message of the failure
+    /// </summary>
+    public string RuntimeMessage { get; }
+
+    /// <summary>
+    /// This is the order of stack frames when the exception was thrown, from oldest to newest element.
+    /// </summary>
+    public List<StackFrame> AmpscriptCallstack { get; }
+
     public RuntimeException(
         string message,
         RuntimeContext context,
         [CallerMemberName] string caller = "") : base(FormatExceptionMessageWithFunction(message, context, caller))
     {
+        _context = context;
+        RuntimeMessage = message;
+        Function = caller;
+
+        // A copy is taken because the line number for the stack frame will change
+        // after it's popped after the exception begins unwinding the stack.
+        AmpscriptCallstack = context.GetStackFrames().Select(f => (StackFrame)f.Clone()).ToList();
     }
 
     protected static string FormatExceptionMessageWithArgumentAndFunction(

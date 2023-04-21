@@ -3,13 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace Sage.Engine.Runtime
 {
@@ -20,7 +14,7 @@ namespace Sage.Engine.Runtime
     public class SubscriberContext
     {
         private readonly JsonNode? _context;
-
+        
         public SubscriberContext(string? context)
         {
             if (context == null)
@@ -37,7 +31,7 @@ namespace Sage.Engine.Runtime
 
         public object? GetAttribute(string attributeName)
         {
-            return _context?[attributeName]?.ToString();
+            return _context?[attributeName];
         }
     }
 }

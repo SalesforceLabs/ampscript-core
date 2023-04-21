@@ -5,6 +5,7 @@
 
 using System.Data;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Nodes;
 using Sage.Engine.Data;
 
 // Ignore the following in this file - mostly due to enabling this codebase to adhere to these rules but AMPscript code may not.
@@ -85,9 +86,16 @@ namespace Sage.Engine.Runtime
         /// <returns>The number of rows in the rowset</returns>
         public int ROWCOUNT(object rowset)
         {
-            DataTable dataTable = this.ThrowIfNotDataTable(rowset);
+            if (ArgumentValidator.IsOfType<JsonArray>(rowset, out JsonArray? jsonRowset))
+            {
+                return jsonRowset.Count;
+            }
+            else
+            {
+                DataTable dataTable = this.ThrowIfNotDataTable(rowset);
 
-            return dataTable.Rows.Count;
+                return dataTable.Rows.Count;
+            }
         }
 
         /// <summary>
@@ -100,9 +108,25 @@ namespace Sage.Engine.Runtime
             object rowset,
             object row)
         {
-            DataTable dataTable = this.ThrowIfNotDataTable(rowset);
-
             int rowOffset = SageValue.ToInt(row) - 1;
+            DataTable dataTable;
+            if (ArgumentValidator.IsOfType<JsonArray>(rowset, out JsonArray? jsonRowset))
+            {
+                // This is quite expensive to generate a data table for the entire array each time a ROW function is called.
+                // Ideally, the data table is generated one time for the given rowset and reused.
+                // Maybe a nice improvement for later.
+                dataTable = ConvertJsonArrayOfObjectsToDatatable(jsonRowset);
+            }
+            else
+            {
+                dataTable = this.ThrowIfNotDataTable(rowset);
+            }
+
+            if (dataTable.Rows.Count < rowOffset)
+            {
+                throw new RuntimeException($"Index out of bounds. Index={rowOffset} Rows={dataTable.Rows.Count}", this);
+            }
+
             return dataTable.Rows[rowOffset];
         }
 
@@ -185,6 +209,50 @@ namespace Sage.Engine.Runtime
                     this.ThrowIfStringNullOrEmpty(attributeName, caller),
                     this.ThrowIfStringNullOrEmpty(attributeValue, caller));
             }
+        }
+
+        /// <summary>
+        /// Creates a data table from the values in the JsonArray. This is so that ROW and FIELD can work as expected
+        /// on data that originally came in as a JSON array.
+        /// </summary>
+        private DataTable ConvertJsonArrayOfObjectsToDatatable(JsonArray jsonArray)
+        {
+            var dataTable = new DataTable();
+            if (jsonArray.Count == 0)
+            {
+                return dataTable;
+            }
+
+            var firstJsonObject = jsonArray[0] as JsonObject;
+            if (firstJsonObject == null)
+            {
+                throw new InternalEngineException("No json object in the json array");
+            }
+
+            foreach (KeyValuePair<string, JsonNode?> property in firstJsonObject)
+            {
+                dataTable.Columns.Add(property.Key);
+            }
+
+            foreach (JsonNode? obj in jsonArray)
+            {
+                var jsonObject = obj as JsonObject;
+
+                if (jsonObject == null)
+                {
+                    continue;
+                }
+
+                DataRow nextRow = dataTable.NewRow();
+                foreach (KeyValuePair<string, JsonNode?> property in jsonObject)
+                {
+                    nextRow[property.Key] = property.Value?.ToString();
+                }
+
+                dataTable.Rows.Add(nextRow);
+            }
+
+            return dataTable;
         }
     }
 }

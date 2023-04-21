@@ -4,8 +4,8 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using Antlr4.Runtime.Misc;
 
 namespace Sage.Engine.Runtime
 {
@@ -63,6 +63,20 @@ namespace Sage.Engine.Runtime
             return context.ThrowIfNotType<DataRow>(input, "FIELD", callerFunction, callerArgument);
         }
 
+        public static bool IsOfType<T>(object? input, [NotNullWhen(returnValue: true)] out T? convertedType)
+        {
+            object? unboxedInput = SageValue.UnboxVariable(input);
+
+            if (unboxedInput is not T convertedInput)
+            {
+                convertedType = default(T);
+                return false;
+            }
+
+            convertedType = convertedInput;
+            return true;
+        }
+
         /// <summary>
         /// Casts the object to a <see cref="T"/>, throws if it is not that type
         /// </summary>
@@ -74,7 +88,7 @@ namespace Sage.Engine.Runtime
             [CallerArgumentExpression("input")] string callerArgument = "") where T : class
         {
             object? unboxedInput = SageValue.UnboxVariable(input);
-            if (unboxedInput is not T convertedType || convertedType == null)
+            if (unboxedInput is not T convertedType || convertedType == null || input == null)
             {
                 throw new RuntimeArgumentException($"The provided value is not a {typeName}", context, callerFunction, callerArgument);
             }

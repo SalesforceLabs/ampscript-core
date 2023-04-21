@@ -10,17 +10,17 @@ namespace Sage.Engine;
 /// <summary>
 /// An exception that's thrown by a failure to compile the C# code
 /// </summary>
-internal class CompileCodeException : Exception
+public class CompileCodeException : Exception
 {
-    private readonly CompileResult _result;
+    public CompileResult CompileResult { get; }
 
-    public CompileCodeException(CompileResult result)
+    internal CompileCodeException(CompileResult compileResult)
     {
-        this._result = result;
+        this.CompileResult = compileResult;
     }
 
     public override string ToString()
     {
-        return string.Join("\n", _result.EmitResult.Diagnostics);
+        return string.Join("\n", CompileResult.EmitResult.Diagnostics);
     }
 }
