@@ -6,7 +6,6 @@
 namespace Sage.Engine.Tests
 {
     using NUnit.Framework;
-    using NUnit.Framework.Internal;
 
     /// <summary>
     /// These tests validate that the ANTLR4 generated parse tree is what is expected from test files

@@ -6,7 +6,6 @@
 namespace Sage.Engine.Tests
 {
     using NUnit.Framework;
-    using NUnit.Framework.Internal;
 
     /// <summary>
     /// Validates the auto-generated comparision tests

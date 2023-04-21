@@ -4,7 +4,6 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using Antlr4.Runtime;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using Microsoft.CodeAnalysis;
