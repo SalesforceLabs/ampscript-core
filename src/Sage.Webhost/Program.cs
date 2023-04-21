@@ -77,7 +77,7 @@ string RenderContent(FileInfo contentPath)
             JsonNode jsonFrame = new JsonObject();
             jsonFrame["Name"] = frame.Name;
             jsonFrame["CurrentLineNumber"] = frame.CurrentLineNumber;
-            jsonFrame["Code"] = GetLinesFromCode(frame.CurrentLineNumber, frame.Code ?? throw new FileNotFoundException());
+            jsonFrame["Code"] = GetLinesFromCode(frame.CurrentLineNumber, frame.CodeFromFile ?? throw new FileNotFoundException());
             callstack.Add(jsonFrame);
         }
 
@@ -125,7 +125,8 @@ int RunPackage(PackageGraph graph, CommandLine.EntityType type, string sourceId,
 
             if (asset == null)
             {
-                throw new InvalidDataException($"Cannot find asset {sourceId}");
+                Console.Error.WriteLine($"Cannot find asset {sourceId}");
+                return -1;
             }
 
             File.WriteAllText(flattenedContentPath.FullName, asset.Compile());

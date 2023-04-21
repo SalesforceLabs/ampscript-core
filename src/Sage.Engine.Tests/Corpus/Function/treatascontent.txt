@@ -1,0 +1,12 @@
+﻿==========
+TREATASCONTENT
+==========
+%%= TREATASCONTENT(CONCAT("%", "%", "=ADD(1,2)=", "%", "%")) =%%
+++++++++++
+3
+==========
+TREATASCONTENTAREA
+==========
+%%= TREATASCONTENTAREA("Content",CONCAT("%", "%", "=ADD(1,2)=", "%", "%")) =%%
+++++++++++
+3

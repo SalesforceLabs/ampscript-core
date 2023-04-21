@@ -22,5 +22,37 @@ namespace Sage.Engine.Runtime
             // TODO: Use CST without daylight savings
             return DateTimeOffset.Now;
         }
+
+        /// <summary>
+        /// Returns the difference between two dates using the specified part
+        /// </summary>
+        /// <param name="start">The date from which to subtract from</param>
+        /// <param name="end">The date </param>
+        /// <param name="diffType">Which part of the date to subtract. Valid options are "Y" (year), "M" (month), "D" (day), "H" (hour), "MI" (minute)</param>
+        /// <returns></returns>
+        public long DATEDIFF(object? start, object? end, object? diffType)
+        {
+            // **NOTE** the left side is the 'end' date, and the right side is the 'start' date.
+            DateTimeOffset leftDateTime = SageValue.ToDateTime(end);
+            DateTimeOffset rightDateTime = SageValue.ToDateTime(start);
+            string? partString = diffType.ToString()?.ToLower();
+
+            switch (partString)
+            {
+                case "y":
+                    return leftDateTime.Year - rightDateTime.Year;
+                case "m":
+                    return (leftDateTime.Month - rightDateTime.Month) + (12 * (leftDateTime.Year - rightDateTime.Year));
+                case "d":
+                    return ((long)(leftDateTime - rightDateTime).TotalDays);
+                case "h":
+                    return ((long)(leftDateTime - rightDateTime).TotalHours);
+                case "mi":
+                    return ((long)(leftDateTime - rightDateTime).TotalMinutes);
+                default:
+                    throw new RuntimeException($"Invalid value specified for diffType parameter.  Given: {partString} expected one of the following: y m d h mi", this);
+
+            }
+        }
     }
 }

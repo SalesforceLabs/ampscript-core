@@ -34,7 +34,15 @@ namespace Sage.Engine.Runtime
         /// <summary>
         /// The location where the code exists on disk. May be null for rendering without a file on disk.
         /// </summary>
-        public FileInfo? Code
+        public FileInfo? CodeFromFile
+        {
+            get;
+        }
+
+        /// <summary>
+        /// For code that came from TREATASCONTENT that does not have a file
+        /// </summary>
+        public string? GeneratedCode
         {
             get;
         }
@@ -48,24 +56,32 @@ namespace Sage.Engine.Runtime
             set;
         }
 
-        public StackFrame(string name, FileInfo? code)
+        public StackFrame(string name, FileInfo? codeFromFile)
         {
             OutputStream = new StringBuilder();
             Name = name;
-            Code = code;
+            CodeFromFile = codeFromFile;
         }
 
-        private StackFrame(string name, int lineNumber, FileInfo? code, StringBuilder outputStream)
+        public StackFrame(string name, string generatedCode)
+        {
+            OutputStream = new StringBuilder();
+            Name = name;
+            GeneratedCode = generatedCode;
+        }
+
+        private StackFrame(string name, int lineNumber, FileInfo? codeFromFile, string? generatedCode, StringBuilder outputStream)
         {
             Name = name;
             CurrentLineNumber = lineNumber;
-            Code = code;
+            CodeFromFile = codeFromFile;
+            GeneratedCode = generatedCode;
             OutputStream = new StringBuilder(outputStream.ToString());
         }
 
         public object Clone()
         {
-            return new StackFrame(Name, CurrentLineNumber, Code, OutputStream);
+            return new StackFrame(Name, CurrentLineNumber, CodeFromFile, GeneratedCode, OutputStream);
         }
     }
 }

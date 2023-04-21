@@ -1,0 +1,18 @@
+==========
+DATEDIFF
+==========
+%%[
+set @startDate = '2022-04-01 8:30 AM'
+set @endDate = '2023-04-02 8:31 AM'
+OUTPUTLINE(dateDiff(@startDate, @endDate,"Y"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"M"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"D"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"H"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"MI"))
+]%%
+++++++++++
+1
+12
+366
+8784
+527041

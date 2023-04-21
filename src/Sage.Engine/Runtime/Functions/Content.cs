@@ -123,6 +123,29 @@ namespace Sage.Engine.Runtime
         }
 
         /// <summary>
+        /// Evalutes the string as if it were code.  Similar to JavaScript `eval()`.
+        /// </summary>
+        /// <param name="content">The content to be parsed</param>
+        /// <returns>The rendered text</returns>
+        public string TREATASCONTENT(object? content)
+        {
+            string contentString = content?.ToString() ?? string.Empty;
+
+            return CompileAndExecuteEmbeddedCodeAsync($"treatascontent__{_stackFrame.Peek().CurrentLineNumber}", contentString) ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Identical to TREATASCONTENT, except the results are cached and made available to all compute nodes for performance optimization.
+        /// </summary>
+        /// <remarks>
+        /// The primary use of TREATASCONTENTAREA vs TREATASCONTENT is for performance improvement for content that is relatively static, expensive to generate, and frequently used.
+        /// </remarks>
+        public string TREATASCONTENTAREA(object? key, object? content, object? impressionRegionName = null)
+        {
+            return TREATASCONTENT(content);
+        }
+
+        /// <summary>
         /// All of the content block functions validate the results the same way, so this helper method does this
         /// </summary>
         private string ReturnContentBasedOnInput(

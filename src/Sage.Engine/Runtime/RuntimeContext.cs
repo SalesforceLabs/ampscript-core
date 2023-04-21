@@ -149,6 +149,16 @@ namespace Sage.Engine.Runtime
             _stackFrame.Push(new StackFrame(name, code));
         }
 
+        /// <summary>
+        /// Gets the context ready for a new content stack frame
+        /// </summary>
+        /// <param name="name">The name of the content</param>
+        /// <param name="code">The TREATASCONTENT code</param>
+        public void PushContext(string name, string code)
+        {
+            _stackFrame.Push(new StackFrame(name, code));
+        }
+
         public void SetCurrentContextLineNumber(int lineNumber)
         {
             _stackFrame.Peek().CurrentLineNumber = lineNumber;
@@ -179,6 +189,15 @@ namespace Sage.Engine.Runtime
             return _subscriberContext;
         }
 
+
+        internal string? CompileAndExecuteEmbeddedCodeAsync(string id, string code)
+        {
+            CompilerOptionsBuilder fromCodeString = new CompilerOptionsBuilder().WithSourceCode(id, code);
+
+            return CompileAndExecuteEmbeddedCodeAsync(id, fromCodeString, code);
+        }
+
+
         /// <summary>
         /// Executes embedded code - whether that came from TREATASCONTENT or CONTENT calls.
         /// </summary>
@@ -193,8 +212,15 @@ namespace Sage.Engine.Runtime
                 return null;
             }
 
-            CompilationOptions generatedOptions = new CompilerOptionsBuilder()
-                .WithInputFile(code)
+            CompilerOptionsBuilder fromFileOptions = new CompilerOptionsBuilder().WithInputFile(code);
+
+            return CompileAndExecuteEmbeddedCodeAsync(id, fromFileOptions, code);
+        }
+
+
+        internal string? CompileAndExecuteEmbeddedCodeAsync(string id, CompilerOptionsBuilder currentOptions, object fileInfoOrString)
+        {
+            CompilationOptions generatedOptions = currentOptions
                 .WithOutputDirectory(_rootCompilationOptions?.OutputDirectory ?? new DirectoryInfo(Environment.CurrentDirectory))
                 .WithOptimizationLevel(_rootCompilationOptions?.OptimizationLevel ?? OptimizationLevel.Debug)
                 .Build();
@@ -202,7 +228,16 @@ namespace Sage.Engine.Runtime
             CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(generatedOptions);
 
             string poppedContext;
-            PushContext(generatedOptions.GeneratedMethodName, code);
+
+            if (fileInfoOrString is FileInfo contextFile)
+            {
+                PushContext(generatedOptions.GeneratedMethodName, contextFile);
+            }
+            else
+            {
+                PushContext(generatedOptions.GeneratedMethodName, fileInfoOrString.ToString());
+            }
+
             try
             {
                 compileResult.Execute(this);
