@@ -44,14 +44,16 @@ namespace Sage.Engine.Runtime
                 case "m":
                     return (leftDateTime.Month - rightDateTime.Month) + (12 * (leftDateTime.Year - rightDateTime.Year));
                 case "d":
-                    return ((long)(leftDateTime - rightDateTime).TotalDays);
+                    return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day)
+                        - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day)).TotalDays;
                 case "h":
-                    return ((long)(leftDateTime - rightDateTime).TotalHours);
+                    return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day, leftDateTime.Hour, 0, 0)
+                        - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day, rightDateTime.Hour, 0, 0)).TotalHours;
                 case "mi":
-                    return ((long)(leftDateTime - rightDateTime).TotalMinutes);
+                    return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day, leftDateTime.Hour, leftDateTime.Minute, 0)
+                        - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day, rightDateTime.Hour, rightDateTime.Minute, 0)).TotalMinutes;
                 default:
                     throw new RuntimeException($"Invalid value specified for diffType parameter.  Given: {partString} expected one of the following: y m d h mi", this);
-
             }
         }
     }

@@ -16,3 +16,78 @@ OUTPUTLINE(dateDiff(@startDate, @endDate,"MI"))
 366
 8784
 527041
+==========
+DATEDIFF - DATES ONLY
+==========
+%%[
+set @startDate = '12/31/2001'
+set @endDate = '5/31/2002'
+OUTPUTLINE(dateDiff(@startDate, @endDate,"Y"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"M"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"D"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"H"))
+OUTPUTLINE(dateDiff(@startDate, @endDate,"MI"))
+]%%
+++++++++++
+1
+5
+151
+3624
+217440
+==========
+DATEDIFF INVALID DATE
+==========
+%%[
+var @date1
+var @date2
+var @diffType
+var @result
+
+set @date1 = "bogus"
+set @date2 = "5/31/2002"
+set @diffType = "MI"
+
+set @result = datediff(@date1, @date2, @diffType)
+]%%
+
+%%=v(@result)=%%
+++++++++++
+!
+==========
+DATEDIFF INVALID DIFFTYPE
+==========
+%%[
+var @date1
+var @date2
+var @diffType
+var @result
+
+set @date1 = "12/31/2001"
+set @date2 = "5/31/2002"
+set @diffType = "X"
+
+set @result = datediff(@date1, @date2, @diffType)
+]%%
+
+%%=v(@result)=%%
+++++++++++
+!
+==========
+DATEDIFF EMPTY DATE
+==========
+%%[
+var @date1
+var @date2
+var @diffType
+var @result
+
+set @date1 = ""
+set @date2 = "5/31/2002"
+set @diffType = "M"
+
+set @result = datediff(@date1, @date2, @diffType)
+]%%
+
+%%=v(@result)=%%
+++++++++++
+!
