@@ -9,6 +9,7 @@ using Sage.Engine.Data;
 using Sage.Engine.Compiler;
 using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Sage.Engine.Runtime
 {
@@ -31,6 +32,9 @@ namespace Sage.Engine.Runtime
         private IContentClient _classicContentClient;
         private IContentClient _contentBuilderContentClient;
         private SubscriberContext _subscriberContext;
+
+        // TODO: Make configurable
+        private CultureInfo _currentCulture = CultureInfo.InvariantCulture;
 
         private DirectoryInfo WorkingDirectory => _rootCompilationOptions?.InputFile.Directory ?? new DirectoryInfo(Environment.CurrentDirectory);
 

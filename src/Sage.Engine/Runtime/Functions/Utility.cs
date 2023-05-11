@@ -40,7 +40,7 @@ namespace Sage.Engine.Runtime
                 }
             }
 
-            cultureInfo ??= CultureInfo.CurrentCulture;
+            cultureInfo ??= this._currentCulture;
 
             // !Backward compatibility!
             // If converting fails, return the source.
@@ -48,7 +48,7 @@ namespace Sage.Engine.Runtime
             {
                 if (string.Compare("date", compareType, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
-                    return SageValue.ToString(SageValue.ToDateTime(subject.ToString()), formatString, cultureInfo);
+                    return SageValue.ToString(SageValue.ToDateTime(subject.ToString(), this._currentCulture, DateTimeStyles.AssumeLocal), formatString, cultureInfo);
                 }
 
                 if (string.Compare("number", compareType, StringComparison.InvariantCultureIgnoreCase) == 0)
@@ -125,7 +125,7 @@ namespace Sage.Engine.Runtime
         /// </summary>
         /// <param name="attributeName">Name of the attribute to obtain</param>
         /// <returns>The value of the attribute</returns>
-        
+
         public object? ATTRIBUTEVALUE(object? attributeName)
         {
             string attributeNameString = this.ThrowIfStringNullOrEmpty(attributeName);

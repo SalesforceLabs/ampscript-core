@@ -91,3 +91,48 @@ set @result = datediff(@date1, @date2, @diffType)
 %%=v(@result)=%%
 ++++++++++
 !
+==========
+DATEPARSE EMPTY DATE
+==========
+%%[
+set @result = DATEPARSE("")
+]%%
+%%=v(@result)=%%
+++++++++++
+!
+==========
+DATEPARSE Date
+==========
+%%[
+set @result = DATEPARSE("2023-05-01")
+]%%
+%%=v(@result)=%%
+++++++++++
+5/1/2023 12:00:00 AM
+==========
+DATEPARSE DateTime
+==========
+%%[
+set @result = DATEPARSE("2023-05-01 5:00:00")
+]%%
+%%=v(@result)=%%
+++++++++++
+5/1/2023 5:00:00 AM
+==========
+DATEPARSE DateTime with UTC
+==========
+%%[
+set @result = DATEPARSE("2023-05-01 2:30PM-1:00", 1)
+]%%
+%%=v(@result)=%%
+++++++++++
+5/1/2023 3:30:00 PM
+==========
+DATEPARSE DateTime without UTC
+==========
+%%[
+set @result = DATEPARSE("2023-05-01 2:30PM-1:00", 0)
+]%%
+%%=v(@result)=%%
+++++++++++
+5/1/2023 11:30:00 AM

@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Globalization;
+
 namespace Sage.Engine.Runtime
 {
     public partial class RuntimeContext
@@ -33,9 +35,9 @@ namespace Sage.Engine.Runtime
         public long DATEDIFF(object? start, object? end, object? diffType)
         {
             // **NOTE** the left side is the 'end' date, and the right side is the 'start' date.
-            DateTimeOffset leftDateTime = SageValue.ToDateTime(end);
-            DateTimeOffset rightDateTime = SageValue.ToDateTime(start);
-            string? partString = diffType.ToString()?.ToLower();
+            DateTimeOffset leftDateTime = SageValue.ToDateTime(end, null, DateTimeStyles.AssumeLocal);
+            DateTimeOffset rightDateTime = SageValue.ToDateTime(start, null, DateTimeStyles.AssumeLocal);
+            string? partString = diffType?.ToString()?.ToLower();
 
             switch (partString)
             {
@@ -55,6 +57,31 @@ namespace Sage.Engine.Runtime
                 default:
                     throw new RuntimeException($"Invalid value specified for diffType parameter.  Given: {partString} expected one of the following: y m d h mi", this);
             }
+        }
+
+        /// <summary>
+        /// Parses the input string and returns a DateTime from the parsed value
+        /// </summary>
+        /// <param name="date">The value to parse</param>
+        /// <param name="useUtc">Whether the result should be in UTC format or not</param>
+        /// <returns></returns>
+        public DateTime DATEPARSE(object? date, object? useUtc = null)
+        {
+            bool useUtcBool = false;
+            if (useUtc != null)
+            {
+                useUtcBool = SageValue.ToBoolean(useUtc);
+            }
+
+            CultureInfo currentCulture = this._currentCulture;
+            DateTimeStyles dateTimeStyles = DateTimeStyles.AssumeLocal;
+            if (useUtcBool)
+            {
+                dateTimeStyles |= DateTimeStyles.AdjustToUniversal;
+                return SageValue.ToDateTime(date, currentCulture, dateTimeStyles).UtcDateTime;
+            }
+
+            return SageValue.ToDateTime(date, currentCulture, dateTimeStyles).LocalDateTime;
         }
     }
 }

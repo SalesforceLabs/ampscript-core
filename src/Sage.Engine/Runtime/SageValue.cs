@@ -265,7 +265,7 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not DateTimeOffset is the best representation of this boxed inputObj</returns>
-        public static UnboxResult TryToDateTime(object? inputObj, out DateTimeOffset result)
+        public static UnboxResult TryToDateTime(object? inputObj, IFormatProvider? formatProvider, DateTimeStyles dateTimeStyles, out DateTimeOffset result)
         {
             inputObj = UnboxVariable(inputObj);
 
@@ -275,7 +275,7 @@ namespace Sage.Engine.Runtime
                 return UnboxResult.Succeed;
             }
 
-            if (DateTimeOffset.TryParse(inputObj?.ToString(), null, DateTimeStyles.AssumeLocal, out result))
+            if (DateTimeOffset.TryParse(inputObj?.ToString(), formatProvider, dateTimeStyles, out result))
             {
                 return UnboxResult.SucceededFromString;
             }
@@ -292,9 +292,9 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">Boxed inputObj to convert to an DateTimeOffset</param>
         /// <returns>The DateTimeOffset representation of the object</returns>
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to an DateTimeOffset inputObj.</exception>
-        public static DateTimeOffset ToDateTime(object? inputObj)
+        public static DateTimeOffset ToDateTime(object? inputObj, IFormatProvider? formatProvider, DateTimeStyles dateTimeStyles)
         {
-            if (TryToDateTime(inputObj, out DateTimeOffset result) == UnboxResult.Fail)
+            if (TryToDateTime(inputObj, formatProvider, dateTimeStyles, out DateTimeOffset result) == UnboxResult.Fail)
             {
                 throw new InvalidCastException($"Cannot convert {inputObj} to DateTimeOffset");
             }
@@ -346,16 +346,6 @@ namespace Sage.Engine.Runtime
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Returns whether or not the boxed value is null
-        /// </summary>
-        public static bool IsNull(object? inputObj)
-        {
-            inputObj = UnboxVariable(inputObj);
-
-            return inputObj == null;
         }
         #endregion
 
@@ -516,8 +506,8 @@ namespace Sage.Engine.Runtime
         {
             // NOTE! By-design this is not a lazily-checked or statement.  We want values for both left and right, and if this were ||,
             // then the right side may not be evaluated!
-            if (TryToDateTime(left, out DateTimeOffset leftDateTime) != UnboxResult.Fail |
-                TryToDateTime(right, out DateTimeOffset rightDateTime) != UnboxResult.Fail)
+            if (TryToDateTime(left, null, DateTimeStyles.AssumeLocal, out DateTimeOffset leftDateTime) != UnboxResult.Fail |
+                TryToDateTime(right, null, DateTimeStyles.AssumeLocal, out DateTimeOffset rightDateTime) != UnboxResult.Fail)
             {
                 result = leftDateTime.CompareTo(rightDateTime);
                 return true;
@@ -602,7 +592,7 @@ namespace Sage.Engine.Runtime
             value = UnboxVariable(value);
 
             // A DateTime from a string is not success here.
-            if (TryToDateTime(value, out DateTimeOffset date) == UnboxResult.Succeed)
+            if (TryToDateTime(value, cultureInfo, DateTimeStyles.AssumeLocal, out DateTimeOffset date) == UnboxResult.Succeed)
             {
                 return date.ToString(formatString, cultureInfo);
             }
