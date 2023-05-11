@@ -27,5 +27,5 @@ SET @name2=""
 %%=ISNULL(@name)=%%
 %%=ISNULL(@name2)=%%
 ++++++++++
-True
+False
 False

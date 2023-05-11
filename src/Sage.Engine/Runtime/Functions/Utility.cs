@@ -88,7 +88,9 @@ namespace Sage.Engine.Runtime
         /// </summary>
         public bool ISNULL(object expression)
         {
-            return SageValue.IsNull(expression);
+            object? unboxed = SageValue.UnboxVariable(expression);
+
+            return unboxed is DBNull;
         }
 
         /// <summary>

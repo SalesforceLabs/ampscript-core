@@ -43,7 +43,7 @@ namespace Sage.Engine.Runtime
                 return dataTable.Rows[0][returnAttribute.ToString() ?? string.Empty];
             }
 
-            return null;
+            return DBNull.Value;
         }
 
         /// <summary>
