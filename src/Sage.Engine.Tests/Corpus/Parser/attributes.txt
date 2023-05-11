@@ -25,3 +25,19 @@ Amp Attribute
             (VariableAssignmentContext
               (AttributeExpressionContext
                 (AttributeContext)))))))))
+===========
+Amp Attribute Without Brackets
+===========
+%%[
+	SET @VAR = Foo
+]%%
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (SetVariableContext
+            (VariableAssignmentContext
+              (AttributeExpressionContext
+                (AttributeContext)))))))))

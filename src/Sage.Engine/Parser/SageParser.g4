@@ -123,6 +123,7 @@ string
 
 attribute
     : AttributeName
+    | NameString
     ;
 
 arguments
