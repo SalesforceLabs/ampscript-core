@@ -11,6 +11,7 @@ namespace Sage.PackageManager.Tests
     public class ContentCompilerTests
     {
         [TestCase("HtmlPaste")]
+        [TestCase("AmpscriptAttributes")]
         [TestCase("TemplateBasedEmail")]
         [TestCase("ComplexTemplateBasedEmail")]
         [TestCase("CONTENTTEMPLATES_1_3_1_ALT_COLUMN")]
@@ -28,7 +29,14 @@ namespace Sage.PackageManager.Tests
 
             string expectedContents = File.ReadAllText(expected.FullName).Trim();
 
-            Assert.That(string.Compare(compiled, expectedContents, CultureInfo.CurrentCulture, CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0);
+            compiled = compiled.Replace("\r\n", "\n").Trim();
+            expectedContents = expectedContents.Replace("\r\n", "\n").Trim();
+            int compare = string.Compare(compiled, expectedContents);
+
+            if (compare != 0)
+            {
+                Assert.That(compiled, Is.EqualTo(expectedContents));
+            }
         }
     }
 }

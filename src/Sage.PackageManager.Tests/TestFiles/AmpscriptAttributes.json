@@ -1,0 +1,19 @@
+{
+  "name": "my first message",
+  "channels": {
+    "email": true,
+    "web": false
+  },
+  "views": {
+    "html": {
+      "content": "<!DOCTYPE html><html><body %%=V(@foo)=%%>This is a simple html paste email.</body></html>"
+    },
+    "text": {},
+    "subjectline": {},
+    "preheader": {}
+  },
+  "assetType": {
+    "name": "htmlemail",
+    "id": 208
+  }
+}

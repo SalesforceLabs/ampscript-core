@@ -33,6 +33,9 @@ namespace Sage.PackageManager
             }
 
             var flattenedPlaceholder = new HtmlDocument();
+            flattenedPlaceholder.OptionOutputOriginalCase = true;
+            flattenedPlaceholder.OptionCheckSyntax = false;
+            flattenedPlaceholder.GlobalAttributeValueQuote = AttributeValueQuote.Initial;
             flattenedPlaceholder.LoadHtml(placeholder.content);
 
             HtmlNodeCollection dataKeyNodes = flattenedPlaceholder.DocumentNode.SelectNodes("//*[@data-key]");
