@@ -8,7 +8,7 @@ namespace Sage.PackageManager.DataObjects
     /// <summary>
     /// Assets may belong to folders, and folders are represented in the asset model through Categories.
     /// </summary>
-    internal record Category(string description, string categoryType, int parentId, string name, int editable, int extendable);
+    internal record Category(string description, string categoryType, object parentId, string name, int editable, int extendable);
 
     /// <summary>
     /// A category from PackageManager
