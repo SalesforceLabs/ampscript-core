@@ -1,0 +1,6 @@
+﻿==========
+AssetBlocks
+==========
+%%=BEGINASSETBLOCK("StaticContent")=%%
+%%=ENDASSETBLOCK()=%%
+++++++++++
