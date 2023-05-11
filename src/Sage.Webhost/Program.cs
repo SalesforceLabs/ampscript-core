@@ -12,20 +12,14 @@ using Microsoft.Extensions.FileProviders;
 using Sage.Engine;
 using Sage.Engine.Runtime;
 using Sage.PackageManager;
+using Sage.Webhost;
 using StackFrame = Sage.Engine.Runtime.StackFrame;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-string assetsPath = Path.Combine(builder.Environment.ContentRootPath, "assets");
-if (Path.Exists(assetsPath))
-{
-    app.UseStaticFiles(new StaticFileOptions
-    {
-        FileProvider = new PhysicalFileProvider(assetsPath),
-        RequestPath = "/assets"
-    });
-}
+Configuration config = new Configuration(false);
+app.Configuration.GetSection("Configuration").Bind(config);
 
 var commandLine = new CommandLine()
 {
@@ -55,11 +49,15 @@ string RenderContent(FileInfo contentPath)
     {
         return Renderer.Render(contentPath);
     }
-    catch (CompileCodeException compileException)
+    catch (GenerateCodeException compileException)
     {
+        if (!config.CustomExceptionPage)
+        {
+            throw;
+        }
         subscriberExceptionContext["ExceptionType"] = compileException.GetType().Name;
         subscriberExceptionContext["Message"] = compileException.Message;
-        throw;
+        subscriberExceptionContext["Stack"] = new JsonArray();
     }
     catch (RuntimeException runtimeException)
     {
@@ -72,6 +70,11 @@ string RenderContent(FileInfo contentPath)
         //   },
         //   { ... },
         // ]
+        if (!config.CustomExceptionPage)
+        {
+            throw;
+        }
+
         var callstack = new JsonArray();
         foreach (StackFrame frame in runtimeException.AmpscriptCallstack)
         {
@@ -85,7 +88,6 @@ string RenderContent(FileInfo contentPath)
         subscriberExceptionContext["Stack"] = callstack;
         subscriberExceptionContext["ExceptionType"] = runtimeException.GetType().Name;
         subscriberExceptionContext["Message"] = runtimeException.Message;
-        throw;
     }
 
     string pathToExceptionHtml = Path.Join(Path.GetDirectoryName(typeof(RuntimeContext).Assembly.Location), "Exception.ampscript");
