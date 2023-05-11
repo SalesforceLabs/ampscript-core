@@ -239,7 +239,7 @@ namespace Sage.Engine.Runtime
             }
             else
             {
-                PushContext(generatedOptions.GeneratedMethodName, fileInfoOrString.ToString());
+                PushContext(generatedOptions.GeneratedMethodName, fileInfoOrString?.ToString() ?? string.Empty);
             }
 
             try

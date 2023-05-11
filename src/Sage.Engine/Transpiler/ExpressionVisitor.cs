@@ -142,6 +142,16 @@ internal class ExpressionVisitor : SageParserBaseVisitor<ExpressionSyntax>
         ExpressionSyntax leftExpression = base.Visit(context.expression(0));
         ExpressionSyntax rightExpression = base.Visit(context.expression(1));
 
+        if (leftExpression == null)
+        {
+            throw new ParseCodeException($"Unexpected empty left expression", context);
+        }
+
+        if (rightExpression == null)
+        {
+            throw new ParseCodeException($"Unexpected empty right expression", context);
+        }
+
         string methodName;
         switch (context.op.Type)
         {
