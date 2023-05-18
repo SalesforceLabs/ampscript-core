@@ -57,35 +57,6 @@ Outputs:
 Hello Donnie
 ```
 
-## Debugging AMPscript using Sage
-There is an example at [Index.ampscript](src/Sage.Webhost/Index.ampscript) that you may modify and test.
-
-In VSCode, create a `launch.json` file which launches the sage engine. Example:
-```json
-    "configurations": [
-        {
-            "name": "Launch (web)",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "<path to release>\\Sage.Webhost.dll",
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}"
-            }
-        }
-    ]
-```
-
-Future editor plugins (VSCode) are on the roadmap
-
 ## Marketing Cloud Supported Languages
 
 | Language | Summary |
