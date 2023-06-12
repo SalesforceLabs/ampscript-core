@@ -201,3 +201,47 @@ nullValue: %%=EMPTY(@nullValue)=%%
 empty: True
 notEmpty: False
 nullValue: True
+==========
+LENGTH
+==========
+%%=LENGTH('')=%%
+%%=LENGTH('H')=%%
+++++++++++
+0
+1
+==========
+LOWERCASE
+==========
+%%=LOWERCASE('h')=%%
+%%=LOWERCASE('H')=%%
+%%=LOWERCASE('ß')=%%
+%%=LOWERCASE('')=%%
+%%=LOWERCASE('1')=%%
+++++++++++
+h
+h
+ß
+
+1
+==========
+REGEX
+==========
+%%[
+set @digits = "^\d+$"
+set @lowercase = "^[a-z]+$"
+]%%
+%%=RegExMatch("12345", @digits, 0)=%%
+%%=RegExMatch("abc123", @digits, 0)=%%
+%%=RegExMatch("123abc", @digits, 0)=%%
+%%=RegExMatch("45678", @digits, 0)=%%
+%%=RegExMatch("abc", @lowercase, 0)=%%
+%%=RegExMatch("ABC", @lowercase, 0)=%%
+%%=RegExMatch("ABC", @lowercase, 0, "IgnoreCase")=%%
+++++++++++
+12345
+
+
+45678
+abc
+
+ABC

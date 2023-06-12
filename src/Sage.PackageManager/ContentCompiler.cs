@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Sage.PackageManager.DataObjects;
 
@@ -16,13 +17,15 @@ namespace Sage.PackageManager
     /// <see cref="https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/compiling-asset-model.html"/>
     internal static class ContentCompiler
     {
+        private static readonly Regex s_referenceRegex = new Regex(@"{{mcpm#/entities/(?<entityname>.*)/(?<id>.*)/data/(?<key>.*)}}");
+
         /// <summary>
         /// Identifies all data-key divs and recursively resolves the underlying referenced content.
         /// </summary>
         /// <param name="placeholder"></param>
         /// <returns></returns>
         /// <exception cref="InvalidDataException"></exception>
-        private static HtmlNode FlattenPlaceholder(Placeholder placeholder, int stackDepth)
+        private static HtmlNode FlattenPlaceholder(PackageGraph referenceGraph, Placeholder placeholder, int stackDepth)
         {
             // There is some documentation about how deep this can go:
             // https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/slots.html
@@ -36,7 +39,9 @@ namespace Sage.PackageManager
             flattenedPlaceholder.OptionOutputOriginalCase = true;
             flattenedPlaceholder.OptionCheckSyntax = false;
             flattenedPlaceholder.GlobalAttributeValueQuote = AttributeValueQuote.Initial;
-            flattenedPlaceholder.LoadHtml(placeholder.content);
+
+            var fixedHtmlContent = FixReferences(referenceGraph, placeholder.content);
+            flattenedPlaceholder.LoadHtml(fixedHtmlContent);
 
             HtmlNodeCollection dataKeyNodes = flattenedPlaceholder.DocumentNode.SelectNodes("//*[@data-key]");
 
@@ -73,7 +78,7 @@ namespace Sage.PackageManager
                     throw new InvalidDataException($"Unable to find placeholder for {dataKey}");
                 }
 
-                HtmlNode flattenedChildPlaceholder = FlattenPlaceholder(childPlaceholder, stackDepth + 1);
+                HtmlNode flattenedChildPlaceholder = FlattenPlaceholder(referenceGraph, childPlaceholder, stackDepth + 1);
 
                 childPlaceholderNode.ParentNode.ReplaceChild(flattenedChildPlaceholder, childPlaceholderNode);
             }
@@ -85,23 +90,39 @@ namespace Sage.PackageManager
         /// Compiles the HTMLView of the underlying asset through identifying data-key divs and recursively
         /// resolving the underlying referenced content.
         /// </summary>
-        internal static string Compile(DataObjects.Asset asset)
+        internal static string Compile(PackageGraph referenceGraph, DataObjects.Asset asset)
         {
-            HtmlView? htmlView = asset.views?.html;
+            string? content;
+            Dictionary<string, Slot>? slots;
 
-            if (htmlView == null)
+            if (asset.assetType.id.IsBlock() || asset.assetType.id.IsTemplate())
             {
-                throw new InvalidDataException("No html content found");
+                content = asset.content;
+                slots = asset.slots;
+            }
+            else if (asset.assetType.id.IsImage())
+            {
+                return asset.file ?? string.Empty;
+            }
+            else
+            {
+                content = asset?.views?.html?.content;
+                slots = asset?.views?.html?.slots;
             }
 
-            if (string.IsNullOrEmpty(htmlView.content))
+            if (content == null && slots == null)
             {
-                return string.Empty;
+                throw new InvalidDataException($"Unable to parse the content & slots for {asset?.name}");
             }
 
-            var htmlPlaceholder = new Placeholder(htmlView.content, null, htmlView.slots);
-            HtmlNode flattenedPlaceholder = FlattenPlaceholder(htmlPlaceholder, 0);
+            var htmlPlaceholder = new Placeholder(content, null, slots);
+            HtmlNode flattenedPlaceholder = FlattenPlaceholder(referenceGraph, htmlPlaceholder, 0);
             return flattenedPlaceholder.InnerHtml ?? string.Empty;
+        }
+
+        internal static string FixReferences(PackageGraph referenceGraph, string input)
+        {
+            return s_referenceRegex.Replace(input, evaluator => evaluator.Groups["id"].Value);
         }
     }
 }

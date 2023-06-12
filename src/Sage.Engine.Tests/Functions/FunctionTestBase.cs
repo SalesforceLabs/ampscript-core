@@ -11,14 +11,14 @@ namespace Sage.Engine.Tests.Functions
     /// Base class for testing functions
     /// </summary>
     [TestFixture]
-    internal class FunctionTestBase
+    internal class FunctionTestBase : SageTest
     {
-        protected RuntimeContext _runtimeContext = new RuntimeContext();
+        protected RuntimeContext _runtimeContext;
 
         [SetUp]
         public void TestSetup()
         {
-            _runtimeContext = new RuntimeContext();
+            _runtimeContext = new RuntimeContext(_serviceProvider, TestCompilationOptions());
         }
     }
 }

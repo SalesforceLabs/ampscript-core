@@ -5,6 +5,7 @@
 
 using System.Data;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
 
 namespace Sage.Engine.Data.Sqlite
 {
@@ -19,6 +20,8 @@ namespace Sage.Engine.Data.Sqlite
     /// </remarks>
     internal class SqliteDataExtensionClient : IDataExtensionClient
     {
+        private readonly SageInMemoryDataOption _inMemoryOptions;
+
         /// <summary>
         /// The set of tables that have been loaded from CSV into memory.
         /// The key is the QuotedIdentifier.
@@ -33,18 +36,18 @@ namespace Sage.Engine.Data.Sqlite
             get;
         }
 
-        public SqliteDataExtensionClient(string connectionString, DirectoryInfo workingDirectory)
+        public SqliteDataExtensionClient(IOptions<SageInMemoryDataOption> inMemoryOptions)
         {
-            Connection = new SqliteConnection(connectionString);
-            WorkingDirectory = workingDirectory;
+            _inMemoryOptions = inMemoryOptions.Value;
+            Connection = new SqliteConnection(_inMemoryOptions.ConnectionString);
         }
 
-        public async Task OpenAsync()
+        public async Task ConnectAsync()
         {
             await Connection.OpenAsync();
         }
 
-        public DirectoryInfo WorkingDirectory { get; }
+        public DirectoryInfo WorkingDirectory => _inMemoryOptions.DataExtensionDirectory;
 
         public async Task<DataTable> LookupAsync(LookupRequest lookup)
         {
@@ -108,7 +111,7 @@ namespace Sage.Engine.Data.Sqlite
 
             if (schema.Rows.Count == 0)
             {
-                await this.LoadCsv(WorkingDirectory.FullName, table.Unquote());
+                await this.LoadCsv(table.Unquote());
             }
         }
 

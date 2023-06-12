@@ -4,22 +4,25 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
+using Sage.PackageManager.DataObjects;
 
 namespace Sage.PackageManager
 {
     /// <summary>
     /// An entity is any reachable object within the package graph.
-    ///
-    /// This interface is a high-level interface for interacting with the package graph and is not supposed to be a 1:1 representation of the underlying JSON.
-    ///
+    /// This interface is a high-level interface for interacting with the package graph and is not supposed to be a 1:1
+    /// representation of the underlying JSON.
     /// Types of entities are assets, automations, journeys, etc.
     /// </summary>
     public class Entity
     {
-        protected static Regex MatchAssetId = new Regex(@"{{mcpm#/entities/assets/(?<ID>.*)/data/id}}");
+        private readonly ConcurrentDictionary<string, Entity> _incomingEdges =
+            new ConcurrentDictionary<string, Entity>();
 
-        internal Entity(DataObjects.PackagedEntity packagedEntity)
+        private readonly ConcurrentDictionary<string, Entity> _outgoingEdges =
+            new ConcurrentDictionary<string, Entity>();
+
+        internal Entity(PackagedEntity packagedEntity)
         {
             this.Id = packagedEntity.originID ?? throw new InvalidDataException("Unable to identify the origin ID");
         }
@@ -59,9 +62,6 @@ namespace Sage.PackageManager
             }
         }
 
-        private readonly ConcurrentDictionary<string, Entity> _outgoingEdges = new ConcurrentDictionary<string, Entity>();
-        private readonly ConcurrentDictionary<string, Entity> _incomingEdges = new ConcurrentDictionary<string, Entity>();
-
         internal void AddOutgoing(Entity outgoing)
         {
             _outgoingEdges.AddOrUpdate(outgoing.Id, outgoing, (string id, Entity other) =>
@@ -91,6 +91,5 @@ namespace Sage.PackageManager
                 return other;
             });
         }
-
     }
 }

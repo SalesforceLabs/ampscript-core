@@ -87,9 +87,9 @@ internal class Runtime
 
     /// <summary>
     /// As the code executes, it needs to inform the runtime what line number it's on
-    /// in the AMPScript content.  This aids in providing debugging information when
+    /// in the AMPscript content.  This aids in providing debugging information when
     /// an error is encountered and the engine can provide a stack trace exclusively from the
-    /// AMPScript content.
+    /// AMPscript content.
     /// </summary>
     /// <param name="lineNumber">The line number it's executing on, beginning with "1"</param>
     /// <returns>Invoking RuntimeContext.SetCurrentContextLineNumber to set the line</returns>

@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using Microsoft.CodeAnalysis;
 using Sage.Engine.Content;
 using Sage.Engine.Data;
 using Sage.Engine.Compiler;
 using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 using System.Diagnostics;
 using System.Globalization;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Sage.Engine.Runtime
 {
@@ -27,41 +27,33 @@ namespace Sage.Engine.Runtime
         private readonly Stack<StackFrame> _stackFrame = new();
 
         private readonly Dictionary<string, SageVariable> _variables = new();
-        private CompilationOptions? _rootCompilationOptions;
-        private IDataExtensionClient _dataExtensionClient;
-        private IContentClient _classicContentClient;
-        private IContentClient _contentBuilderContentClient;
-        private SubscriberContext _subscriberContext;
+        private readonly CompilationOptions _rootCompilationOptions;
+        private readonly IDataExtensionClient _dataExtensionClient;
+        private readonly IContentClient _classicContentClient;
+        private readonly IContentClient _contentBuilderContentClient;
+        private readonly SubscriberContext _subscriberContext;
 
         // TODO: Make configurable
-        private CultureInfo _currentCulture = CultureInfo.InvariantCulture;
-
-        private DirectoryInfo WorkingDirectory => _rootCompilationOptions?.InputFile.Directory ?? new DirectoryInfo(Environment.CurrentDirectory);
+        private readonly CultureInfo _currentCulture = CultureInfo.CurrentCulture;
 
         public RuntimeContext(
-            CompilationOptions rootCompilationOptions,
-            IDataExtensionClient dataExtensionClient,
-            SubscriberContext? subscriberContext)
-        {
-            _rootCompilationOptions = rootCompilationOptions;
-            _subscriberContext = subscriberContext ?? new SubscriberContext(null);
-            _dataExtensionClient = dataExtensionClient;
-            _classicContentClient = ContentClientFactory.CreateLocalDiskContentClient(Path.Combine(WorkingDirectory.FullName, "Content"));
-            _contentBuilderContentClient = _classicContentClient;
-            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName, _rootCompilationOptions.InputFile));
-        }
-
-        public RuntimeContext(
-            CompilationOptions? rootCompileOptions = null,
+            IServiceProvider provider,
+            CompilationOptions rootCompileOptions,
             SubscriberContext? subscriberContext = null)
         {
             this.Random = new Random();
             _rootCompilationOptions = rootCompileOptions;
-            _classicContentClient = ContentClientFactory.CreateLocalDiskContentClient(Path.Combine(WorkingDirectory.FullName, "Content"));
-            _contentBuilderContentClient = _classicContentClient;
-            _dataExtensionClient = DataExtensionClientFactory.CreateInMemoryDataExtensions(WorkingDirectory).Result;
+            _classicContentClient = provider.GetRequiredService<IClassicContentClient>();
+            _contentBuilderContentClient = provider.GetRequiredService<IContentBuilderContentClient>();
+            _dataExtensionClient = provider.GetRequiredService<IDataExtensionClient>();
+            _dataExtensionClient.ConnectAsync().Wait();
 
-            string subscriberContextFile = Path.Combine(WorkingDirectory.FullName, "subscriber.json");
+            if (_rootCompilationOptions.InputFile.Directory == null)
+            {
+                throw new InternalEngineException($"Directory for the input file ({_rootCompilationOptions.InputFile.FullName}) is unexpectedly not available");
+            }
+
+            string subscriberContextFile = Path.Combine(_rootCompilationOptions.InputFile.Directory.FullName, "subscriber.json");
             if (subscriberContext != null)
             {
                 _subscriberContext = subscriberContext;
@@ -75,7 +67,7 @@ namespace Sage.Engine.Runtime
                 _subscriberContext = new SubscriberContext(null);
             }
 
-            _stackFrame.Push(new StackFrame(_rootCompilationOptions?.GeneratedMethodName ?? "TEST", _rootCompilationOptions?.InputFile ?? null));
+            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName, _rootCompilationOptions.InputFile));
         }
 
         /// <summary>
@@ -193,14 +185,12 @@ namespace Sage.Engine.Runtime
             return _subscriberContext;
         }
 
-
         internal string? CompileAndExecuteEmbeddedCodeAsync(string id, string code)
         {
-            CompilerOptionsBuilder fromCodeString = new CompilerOptionsBuilder().WithSourceCode(id, code);
+            CompilerOptionsBuilder fromCodeString = new CompilerOptionsBuilder(_rootCompilationOptions).WithSourceCode(id, code);
 
-            return CompileAndExecuteEmbeddedCodeAsync(id, fromCodeString, code);
+            return CompileAndExecuteEmbeddedCodeAsync(fromCodeString.Build(), code);
         }
-
 
         /// <summary>
         /// Executes embedded code - whether that came from TREATASCONTENT or CONTENT calls.
@@ -216,30 +206,24 @@ namespace Sage.Engine.Runtime
                 return null;
             }
 
-            CompilerOptionsBuilder fromFileOptions = new CompilerOptionsBuilder().WithInputFile(code);
+            CompilerOptionsBuilder fromFileOptions = new CompilerOptionsBuilder(_rootCompilationOptions).WithInputFile(code);
 
-            return CompileAndExecuteEmbeddedCodeAsync(id, fromFileOptions, code);
+            return CompileAndExecuteEmbeddedCodeAsync(fromFileOptions.Build(), code);
         }
 
-
-        internal string? CompileAndExecuteEmbeddedCodeAsync(string id, CompilerOptionsBuilder currentOptions, object fileInfoOrString)
+        internal string? CompileAndExecuteEmbeddedCodeAsync(CompilationOptions currentOptions, object fileInfoOrString)
         {
-            CompilationOptions generatedOptions = currentOptions
-                .WithOutputDirectory(_rootCompilationOptions?.OutputDirectory ?? new DirectoryInfo(Environment.CurrentDirectory))
-                .WithOptimizationLevel(_rootCompilationOptions?.OptimizationLevel ?? OptimizationLevel.Debug)
-                .Build();
-
-            CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(generatedOptions);
+            CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(currentOptions);
 
             string poppedContext;
 
             if (fileInfoOrString is FileInfo contextFile)
             {
-                PushContext(generatedOptions.GeneratedMethodName, contextFile);
+                PushContext(currentOptions.GeneratedMethodName, contextFile);
             }
             else
             {
-                PushContext(generatedOptions.GeneratedMethodName, fileInfoOrString?.ToString() ?? string.Empty);
+                PushContext(currentOptions.GeneratedMethodName, fileInfoOrString.ToString() ?? string.Empty);
             }
 
             try

@@ -88,9 +88,9 @@ namespace Sage.Engine.Data.Sqlite
         /// <param name="dataExtensionClient">The client used for loading data</param>
         /// <param name="workingDirectory">The root folder for where the CSV files live</param>
         /// <param name="dataExtensionName">The name of the data extension to load the data into.</param>
-        public static async Task LoadCsv(this SqliteDataExtensionClient dataExtensionClient, string workingDirectory, string dataExtensionName)
+        public static async Task LoadCsv(this SqliteDataExtensionClient dataExtensionClient, string dataExtensionName)
         {
-            var csvFile = new FileInfo(Path.Join(workingDirectory, "DataExtensions", $"{dataExtensionName}.csv"));
+            var csvFile = new FileInfo(Path.Join(dataExtensionClient.WorkingDirectory.FullName, $"{dataExtensionName}.csv"));
 
             await dataExtensionClient.LoadCsv(csvFile.OpenRead(), dataExtensionName);
         }

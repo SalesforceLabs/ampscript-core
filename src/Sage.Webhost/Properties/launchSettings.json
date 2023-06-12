@@ -1,16 +1,8 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:61771",
-      "sslPort": 44372
-    }
-  },
   "profiles": {
     "PackageZip": {
       "commandName": "Project",
-      "commandLineArgs": "packagezip --packageDir \"<<Insert path to PackageManager unzipped directory>>\" -t Asset --sourceId <<Insert ID of asset to be debugged>>",
+      "commandLineArgs": "packagezip --packageDir \"C:\\Users\\lbuesching\\Downloads\\paypal\" --sourceId 19740",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -20,7 +12,7 @@
     },
     "PackageJson": {
       "commandName": "Project",
-      "commandLineArgs": "packagejson --source \"<<Insert path to JSON file to be debugged>>\" -t Asset --sourceId <<Insert ID of asset to be debugged>>",
+      "commandLineArgs": "packagejson --source \"C:\\code\\AmpscriptFiles\\Target.json\" --sourceId 55184",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -30,13 +22,21 @@
     },
     "Ampscript ": {
       "commandName": "Project",
-      "commandLineArgs": "ampscript --source \"<<Insert path to JSON file to be debugged>>\"",
+      "commandLineArgs": "ampscript --source \"C:\\code\\AmpscriptFiles\\dd4tmp.ampscript\"",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7194"
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:61771",
+      "sslPort": 44372
     }
   }
 }

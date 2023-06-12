@@ -5,6 +5,30 @@ CONTENTBLOCKBYNAME
 ++++++++++
 Hello World
 ==========
+CONTENTBLOCKBYKEY
+==========
+%%=CONTENTBLOCKBYKEY("StaticContent")=%%
+++++++++++
+Hello World
+==========
+CONTENTBLOCKBYID
+==========
+%%=CONTENTBLOCKBYID("StaticContent")=%%
+++++++++++
+Hello World
+==========
+CONTENTAREA
+==========
+%%=CONTENTAREA("StaticContent")=%%
+++++++++++
+Hello World
+==========
+CONTENTAREABYNAME
+==========
+%%=CONTENTAREABYNAME("StaticContent")=%%
+++++++++++
+Hello World
+==========
 CONTENTBLOCKBYNAME Not Exist DoNotThrow
 ==========
 %%=CONTENTBLOCKBYNAME("StaticContentDoesNotExist", "", false)=%%

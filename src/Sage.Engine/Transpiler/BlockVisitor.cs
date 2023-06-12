@@ -9,7 +9,7 @@ using Sage.Engine.Parser;
 namespace Sage.Engine.Transpiler;
 
 /// <summary>
-/// This visits blocks of AMPScript code, such as the contents of a file, what's inside an IF statement, or what's in a DO loop.
+/// This visits blocks of AMPscript code, such as the contents of a file, what's inside an IF statement, or what's in a DO loop.
 /// </summary>
 internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>>
 {
@@ -50,7 +50,7 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
     }
 
     /// <summary>
-    /// An inline AmpBlock is AMPScript of the form %%= -- for example, %%=V(Firstname)=%%.
+    /// An inline AmpBlock is AMPscript of the form %%= -- for example, %%=V(Firstname)=%%.
     /// </summary>
     public override IEnumerable<StatementSyntax> VisitInlineAmpBlock(SageParser.InlineAmpBlockContext context)
     {

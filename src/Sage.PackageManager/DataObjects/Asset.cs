@@ -9,7 +9,7 @@ namespace Sage.PackageManager.DataObjects
     /// Represents an asset in the content builder SDK.
     /// </summary>
     /// <see cref="https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/asset_type.html"/>
-    internal record Asset(AssetType assetType, string name, Views views);
+    internal record Asset(AssetType assetType, string name, string? content, string? file, Dictionary<string, Slot>? slots, Views? views);
 
     /// <summary>
     /// Maps the ID number to a human readable name
@@ -22,8 +22,25 @@ namespace Sage.PackageManager.DataObjects
         Block = 3,
         Template = 4,
         Message = 5,
+        FreeformBlock = 195,
+        TextBlock = 196,
+        HtmlBlock = 197,
+        TextPlusImageBlock = 198,
+        ImageBlock = 199,
+        ABTestBlock = 200,
+        DynamicBlock = 201,
+        StylingBlock = 202,
+        EinsteinContentBlock = 203,
+        Webpage = 205,
+        WebTemplate = 206,
         TemplateBasedEmail = 207,
         HtmlEmail = 208,
+        TextOnlyEmail = 209,
+        SocialShareBlock = 210,
+        SocialFollowBlock = 211,
+        ButtonBlock = 212,
+        LayoutBlock = 213,
+        DefaultTemplate = 214
     }
 
     /// <summary>

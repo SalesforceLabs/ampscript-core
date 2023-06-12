@@ -18,16 +18,24 @@ namespace Sage.Engine.Compiler
     /// <param name="OutputDirectory">What directory to output generated files</param>
     /// <param name="AssemblyStream">Stream for the assembly to be generated into</param>
     /// <param name="SymbolStream">Stream for the symbol file to be generated into</param>
-    public record CompilationOptions(
-        string InputName,
-        FileInfo InputFile,
-        string SourceCode,
-        string GeneratedMethodName,
-        OptimizationLevel OptimizationLevel,
-        DirectoryInfo OutputDirectory,
-        Stream AssemblyStream,
-        Stream SymbolStream)
+    public class CompilationOptions
     {
+        public required string InputName { get; set; }
+        public required FileInfo InputFile { get; set; }
+        public string? SourceCode { get; set; }
+        public required string GeneratedMethodName { get; set; }
+        public required OptimizationLevel OptimizationLevel { get; set; }
+        public required DirectoryInfo OutputDirectory { get; set; }
+        public required Stream AssemblyStream { get; set; }
+        public required Stream SymbolStream { get; set; }
+
+        public CompilationOptions Clone()
+        {
+            var newOptions = (CompilationOptions)this.MemberwiseClone();
+            newOptions.AssemblyStream = new MemoryStream();
+            newOptions.SymbolStream = new MemoryStream();
+            return newOptions;
+        }
 
         /// <summary>
         /// Pre-defined generated assembly file

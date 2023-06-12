@@ -10,14 +10,13 @@ namespace Sage.Engine.Tests
     /// <summary>
     /// Validates tests regarding ampscript data functions
     /// </summary>
-    [TestFixture]
-    public class ContentTests
+    public class ContentTests : SageTest
     {
         [Test]
         [RuntimeTest("Content")]
         public EngineTestResult TestContentFunctions(CorpusData test)
         {
-            var result = TestUtils.GetOutputFromTest(test);
+            var result = TestUtils.GetOutputFromTest(_serviceProvider, test);
             Assert.That(result.Output, Is.EqualTo(test.Output));
             return result;
         }

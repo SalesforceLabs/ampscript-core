@@ -16,7 +16,6 @@ using Sage.Engine.Runtime;
 using Basic.Reference.Assemblies;
 using Sage.Engine.Data;
 
-
 namespace Sage.Engine.Compiler
 {
     /// <summary>
@@ -24,13 +23,12 @@ namespace Sage.Engine.Compiler
     /// </summary>
     internal static class CSharpCompiler
     {
-        public static string CompileAndExecute(CompilationOptions options)
-        {
-            return CompileAndExecute(options, new RuntimeContext(options));
-        }
-
         public static string CompileAndExecute(CompilationOptions options, RuntimeContext context)
         {
+            if (string.IsNullOrEmpty(options.SourceCode))
+            {
+                options.SourceCode = File.ReadAllText(options.InputFile.FullName);
+            }
             CompileResult result = GenerateAssemblyFromSource(options);
 
             result.Execute(context);
@@ -48,6 +46,11 @@ namespace Sage.Engine.Compiler
         /// </summary>
         public static CompileResult GenerateAssemblyFromSource(CompilationOptions options)
         {
+            if (options.SourceCode == null)
+            {
+                throw new ArgumentNullException(nameof(options.SourceCode));
+            }
+
             CSharpTranspiler transpiler = CSharpTranspiler.CreateFromSource(options.InputFile.FullName, options.GeneratedMethodName, options.SourceCode);
 
             CompilationUnitSyntax compilationUnit = transpiler.GenerateCode();

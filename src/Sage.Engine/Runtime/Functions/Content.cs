@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 // ReSharper disable ConstantConditionalAccessQualifier
 // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 // ReSharper disable ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+#pragma warning disable IDE0060 // Remove unused parameter
 
 namespace Sage.Engine.Runtime
 {
@@ -21,7 +22,7 @@ namespace Sage.Engine.Runtime
         /// Impression regions allow for tracking specific regions of content.
         /// </summary>
         /// <param name="regionName">The name of the impression region to track</param>
-        /// <remarks>At this time, no tracking features are available so this function is a no-op. It exists solely for AMPScript to compile.</remarks>
+        /// <remarks>At this time, no tracking features are available so this function is a no-op. It exists solely for AMPscript to compile.</remarks>
         public string BEGINIMPRESSIONREGION(object? regionName)
         {
             return "";
@@ -31,7 +32,7 @@ namespace Sage.Engine.Runtime
         /// Impression regions allow for tracking specific regions of content.
         /// </summary>
         /// <param name="regionName">The name of the impression region to track</param>
-        /// <remarks>At this time, no tracking features are available so this function is a no-op.  It exists solely for AMPScript to compile.</remarks>
+        /// <remarks>At this time, no tracking features are available so this function is a no-op.  It exists solely for AMPscript to compile.</remarks>
         public string ENDIMPRESSIONREGION()
         {
             return "";
@@ -41,7 +42,7 @@ namespace Sage.Engine.Runtime
         /// This function serves as a marker for link attribution within the content.
         /// </summary>
         /// <param name="assetBlock">The identifier of the asset block</param>
-        /// <remarks>At this time, no tracking features are available so this function is a no-op. It exists solely for AMPScript to compile.</remarks>
+        /// <remarks>At this time, no tracking features are available so this function is a no-op. It exists solely for AMPscript to compile.</remarks>
         public string BEGINASSETBLOCK(object? assetBlock)
         {
             return "";
@@ -51,7 +52,7 @@ namespace Sage.Engine.Runtime
         /// This function serves as a marker for link attribution within the content.
         /// </summary>
         /// <param name="assetBlock">The identifier of the asset block</param>
-        /// <remarks>At this time, no tracking features are available so this function is a no-op. It exists solely for AMPScript to compile.</remarks>
+        /// <remarks>At this time, no tracking features are available so this function is a no-op. It exists solely for AMPscript to compile.</remarks>
         public string ENDASSETBLOCK()
         {
             return "";

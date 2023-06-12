@@ -5,20 +5,21 @@
 
 using System.Data;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.DependencyInjection;
 using Sage.Engine.Data;
 using Sage.Engine.Data.Sqlite;
 
 namespace Sage.Engine.Tests.Data
 {
     [TestFixture]
-    internal class SqliteDataTests
+    internal class SqliteDataTests : SageTest
     {
         private SqliteDataExtensionClient _dataExtensionClient;
 
         [SetUp]
         public void TestSetup()
         {
-            _dataExtensionClient = (SqliteDataExtensionClient)DataExtensionClientFactory.CreateInMemoryDataExtensions(new DirectoryInfo(Environment.CurrentDirectory)).Result;
+            _dataExtensionClient = (SqliteDataExtensionClient)_serviceProvider.GetRequiredService<IDataExtensionClient>();
         }
 
         [TearDown]
@@ -30,13 +31,13 @@ namespace Sage.Engine.Tests.Data
         [Test]
         public async Task InitInMemory()
         {
-            await _dataExtensionClient.OpenAsync();
+            await _dataExtensionClient.ConnectAsync();
         }
 
         [Test]
         public async Task LoadDataFromTable()
         {
-            await _dataExtensionClient.OpenAsync();
+            await _dataExtensionClient.ConnectAsync();
 
             await _dataExtensionClient.CreateTable("TestTable", new[] { "TestColumn" });
 
@@ -50,7 +51,7 @@ namespace Sage.Engine.Tests.Data
         [Test]
         public async Task InsertAndLookup()
         {
-            await _dataExtensionClient.OpenAsync();
+            await _dataExtensionClient.ConnectAsync();
 
             await _dataExtensionClient.CreateTable("TestTable", new[] { "TestColumn" });
 
@@ -71,15 +72,15 @@ namespace Sage.Engine.Tests.Data
         [TestCase("Loyalty")]
         public async Task LoadCsv(string dataExtension)
         {
-            await _dataExtensionClient.OpenAsync();
-            await _dataExtensionClient.LoadCsv(TestContext.CurrentContext.TestDirectory, dataExtension);
+            await _dataExtensionClient.ConnectAsync();
+            await _dataExtensionClient.LoadCsv(dataExtension);
         }
 
         [Test]
         public async Task TestLoyaltyQueries()
         {
-            await _dataExtensionClient.OpenAsync();
-            await _dataExtensionClient.LoadCsv(TestContext.CurrentContext.TestDirectory, "Loyalty");
+            await _dataExtensionClient.ConnectAsync();
+            await _dataExtensionClient.LoadCsv("Loyalty");
 
             var lookupBuilder = new LookupRequestBuilder("Loyalty");
             lookupBuilder.WithReturnedProperty("EmailAddress");

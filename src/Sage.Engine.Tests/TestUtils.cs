@@ -4,6 +4,7 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using Antlr4.Runtime.Tree;
+using Microsoft.Extensions.DependencyInjection;
 using Sage.Engine.Compiler;
 using Sage.Engine.Data;
 using Sage.Engine.Parser;
@@ -32,26 +33,26 @@ public static class TestUtils
         return result;
     }
 
-    private static async Task<RuntimeContext> GetTestRuntimeContext(CompilationOptions options, CorpusData test)
+    private static RuntimeContext GetTestRuntimeContext(IServiceProvider serviceProvider, CompilationOptions options, CorpusData test)
     {
         return new RuntimeContext(
+            serviceProvider,
             options,
-            await DataExtensionClientFactory.CreateInMemoryDataExtensions(new DirectoryInfo(Environment.CurrentDirectory)),
             test.SubscriberContext);
     }
 
     /// <summary>
     /// Executes the engine and gets the expected result from the engine
     /// </summary>
-    public static EngineTestResult GetOutputFromTest(CorpusData test)
+    public static EngineTestResult GetOutputFromTest(IServiceProvider serviceProvider, CorpusData test)
     {
         CompilationOptions options = new CompilerOptionsBuilder()
             .WithSourceCode(test.FileFriendlyName, test.Code)
-            .Build();
+        .Build();
 
         try
         {
-            return new EngineTestResult(CSharpCompiler.CompileAndExecute(options, GetTestRuntimeContext(options, test).Result).Trim());
+            return new EngineTestResult(CSharpCompiler.CompileAndExecute(options, GetTestRuntimeContext(serviceProvider, options, test)).Trim());
         }
         catch (CompileCodeException e)
         {

@@ -64,14 +64,12 @@ namespace Sage.Engine.Data.Sqlite
             return this;
         }
 
-
         private SqliteSelectBuilder WithConstraints(IEnumerable<ParameterizedQueryItem> attributeConstraints)
         {
             _attributeConstraints = attributeConstraints;
 
             return this;
         }
-
 
         private SqliteSelectBuilder WithOrdering(IEnumerable<KeyValuePair<QuotedIdentifier, Order>> resultOrdering)
         {

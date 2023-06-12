@@ -5,7 +5,6 @@
 
 namespace Sage.Engine.Tests.Functions
 {
-    [TestFixture]
     internal class StringTests : FunctionTestBase
     {
         [Test]

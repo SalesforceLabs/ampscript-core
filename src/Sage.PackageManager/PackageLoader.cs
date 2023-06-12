@@ -10,12 +10,59 @@ using Sage.PackageManager.DataObjects;
 
 namespace Sage.PackageManager
 {
-    abstract class PackageLoader
+    /// <summary>
+    /// Abstract class that can load a package and generate a package graph.
+    /// This is extended by the JSON and ZIP loaders to source entities either from other files (zip), or within the paylaod
+    /// (json).
+    /// </summary>
+    public abstract class PackageLoader : IPackageLoader
     {
+        /// <summary>
+        /// Loads the package manager given package into a package graph
+        /// </summary>
+        public virtual PackageGraph Load()
+        {
+            Validate();
+
+            var entities = new ConcurrentDictionary<string, Entity>();
+
+            JsonObject referencesJsonObject = GetReferences();
+            foreach (KeyValuePair<string, JsonNode?> referenceObject in referencesJsonObject)
+            {
+                if (referenceObject.Value is not JsonArray referenceArray)
+                {
+                    continue;
+                }
+
+                foreach (JsonNode? entity in referenceArray)
+                {
+                    Reference? reference = entity.Deserialize<Reference>();
+                    if (reference == null)
+                    {
+                        continue;
+                    }
+
+                    GetOrCreate(entities, referenceObject.Key).AddOutgoing(GetOrCreate(entities, reference.identifier));
+                }
+            }
+
+            var selectedEntities = new HashSet<Entity>();
+            SelectedEntities? selectedEntitiesObject = GetSelectedEntities().Deserialize<SelectedEntities>();
+            if (selectedEntitiesObject != null)
+            {
+                foreach (int assetId in selectedEntitiesObject.assets)
+                {
+                    selectedEntities.Add(GetOrCreate(entities, $"assets/{assetId}"));
+                }
+            }
+
+            return new PackageGraph(entities, selectedEntities);
+        }
+
         /// <summary>
         /// Validates that the provided package is well formed before parsing.
         /// </summary>
-        internal abstract void Validate();
+        protected abstract void Validate();
 
         /// <summary>
         /// Returns the JSON object
@@ -32,47 +79,6 @@ namespace Sage.PackageManager
         /// </summary>
         protected abstract JsonObject GetReferences();
 
-        /// <summary>
-        /// Loads the package manager given package into a package graph
-        /// </summary>
-        internal PackageGraph Load()
-        {
-            Validate();
-
-            var entities = new ConcurrentDictionary<string, Entity>();
-
-            JsonObject referencesJsonObject = GetReferences();
-            foreach (KeyValuePair<string, JsonNode?> referenceObject in referencesJsonObject)
-            {
-                if (referenceObject.Value is not JsonArray referenceArray)
-                {
-                    continue;
-                }
-
-                foreach (var entity in referenceArray)
-                {
-                    DataObjects.Reference? reference = entity.Deserialize<DataObjects.Reference>();
-                    if (reference == null)
-                    {
-                        continue;
-                    }
-
-                    GetOrCreate(entities, referenceObject.Key).AddOutgoing(GetOrCreate(entities, reference.identifier));
-                }
-            }
-
-            var selectedEntities = new HashSet<Entity>();
-            SelectedEntities? selectedEntitiesObject = GetSelectedEntities().Deserialize<DataObjects.SelectedEntities>();
-            if (selectedEntitiesObject != null)
-            {
-                foreach (int assetId in selectedEntitiesObject.assets)
-                {
-                    selectedEntities.Add(GetOrCreate(entities, $"assets/{assetId}"));
-                }
-            }
-
-            return new PackageGraph(entities, selectedEntities);
-        }
         internal Entity GetOrCreate(ConcurrentDictionary<string, Entity> entities, string id)
         {
             return entities.GetOrAdd(id, LoadEntity);
@@ -94,13 +100,14 @@ namespace Sage.PackageManager
             switch (entityType)
             {
                 case "assets":
-                    DataObjects.PackagedAsset? packagedAsset = entityJson.Deserialize<DataObjects.PackagedAsset>();
+                    PackagedAsset? packagedAsset = entityJson.Deserialize<PackagedAsset>();
+
                     return packagedAsset == null ? new Entity(id) : new Asset(packagedAsset);
                 case "categories":
-                    DataObjects.PackagedCategory? packagedCategory = entityJson.Deserialize<DataObjects.PackagedCategory>();
+                    PackagedCategory? packagedCategory = entityJson.Deserialize<PackagedCategory>();
                     return packagedCategory == null ? new Entity(id) : new Category(packagedCategory);
                 default:
-                    DataObjects.PackagedEntity? packagedEntity = entityJson.Deserialize<DataObjects.PackagedEntity>();
+                    PackagedEntity? packagedEntity = entityJson.Deserialize<PackagedEntity>();
                     return packagedEntity == null ? new Entity(id) : new Entity(packagedEntity);
             }
         }

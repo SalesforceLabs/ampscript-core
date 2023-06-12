@@ -25,7 +25,7 @@ namespace Sage.PackageManager.Tests
 
             Assert.That(message != null);
 
-            string compiled = ContentCompiler.Compile(message!);
+            string compiled = ContentCompiler.Compile(null!, message!);
 
             string expectedContents = File.ReadAllText(expected.FullName).Trim();
 

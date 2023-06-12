@@ -24,22 +24,9 @@ namespace Sage.PackageManager
         /// This does not do any ampscript rendering.  "Compile" and "rendered" in this context simply means
         /// resolving the data-key references and placing them into the content tree.
         /// </remarks>
-        public string Compile()
+        public string Compile(PackageGraph referenceGraph)
         {
-            return ContentCompiler.Compile(asset.data);
-        }
-
-        /// <summary>
-        /// From package manager, they specify references as {{mcpm#SOME_IDENTIFIER}} (mustache expressions).  This method just updates the ID to be what integer identifier is local.
-        /// </summary>
-        /// <remarks>
-        /// It's silly to bring a mustache expression library for one use case like this, so it just does regex matching.
-        /// </remarks>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static string FixReferences(string input)
-        {
-            return MatchAssetId.Replace(input, "${ID}");
+            return ContentCompiler.Compile(referenceGraph, asset.data);
         }
     }
 }

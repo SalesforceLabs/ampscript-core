@@ -5,32 +5,29 @@
 
 using Sage.Engine.Compiler;
 using Sage.Engine.Runtime;
-using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 
 namespace Sage.Engine
 {
     /// <summary>
     /// A class that compiles AMPscript source code into C#
     /// </summary>
-    public static class Renderer
+    public class Renderer
     {
-        /// <summary>
-        /// Renders the content with the provided subscriber context.
-        ///
-        /// If no subscriber context is provided, it is read from a `subscriber.json` file.
-        /// </summary>
-        /// <param name="file">The file to render</param>
-        /// <param name="context">The subscriber context - if none is provided, it may be automatically read generated from a `subscriber.json` file.</param>
-        /// <returns></returns>
-        public static string Render(FileInfo file, SubscriberContext? context = null)
+        private readonly IServiceProvider _services;
+
+        public Renderer(
+            IServiceProvider services)
         {
-            CompilationOptions options = new CompilerOptionsBuilder()
-                .WithInputFile(file)
-                .Build();
+            _services = services;
+        }
 
-            RuntimeContext runtimeContext = new RuntimeContext(options, context);
+        public string Render(
+            CompilationOptions compOptions,
+            SubscriberContext? context = null)
+        {
+            var runtimeContext = new RuntimeContext(_services, compOptions, context);
 
-            return CSharpCompiler.CompileAndExecute(options, runtimeContext);
+            return CSharpCompiler.CompileAndExecute(compOptions, runtimeContext);
         }
     }
 }

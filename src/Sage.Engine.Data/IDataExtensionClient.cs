@@ -29,5 +29,10 @@ namespace Sage.Engine.Data
         /// Returns the schema of a data extension table
         /// </summary>
         Task<DataTable> GetSchemaAsync(string dataExtension);
+
+        /// <summary>
+        /// Creates the client connection
+        /// </summary>
+        Task ConnectAsync();
     }
 }

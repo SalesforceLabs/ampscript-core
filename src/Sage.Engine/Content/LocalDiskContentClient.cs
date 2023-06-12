@@ -3,23 +3,27 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using Microsoft.Extensions.Options;
+using Sage.Engine.Compiler;
+
 namespace Sage.Engine.Content
 {
     /// <summary>
     /// Implements the IContentClient class through files on the local disk.
     /// </summary>
-    public class LocalDiskContentClient : IContentClient
+    public class LocalDiskContentClient : IClassicContentClient, IContentBuilderContentClient
     {
-        private readonly string _contentDirectory;
+        private readonly ContentOptions _options;
 
         /// <summary>
         /// Creates a content client where files of the specified name are read and returned.
         /// </summary>
         /// <param name="contentDirectory">The directory with the content files.</param>
         /// </param>
-        public LocalDiskContentClient(string contentDirectory)
+        public LocalDiskContentClient(
+            IOptionsSnapshot<ContentOptions> options)
         {
-            _contentDirectory = contentDirectory;
+            _options = options.Value;
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace Sage.Engine.Content
         /// </summary>,
         private FileInfo? GetContentFromPath(string path)
         {
-            string finalPath = Path.Combine(_contentDirectory, $"{path}.ampscript");
+            string finalPath = Path.Combine(_options.InputDirectory.FullName, $"{path}.ampscript");
 
             if (!File.Exists(finalPath))
             {

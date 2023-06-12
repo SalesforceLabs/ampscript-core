@@ -28,4 +28,14 @@ namespace Sage.Engine.Content
         /// <returns>A local cached file on disk that contains the content</returns>
         FileInfo? GetContentByCustomerKey(string customerKey);
     }
+
+    public interface IClassicContentClient : IContentClient
+    {
+
+    }
+
+    public interface IContentBuilderContentClient : IContentClient
+    {
+
+    }
 }

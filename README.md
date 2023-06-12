@@ -1,9 +1,7 @@
-# Sage
-Sage is a set of tools for Salesforce Marketing Cloud content development, analytics and security.
+# AMPscript Core
+AMPscript Core is an open source implementation of the Marketing Cloud AMPscript language.
 
-The goal of this project is to make writing, debugging and analyzing content easier.
-
-Questions? Follow up on slack [#sage-discussion](https://salesforce-internal.slack.com/archives/C04H9CDV5RD)
+It is cross platform and works on Windows, macOS and Linux.
 
 ## Subscriber Attributes
 Subscriber attributes `%%Foo%%`/`[Foo]` are supported through a JSON file named `subscriber.json` in the working directory.
@@ -57,44 +55,15 @@ Outputs:
 Hello Donnie
 ```
 
-## Debugging AMPscript using Sage
-There is an example at [Index.ampscript](src/Sage.Webhost/Index.ampscript) that you may modify and test.
-
-In VSCode, create a `launch.json` file which launches the sage engine. Example:
-```json
-    "configurations": [
-        {
-            "name": "Launch (web)",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "<path to release>\\Sage.Webhost.dll",
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}"
-            }
-        }
-    ]
-```
-
-Future editor plugins (VSCode) are on the roadmap
-
 ## Marketing Cloud Supported Languages
 
 | Language | Summary |
 |----------|---------|
-| AMPScript | ⚠️ Partial support |
+| AMPscript | ⚠️ Partial support |
 | SSJS | ⛔ Not supported |
 | GTL | ⛔ Not Supported |
 
-### ⚠️ AMPScript Support
+### ⚠️ AMPscript Support
 | Feature | Summary |
 |----------|---------|
 | Ampscript Blocks `%%[]%%` | ✔️ |
@@ -106,7 +75,6 @@ Future editor plugins (VSCode) are on the roadmap
 | Personalization Strings `[Foo]` or `%%Foo%%` | ✔️ |
 | Tag Syntax `<script language="ampscript">` | ⛔ Not Supported |
 | System Strings `xtmonth, jobid, subscriberkey, etc` | ⛔ Not Supported |
-
 
 ## Supported Functions
 
@@ -132,9 +100,7 @@ If the function isn't listed here, then it's not supported.
 
 
 ## Roadmap
-* VSCode plugin
 * Increase supported feature
-* A 95% compatibility target for supporting ampscript functions, with mockability for local execution.
 * SSJS & GTL
 * Static code analysis tools to identify and remediate performance or security issues
 

@@ -10,8 +10,7 @@ namespace Sage.Engine.Tests
     /// <summary>
     /// Basic tests for the language features and runtime
     /// </summary>
-    [TestFixture]
-    public class LanguageTests
+    public class LanguageTests : SageTest
     {
         [Test]
         [RuntimeTest("Language")]
@@ -19,7 +18,7 @@ namespace Sage.Engine.Tests
         {
             try
             {
-                var result = TestUtils.GetOutputFromTest(test);
+                var result = TestUtils.GetOutputFromTest(_serviceProvider, test);
                 Assert.That(result.Output, Is.EqualTo(test.Output));
                 return result;
             }

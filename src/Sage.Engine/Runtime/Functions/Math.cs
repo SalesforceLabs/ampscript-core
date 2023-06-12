@@ -7,7 +7,7 @@ namespace Sage.Engine.Runtime
 {
     public partial class RuntimeContext
     {
-        private Random Random = new Random();
+        private readonly Random Random = new Random();
 
         /// <summary>
         /// Returns a random number between the values specified, inclusive.

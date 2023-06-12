@@ -10,14 +10,13 @@ namespace Sage.Engine.Tests
     /// <summary>
     /// Validates the auto-generated comparision tests
     /// </summary>
-    [TestFixture]
-    public class ComparisonTests
+    public class ComparisonTests : SageTest
     {
         [Test]
         [RuntimeTest("Comparisons")]
         public EngineTestResult TestComparisons(CorpusData test)
         {
-            var result = TestUtils.GetOutputFromTest(test);
+            var result = TestUtils.GetOutputFromTest(_serviceProvider, test);
             Assert.That(result.Output, Is.EqualTo(test.Output));
             return result;
         }

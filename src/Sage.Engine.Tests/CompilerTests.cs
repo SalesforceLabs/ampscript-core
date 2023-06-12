@@ -13,8 +13,7 @@ namespace Sage.Engine.Tests
     /// <summary>
     /// These tests validate that the ANTLR4 generated parse tree is what is cSharpExpected from test files
     /// </summary>
-    [TestFixture]
-    public class CompilerTests
+    public class CompilerTests : SageTest
     {
         [Test]
         [TestCase("TestAssemblyGeneration.ampscript")]
@@ -35,7 +34,7 @@ namespace Sage.Engine.Tests
 
             Assert.IsNotNull(result.Assembly);
 
-            var context = new RuntimeContext(options);
+            var context = new RuntimeContext(_serviceProvider, options);
             object[] variables = new object[] { context };
             result.Assembly
                 ?.GetType("Sage.Engine.Runtime.AmpProgram")

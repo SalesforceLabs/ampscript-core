@@ -21,6 +21,14 @@ namespace Sage.Engine.Compiler
             this.OutputDirectory = new DirectoryInfo(Environment.CurrentDirectory);
         }
 
+        public CompilerOptionsBuilder(CompilationOptions current)
+        {
+            this.AssemblyStream = new MemoryStream();
+            this.SymbolStream = new MemoryStream();
+            this.OptimizationLevel = current.OptimizationLevel;
+            this.OutputDirectory = current.OutputDirectory;
+        }
+
         /// <summary>
         /// Name of the input, usually the file name of the file
         /// </summary>
@@ -111,18 +119,10 @@ namespace Sage.Engine.Compiler
             return this;
         }
 
-        /// <summary>
-        /// Build the options into the <see cref="CompilationOptions"/> record
-        /// </summary>
-        public CompilationOptions Build()
+        public static string BuildMethodFromFilename(string filename)
         {
-            if (this.InputName == null || this.InputFile == null || this.SourceCode == null)
-            {
-                throw new InvalidOperationException("No input has been specified");
-            }
-
             var generatedMethodName = new StringBuilder();
-            string generateFrom = Path.GetFileNameWithoutExtension(this.InputName);
+            string generateFrom = Path.GetFileNameWithoutExtension(filename);
             for (int i = 0; i < generateFrom.Length; i++)
             {
                 char thisChar = generateFrom[i];
@@ -143,15 +143,32 @@ namespace Sage.Engine.Compiler
                 generatedMethodName.Append(ConvertInvalid(thisChar));
             }
 
-            return new CompilationOptions(
-                this.InputName,
-                this.InputFile,
-                this.SourceCode,
-                generatedMethodName.ToString(),
-                this.OptimizationLevel,
-                this.OutputDirectory,
-                this.AssemblyStream,
-                this.SymbolStream);
+            return generatedMethodName.ToString();
+        }
+
+        /// <summary>
+        /// Build the options into the <see cref="CompilationOptions"/> record
+        /// </summary>
+        public CompilationOptions Build()
+        {
+            if (this.InputName == null || this.InputFile == null || this.SourceCode == null)
+            {
+                throw new InvalidOperationException("No input has been specified");
+            }
+
+            string generatedMethodName = BuildMethodFromFilename(this.InputName);
+
+            return new CompilationOptions()
+            {
+                InputName = this.InputName,
+                InputFile = this.InputFile,
+                SourceCode = this.SourceCode,
+                GeneratedMethodName = generatedMethodName.ToString(),
+                OptimizationLevel = this.OptimizationLevel,
+                OutputDirectory = this.OutputDirectory,
+                AssemblyStream = this.AssemblyStream,
+                SymbolStream = this.SymbolStream
+            };
         }
     }
 }

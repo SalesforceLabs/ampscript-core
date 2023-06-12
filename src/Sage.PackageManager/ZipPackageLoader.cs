@@ -3,31 +3,42 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Diagnostics;
 using System.Text.Json.Nodes;
+using Microsoft.Extensions.Options;
 
 namespace Sage.PackageManager
 {
     /// <summary>
     /// Loads a PackageManager package from an unzipped package manager zip file
     /// </summary>
-    internal class ZippedPackageLoader : PackageLoader
+    public class ZipPackageLoader : PackageLoader
     {
-        private readonly string _packagePath;
+        private readonly string? _packagePath;
 
-        private string ReferencesFile => Path.Combine(_packagePath, "references.json");
-        private string InfoFile => Path.Combine(_packagePath, "info.json");
-        private string SelectedEntitiesFile => Path.Combine(_packagePath, "selected-entities.json");
-        private string AssetsDirectory => Path.Combine(_packagePath, "entities", "assets");
-        private string CategoriesDirectory => Path.Combine(_packagePath, "entities", "categories");
+        private readonly ZipPackageOptions _options;
 
-        internal ZippedPackageLoader(DirectoryInfo zipPath)
+        private string ReferencesFile => Path.Combine(_packagePath!, "references.json");
+        private string InfoFile => Path.Combine(_packagePath!, "info.json");
+        private string SelectedEntitiesFile => Path.Combine(_packagePath!, "selected-entities.json");
+        private string AssetsDirectory => Path.Combine(_packagePath!, "entities", "assets");
+        private string CategoriesDirectory => Path.Combine(_packagePath!, "entities", "categories");
+
+        public ZipPackageLoader(
+            IOptions<ZipPackageOptions> options)
         {
-            if (!zipPath.Exists)
+            _options = options.Value;
+            _packagePath = _options.PackageDirectory.FullName;
+        }
+
+        public override PackageGraph Load()
+        {
+            if (!_options.PackageDirectory.Exists)
             {
-                throw new ArgumentException(zipPath.FullName, $"{zipPath.FullName} is not a directory");
+                throw new ArgumentException(_options.PackageDirectory.FullName, $"{_options.PackageDirectory.FullName} is not a directory");
             }
 
-            _packagePath = zipPath.FullName;
+            return base.Load();
         }
 
         protected override JsonObject GetSelectedEntities()
@@ -42,7 +53,7 @@ namespace Sage.PackageManager
                    ?? throw new InvalidDataException("No References found in package");
         }
 
-        internal override void Validate()
+        protected override void Validate()
         {
             if (!File.Exists(ReferencesFile))
             {
@@ -64,6 +75,7 @@ namespace Sage.PackageManager
 
         protected override JsonObject? GetEntity(string id, string entityType, string entityName)
         {
+            Debug.Assert(_packagePath != null);
             string pathToFile = Path.Combine(_packagePath, "entities", entityType, $"{entityName}.json");
             if (!File.Exists(pathToFile))
             {

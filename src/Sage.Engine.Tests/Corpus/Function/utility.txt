@@ -29,3 +29,24 @@ SET @name2=""
 ++++++++++
 False
 False
+==========
+FORMAT
+==========
+%%[
+set @dateString = "2023-06-01T14:00:00.0"
+set @timeString = "06:07:08.123 AM"
+]%%
+%%=Format(@dateString,"D", "Date")=%%
+%%=Format(@dateString,"d", "Date")=%%
+++++++++++
+Thursday, 01 June 2023
+06/01/2023
+==========
+FORMAT Numbers
+==========
+%%[
+set @num = 12345
+]%%
+%%=Format(@num,"C", "Number")=%%
+++++++++++
+$12,345.00
