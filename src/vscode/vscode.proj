@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sage.Webhost\Sage.Webhost.csproj">
+        <Private>false</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <Target Name="NpmInstall" Inputs="package.json" Outputs="node_modules/.install-stamp">
+    <Exec Command="npm ci" Condition="'$(RestorePackagesWithLockFile)' == 'true'" />
+    <Exec Command="npm install" Condition="'$(RestorePackagesWithLockFile)' != 'true'" />
+    <Touch Files="node_modules/.install-stamp" AlwaysCreate="true" />
+  </Target>
+  
+  <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <SageOutput Include="..\Sage.Webhost\$(OutputPath)\**\*.*" />
+    </ItemGroup>
+    <Exec Command="npm run compile" />
+    <Copy 
+        SourceFiles="@(SageOutput)"
+        DestinationFolder=".Sage\%(RecursiveDir)"
+        SkipUnchangedFiles="true"
+        />
+  </Target>
+</Project>

@@ -1,0 +1,119 @@
+{
+  "name": "ampscript",
+  "publisher": "salesforce",
+  "displayName": "AMPscript Editor",
+  "description": "Locally run AMPscript, powered by AMPscript Core",
+  "version": "0.0.5",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Debuggers"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salesforcelabs/ampscript-core"
+  },
+  "activationEvents": [
+    "onDebugResolve:ampscript",
+    "onDebugInitialConfigurations:ampscript"
+  ],
+  "main": "./out/main.js",
+  "contributes": {
+    "commands": [
+      {
+        "title": "Return the location of the AMPscript runtime",
+        "command": "ampscript.getWebhostLocation"
+      }
+    ],
+    "languages": [
+      {
+        "id": "ampscript",
+        "aliases": [
+          "AMPscript",
+          "ampscript"
+        ],
+        "extensions": [
+          ".amp",
+          ".ampscript"
+        ],
+        "configuration": "./syntaxes/language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ampscript",
+        "scopeName": "text.html.amp",
+        "path": "./syntaxes/ampscript.tmLanguage.json"
+      }
+    ],
+    "breakpoints": [
+      {
+        "language": "ampscript"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "ampscript",
+        "languages": [
+          "ampscript",
+          "json"
+        ],
+        "label": "Debug AMPscript",
+        "configurationSnippets": [
+        {
+          "label": "AMPscript: Debug the current AMPscript file",
+          "description": "Launch an AMPscript file with a debugger.",
+          "body": {
+            "name": "AMPscript launch",
+            "type": "coreclr",
+            "request": "launch",
+            "serverReadyAction": { 
+              "action": "openExternally",
+              "pattern": "\\\\bNow listening on:\\\\s+(https?://\\\\S+)"
+            },
+            "env": {
+              "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "program": "^\"\\${command:ampscript.getWebhostLocation}\"",
+            "args": ["^\"ampscript\",\"--source\",\"\\${file}\""],
+            "cwd": "^\"\\${workspaceFolder}\"",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+          }
+        }]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "5.0.4",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@vscode/extension-telemetry": "^0.7.7",
+    "fs-extra": "9.1.0",
+    "jsonc-parser": "3.0.0"
+  },
+  "extensionDependencies": [
+    "ms-dotnettools.csharp"
+  ]
+}
