@@ -12,6 +12,11 @@ namespace Sage.Engine.Runtime
     /// </summary>
     public static class SageValue
     {
+        private static Lazy<TimeZoneInfo> _timezoneConversion = new Lazy<TimeZoneInfo>(
+            () => TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time"),
+            LazyThreadSafetyMode.PublicationOnly
+        );
+
         #region BOXING
         public enum UnboxResult
         {
@@ -272,6 +277,8 @@ namespace Sage.Engine.Runtime
             if (inputObj is DateTimeOffset dateTimeObj)
             {
                 result = dateTimeObj;
+                
+                result = TimeZoneInfo.ConvertTime(result, _timezoneConversion.Value);
                 return UnboxResult.Succeed;
             }
 
