@@ -34,13 +34,14 @@ namespace Sage.Engine.Runtime
         private readonly SubscriberContext _subscriberContext;
 
         // TODO: Make configurable
-        private readonly CultureInfo _currentCulture = CultureInfo.CurrentCulture;
+        private readonly CultureInfo _currentCulture;
 
         public RuntimeContext(
             IServiceProvider provider,
             CompilationOptions rootCompileOptions,
             SubscriberContext? subscriberContext = null)
         {
+            this._currentCulture = CompatibleGlobalizationSettings.GetCulture("en-US");
             this.Random = new Random();
             _rootCompilationOptions = rootCompileOptions;
             _classicContentClient = provider.GetRequiredService<IClassicContentClient>();

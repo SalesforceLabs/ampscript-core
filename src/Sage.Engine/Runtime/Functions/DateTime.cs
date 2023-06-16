@@ -35,8 +35,8 @@ namespace Sage.Engine.Runtime
         public long DATEDIFF(object? start, object? end, object? diffType)
         {
             // **NOTE** the left side is the 'end' date, and the right side is the 'start' date.
-            DateTimeOffset leftDateTime = SageValue.ToDateTime(end, null, DateTimeStyles.AssumeLocal);
-            DateTimeOffset rightDateTime = SageValue.ToDateTime(start, null, DateTimeStyles.AssumeLocal);
+            DateTimeOffset leftDateTime = SageValue.ToDateTime(end, _currentCulture, DateTimeStyles.AssumeLocal);
+            DateTimeOffset rightDateTime = SageValue.ToDateTime(start, _currentCulture, DateTimeStyles.AssumeLocal);
             string? partString = diffType?.ToString()?.ToLower();
 
             switch (partString)
@@ -73,15 +73,14 @@ namespace Sage.Engine.Runtime
                 useUtcBool = SageValue.ToBoolean(useUtc);
             }
 
-            CultureInfo currentCulture = this._currentCulture;
             DateTimeStyles dateTimeStyles = DateTimeStyles.AssumeLocal;
             if (useUtcBool)
             {
                 dateTimeStyles |= DateTimeStyles.AdjustToUniversal;
-                return SageValue.ToDateTime(date, currentCulture, dateTimeStyles).UtcDateTime;
+                return SageValue.ToDateTime(date, this._currentCulture, dateTimeStyles).UtcDateTime;
             }
 
-            return SageValue.ToDateTime(date, currentCulture, dateTimeStyles).LocalDateTime;
+            return SageValue.ToDateTime(date, this._currentCulture, dateTimeStyles).LocalDateTime;
         }
     }
 }

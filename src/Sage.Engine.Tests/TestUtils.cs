@@ -52,10 +52,16 @@ public static class TestUtils
 
         try
         {
-            return new EngineTestResult(CSharpCompiler.CompileAndExecute(options, GetTestRuntimeContext(serviceProvider, options, test)).Trim());
+            var engineResult = new EngineTestResult(CSharpCompiler.CompileAndExecute(options, GetTestRuntimeContext(serviceProvider, options, test), out CompileResult compileResult).Trim());
+
+            File.WriteAllText(Path.Combine(TestContext.CurrentContext.WorkDirectory, $"{test.FileFriendlyName}_transpiled.cs"), compileResult.TranspiledSource);
+
+            return engineResult;
         }
         catch (CompileCodeException e)
         {
+            File.WriteAllText(Path.Combine(TestContext.CurrentContext.WorkDirectory, $"{test.FileFriendlyName}_transpiled.cs"), e.CompileResult.TranspiledSource);
+
             Assert.Fail(e.ToString());
             throw;
         }

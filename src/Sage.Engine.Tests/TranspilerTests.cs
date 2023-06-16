@@ -39,11 +39,9 @@ namespace Sage.Engine.Tests
         [Test]
         public void TestVariableDeclaration()
         {
-            string variableDeclaration = Runtime.GetInitializationStatement().NormalizeWhitespace().ToString();
-            string expected =
-                $"RuntimeContext {Runtime.RuntimeVariable} = new RuntimeContext();";
-
-            Assert.That(variableDeclaration, Is.EqualTo(expected));
+            SageTest.AssertEqualGeneratedCode(
+                Runtime.GetInitializationStatement(),
+                $"RuntimeContext {Runtime.RuntimeVariable} = new RuntimeContext();");
         }
 
         [Test]
@@ -94,13 +92,13 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("VAR @FOO", new[]
         {
-            $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", null);"
+            $"#line (1, 1) - (1, 9) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@foo\", null);"
         })]
         [TestCase("VAR @FOO, @BAR, @BIZ", new[]
         {
-            $"{Runtime.RuntimeVariable}.SetVariable(\"@foo\", null);",
-            $"{Runtime.RuntimeVariable}.SetVariable(\"@bar\", null);",
-            $"{Runtime.RuntimeVariable}.SetVariable(\"@biz\", null);"
+            $"#line (1, 1) - (1, 21) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@foo\", null);",
+            $"#line (1, 1) - (1, 21) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@bar\", null);",
+            $"#line (1, 1) - (1, 21) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@biz\", null);"
         })]
         public void TestVarDeclaration(string code, string[] expectedCode)
         {
@@ -125,7 +123,7 @@ namespace Sage.Engine.Tests
         [TestCase("%%= V(@FOO) =%%", new[]
         {
             $"{Runtime.RuntimeVariable}.SetCurrentContextLineNumber(1);",
-            $"{Runtime.RuntimeVariable}.Output({Runtime.RuntimeVariable}.V({Runtime.RuntimeVariable}.GetVariable(\"@foo\")));",
+            $"#line (1, 1) - (1, 16) \"TEST.cs\"\n{Runtime.RuntimeVariable}.Output({Runtime.RuntimeVariable}.V({Runtime.RuntimeVariable}.GetVariable(\"@foo\")));",
         })]
         public void TestInlineAmpBlock(string code, string[] expectedCode)
         {
@@ -137,12 +135,12 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("This is inline HTML", new[]
         {
-            $"{Runtime.RuntimeVariable}.Output(\"This is inline HTML\");"
+            $"#line hidden\n{Runtime.RuntimeVariable}.Output(\"This is inline HTML\");"
         })]
         [TestCase("Before %%[]%% After", new[]
         {
-            $"{Runtime.RuntimeVariable}.Output(\"Before \");",
-            $"{Runtime.RuntimeVariable}.Output(\" After\");"
+            $"#line hidden\n{Runtime.RuntimeVariable}.Output(\"Before \");",
+            $"#line hidden\n{Runtime.RuntimeVariable}.Output(\" After\");"
         })]
         public void TestInlineHtml(string ampCode, string[] cSharpStatements)
         {
@@ -154,9 +152,10 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("FOR @I=1 TO 10 DO VAR @VAR NEXT @I", new[]
         {
-            $"{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(1L));",
-            $"{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(10L));",
-            @$"while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) <= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
+            $"#line (1, 5) - (1, 9) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(1L));",
+            $"#line (1, 13) - (1, 15) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(10L));",
+            @$"#line (1, 1) - (1, 18) ""TEST.cs""
+while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) <= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
 {{
 #line (1, 19) - (1, 27) ""TEST.cs""
     {Runtime.RuntimeVariable}.SetVariable(""@var"", null);
@@ -171,9 +170,10 @@ namespace Sage.Engine.Tests
         })]
         [TestCase("FOR @I=10 DOWNTO 1 DO VAR @VAR NEXT @I", new[]
         {
-            $"{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(10L));",
-            $"{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(1L));",
-            @$"while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) >= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
+            $"#line (1, 5) - (1, 10) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(10L));",
+            $"#line (1, 18) - (1, 19) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(1L));",
+            @$"#line (1, 1) - (1, 22) ""TEST.cs""
+while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) >= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
 {{
 #line (1, 23) - (1, 31) ""TEST.cs""
     {Runtime.RuntimeVariable}.SetVariable(""@var"", null);
@@ -194,9 +194,32 @@ namespace Sage.Engine.Tests
         }
 
         [Test]
-        [TestCase("IF (true) THEN ENDIF", new[] { "if (true)\r\n{\r\n}" })]
-        [TestCase("IF (true) THEN ELSEIF (false) THEN ENDIF", new[] { "if (true)\r\n{\r\n}\r\nelse \r\n#line (1, 16) - (1, 35) \"TEST.cs\"\r\nif (false)\r\n{\r\n}" })]
-        [TestCase("IF (true) THEN ELSEIF (false) THEN ELSE ENDIF", new[] { "if (true)\r\n{\r\n}\r\nelse \r\n#line (1, 16) - (1, 35) \"TEST.cs\"\r\nif (false)\r\n{\r\n}\r\n#line (1, 36) - (1, 40) \"TEST.cs\"\r\nelse\r\n{\r\n}" })]
+        [TestCase("IF (true) THEN ENDIF", new[] { @"#line (1, 1) - (1, 15) ""TEST.cs""
+if (true)
+{
+}" })]
+        [TestCase("IF (true) THEN ELSEIF (false) THEN ENDIF", new[] { @"#line (1, 1) - (1, 15) ""TEST.cs""
+if (true)
+{
+}
+else 
+#line (1, 16) - (1, 35) ""TEST.cs""
+if (false)
+{
+}" })]
+        [TestCase("IF (true) THEN ELSEIF (false) THEN ELSE ENDIF", new[] { @"#line (1, 1) - (1, 15) ""TEST.cs""
+if (true)
+{
+}
+else 
+#line (1, 16) - (1, 35) ""TEST.cs""
+if (false)
+{
+}
+#line (1, 36) - (1, 40) ""TEST.cs""
+else
+{
+}" })]
         public void TestIfStatement(string ampCode, string[] cSharpStatements)
         {
             SageParser parser = GetParserInAmpMode(ampCode);
@@ -211,8 +234,8 @@ namespace Sage.Engine.Tests
         })]
         [TestCase("HELLO %%Foo%%", new[]
         {
-            "__runtime.Output(\"HELLO \");",
-            "__runtime.Output(__runtime.ATTRIBUTEVALUE(\"Foo\"));"
+            "#line hidden\n__runtime.Output(\"HELLO \");",
+            "#line hidden\n__runtime.Output(__runtime.ATTRIBUTEVALUE(\"Foo\"));"
         })]
         public void TestAttributes(string ampCode, string[] cSharpStatements)
         {
@@ -225,12 +248,13 @@ namespace Sage.Engine.Tests
         public void TestGeneratedMethod()
         {
             var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");
-            string methodText = transpiler.GenerateMethodFromCode("Foo").NormalizeWhitespace().ToString();
-            Assert.That(methodText, Is.EqualTo(@$"public static void Foo(RuntimeContext __runtime)
+            
+            SageTest.AssertEqualGeneratedCode(transpiler.GenerateMethodFromCode("Foo"), @$"#line hidden
+public static void Foo(RuntimeContext __runtime)
 {{
 #line (1, 4) - (1, 12) ""TEST""
     {Runtime.RuntimeVariable}.SetVariable(""@foo"", null);
-}}"));
+}}");
         }
 
         private static void TestAmpCodeGeneratesExpectedCSharpCode(
@@ -238,16 +262,14 @@ namespace Sage.Engine.Tests
             ParserRuleContext context,
             SageParserBaseVisitor<IEnumerable<StatementSyntax>> statementVisitor)
         {
-            string[] actualCode = statementVisitor.Visit(context)
-                .Select(s => s.NormalizeWhitespace().ToString())
-                .ToArray();
+            var actualCode = statementVisitor.Visit(context).ToArray();
 
             Assert.That(actualCode.Length, Is.EqualTo(expectedCSharpCode.Length),
                 "Number of generated statements does not match the number of cSharpExpected statements");
 
             for (int i = 0; i < expectedCSharpCode.Length; i++)
             {
-                Assert.That(actualCode[i], Is.EqualTo(expectedCSharpCode[i]));
+                SageTest.AssertEqualGeneratedCode(actualCode[i], expectedCSharpCode[i]);
             }
         }
 
@@ -255,8 +277,7 @@ namespace Sage.Engine.Tests
         public void TestGenerateCompilationUnit()
         {
             var transpiler = CSharpTranspiler.CreateFromSource("%%[VAR @FOO]%%");
-            string methodText = transpiler.GenerateCode().NormalizeWhitespace().ToString();
-            Assert.That(methodText, Is.EqualTo(@$"namespace Sage.Engine.Runtime
+            SageTest.AssertEqualGeneratedCode(transpiler.GenerateCode(), @$"namespace Sage.Engine.Runtime
 {{
     using System.Collections.Generic;
     using System.Text;
@@ -271,7 +292,7 @@ namespace Sage.Engine.Tests
             {Runtime.RuntimeVariable}.SetVariable(""@foo"", null);
         }}
     }}
-}}"));
+}}");
         }
 
         /// <summary>

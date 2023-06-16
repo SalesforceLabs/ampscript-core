@@ -587,6 +587,28 @@ namespace Sage.Engine.Runtime
         }
         #endregion
 
+        public static string ToString(object? value, CultureInfo cultureInfo)
+        {
+            value = UnboxVariable(value);
+            
+            if (value == null)
+            {
+                return string.Empty;
+            }
+
+            if (value is DateTime)
+            {
+                return ((DateTime)value).ToString(cultureInfo);
+            }
+
+            if (value is DateTimeOffset)
+            {
+                return ((DateTimeOffset)value).ToString(cultureInfo);
+            }
+
+            return value.ToString() ?? string.Empty;
+        }
+
         public static string ToString(object? value, string formatString, CultureInfo cultureInfo)
         {
             value = UnboxVariable(value);
