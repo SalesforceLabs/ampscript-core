@@ -119,6 +119,15 @@ namespace Sage.Engine.Tests
                 .Replace("/", "FSLASH")
                 .Replace("\\", "BSLASH");
             string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()) + ".";
+            
+            // " is a valid filename character in Linux, but it's not a valid for the #line directive since it's
+            // literally excluded in the grammer.
+            // https://github.com/dotnet/csharpstandard/blob/2ab0634008d59cc7616ba6876fbd6149155afe90/standard/grammar.md?plain=1#L529-L532
+            if (!regexSearch.Contains("\""))
+            {
+                regexSearch += "\"";
+            }
+
             var r = new Regex($"[{Regex.Escape(regexSearch)}]");
 
             // Replace all others with the replace character

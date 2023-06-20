@@ -27,7 +27,7 @@ namespace Sage.Engine
         {
             var runtimeContext = new RuntimeContext(_services, compOptions, context);
 
-            return CSharpCompiler.CompileAndExecute(compOptions, runtimeContext);
+            return CSharpCompiler.CompileAndExecute(compOptions, runtimeContext, out var _);
         }
     }
 }

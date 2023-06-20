@@ -44,7 +44,7 @@ namespace Sage.Engine.Tests
         /// <returns>Key=filename, Value=Tests</returns>
         public static IEnumerable<KeyValuePair<string, IEnumerable<CorpusData>>> LoadFromDirectory(string directory)
         {
-            string thisCorpusDirectory = Path.Combine("corpus", directory);
+            string thisCorpusDirectory = Path.Combine("Corpus", directory);
             foreach (string filename in Directory.GetFiles(thisCorpusDirectory))
             {
                 if (Path.GetExtension(filename).ToLowerInvariant() == ".json")

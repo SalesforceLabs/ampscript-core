@@ -117,7 +117,7 @@ namespace Sage.Engine.Runtime
         /// <param name="data">The data to add to the output stream</param>
         public string V(object? data)
         {
-            return data?.ToString() ?? string.Empty;
+            return SageValue.ToString(data, this._currentCulture);
         }
 
         /// <summary>

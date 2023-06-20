@@ -23,13 +23,13 @@ namespace Sage.Engine.Compiler
     /// </summary>
     internal static class CSharpCompiler
     {
-        public static string CompileAndExecute(CompilationOptions options, RuntimeContext context)
+        public static string CompileAndExecute(CompilationOptions options, RuntimeContext context, out CompileResult result)
         {
             if (string.IsNullOrEmpty(options.SourceCode))
             {
                 options.SourceCode = File.ReadAllText(options.InputFile.FullName);
             }
-            CompileResult result = GenerateAssemblyFromSource(options);
+            result = GenerateAssemblyFromSource(options);
 
             result.Execute(context);
 

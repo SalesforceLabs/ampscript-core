@@ -69,7 +69,7 @@ namespace Sage.Engine.Tests.Data
         }
 
         [Test]
-        [TestCase("Loyalty")]
+        [TestCase("LOYALTY")]
         public async Task LoadCsv(string dataExtension)
         {
             await _dataExtensionClient.ConnectAsync();
@@ -80,7 +80,7 @@ namespace Sage.Engine.Tests.Data
         public async Task TestLoyaltyQueries()
         {
             await _dataExtensionClient.ConnectAsync();
-            await _dataExtensionClient.LoadCsv("Loyalty");
+            await _dataExtensionClient.LoadCsv("LOYALTY");
 
             var lookupBuilder = new LookupRequestBuilder("Loyalty");
             lookupBuilder.WithReturnedProperty("EmailAddress");

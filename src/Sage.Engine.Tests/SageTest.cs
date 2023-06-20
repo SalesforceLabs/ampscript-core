@@ -48,5 +48,13 @@ namespace Sage.Engine.Tests
                 OutputDirectory = new DirectoryInfo(TestContext.CurrentContext.WorkDirectory)
             };
         }
+
+        /// <summary>
+        /// Encapsulates how the test validates the code is identical between generated and expected code.
+        /// </summary>
+        public static void AssertEqualGeneratedCode<TNode>(TNode actual, string expected) where TNode : SyntaxNode
+        {
+            Assert.That(actual.NormalizeWhitespace(eol: "\n").ToFullString(), Is.EqualTo(expected));
+        }
     }
 }
