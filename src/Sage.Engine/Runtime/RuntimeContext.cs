@@ -42,7 +42,7 @@ namespace Sage.Engine.Runtime
             SubscriberContext? subscriberContext = null)
         {
             _currentCulture = CompatibleGlobalizationSettings.GetCulture("en-US");
-            _currentTimezone = TimeZoneInfo.Local;
+            _currentTimezone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             Random = new Random();
             _rootCompilationOptions = rootCompileOptions;
             _classicContentClient = provider.GetRequiredService<IClassicContentClient>();
