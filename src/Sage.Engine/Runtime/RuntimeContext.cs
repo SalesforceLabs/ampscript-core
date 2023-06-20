@@ -3,13 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using Sage.Engine.Content;
-using Sage.Engine.Data;
-using Sage.Engine.Compiler;
-using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 using System.Diagnostics;
 using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
+using Sage.Engine.Compiler;
+using Sage.Engine.Content;
+using Sage.Engine.Data;
 
 namespace Sage.Engine.Runtime
 {
@@ -24,25 +23,27 @@ namespace Sage.Engine.Runtime
     [DebuggerTypeProxy(typeof(RuntimeContextDebugView))]
     public partial class RuntimeContext : IDisposable
     {
-        private readonly Stack<StackFrame> _stackFrame = new();
-
-        private readonly Dictionary<string, SageVariable> _variables = new();
-        private readonly CompilationOptions _rootCompilationOptions;
-        private readonly IDataExtensionClient _dataExtensionClient;
         private readonly IContentClient _classicContentClient;
         private readonly IContentClient _contentBuilderContentClient;
-        private readonly SubscriberContext _subscriberContext;
 
         // TODO: Make configurable
         private readonly CultureInfo _currentCulture;
+        private readonly TimeZoneInfo _currentTimezone;
+        private readonly IDataExtensionClient _dataExtensionClient;
+        private readonly CompilationOptions _rootCompilationOptions;
+        private readonly Stack<StackFrame> _stackFrame = new();
+        private readonly SubscriberContext _subscriberContext;
+
+        private readonly Dictionary<string, SageVariable> _variables = new();
 
         public RuntimeContext(
             IServiceProvider provider,
             CompilationOptions rootCompileOptions,
             SubscriberContext? subscriberContext = null)
         {
-            this._currentCulture = CompatibleGlobalizationSettings.GetCulture("en-US");
-            this.Random = new Random();
+            _currentCulture = CompatibleGlobalizationSettings.GetCulture("en-US");
+            _currentTimezone = TimeZoneInfo.Local;
+            Random = new Random();
             _rootCompilationOptions = rootCompileOptions;
             _classicContentClient = provider.GetRequiredService<IClassicContentClient>();
             _contentBuilderContentClient = provider.GetRequiredService<IContentBuilderContentClient>();
@@ -51,10 +52,12 @@ namespace Sage.Engine.Runtime
 
             if (_rootCompilationOptions.InputFile.Directory == null)
             {
-                throw new InternalEngineException($"Directory for the input file ({_rootCompilationOptions.InputFile.FullName}) is unexpectedly not available");
+                throw new InternalEngineException(
+                    $"Directory for the input file ({_rootCompilationOptions.InputFile.FullName}) is unexpectedly not available");
             }
 
-            string subscriberContextFile = Path.Combine(_rootCompilationOptions.InputFile.Directory.FullName, "subscriber.json");
+            string subscriberContextFile =
+                Path.Combine(_rootCompilationOptions.InputFile.Directory.FullName, "subscriber.json");
             if (subscriberContext != null)
             {
                 _subscriberContext = subscriberContext;
@@ -68,7 +71,13 @@ namespace Sage.Engine.Runtime
                 _subscriberContext = new SubscriberContext(null);
             }
 
-            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName, _rootCompilationOptions.InputFile));
+            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName,
+                _rootCompilationOptions.InputFile));
+        }
+
+        public void Dispose()
+        {
+            _dataExtensionClient.Dispose();
         }
 
         /// <summary>
@@ -116,7 +125,7 @@ namespace Sage.Engine.Runtime
         /// </summary>
         public void Output(object? data)
         {
-            _stackFrame.Peek().OutputStream.Append(data?.ToString());
+            _stackFrame.Peek().OutputStream.Append(data);
         }
 
         /// <summary>
@@ -188,7 +197,8 @@ namespace Sage.Engine.Runtime
 
         internal string? CompileAndExecuteEmbeddedCodeAsync(string id, string code)
         {
-            CompilerOptionsBuilder fromCodeString = new CompilerOptionsBuilder(_rootCompilationOptions).WithSourceCode(id, code);
+            CompilerOptionsBuilder fromCodeString =
+                new CompilerOptionsBuilder(_rootCompilationOptions).WithSourceCode(id, code);
 
             return CompileAndExecuteEmbeddedCodeAsync(fromCodeString.Build(), code);
         }
@@ -196,8 +206,14 @@ namespace Sage.Engine.Runtime
         /// <summary>
         /// Executes embedded code - whether that came from TREATASCONTENT or CONTENT calls.
         /// </summary>
-        /// <param name="id">The identifier of this particular code.  Can be the content ID, or an identifier to the TREATASCONTENT line of code</param>
-        /// <param name="getCode">A delegate which produces the code.  This interface is a delegate which allows for future caching of content retrieval.</param>
+        /// <param name="id">
+        /// The identifier of this particular code.  Can be the content ID, or an identifier to the TREATASCONTENT
+        /// line of code
+        /// </param>
+        /// <param name="getCode">
+        /// A delegate which produces the code.  This interface is a delegate which allows for future caching
+        /// of content retrieval.
+        /// </param>
         /// <returns>The result of executing the code</returns>
         internal string? CompileAndExecuteEmbeddedCodeAsync(string id, Func<FileInfo?> getCode)
         {
@@ -207,7 +223,8 @@ namespace Sage.Engine.Runtime
                 return null;
             }
 
-            CompilerOptionsBuilder fromFileOptions = new CompilerOptionsBuilder(_rootCompilationOptions).WithInputFile(code);
+            CompilerOptionsBuilder fromFileOptions =
+                new CompilerOptionsBuilder(_rootCompilationOptions).WithInputFile(code);
 
             return CompileAndExecuteEmbeddedCodeAsync(fromFileOptions.Build(), code);
         }
@@ -237,11 +254,6 @@ namespace Sage.Engine.Runtime
             }
 
             return poppedContext;
-        }
-
-        public void Dispose()
-        {
-            _dataExtensionClient.Dispose();
         }
     }
 }

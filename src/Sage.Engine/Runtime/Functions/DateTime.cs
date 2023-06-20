@@ -13,7 +13,10 @@ namespace Sage.Engine.Runtime
         /// Returns the current system (server) date and time.
         /// Now() is in Central Standard Time (CST) without daylight saving time.
         /// </summary>
-        /// <param name="useSendTimeStarted">Determines whether to preserve the email sent time for post-send resolution of Now(). A value of true preserves the email sent time.</param>
+        /// <param name="useSendTimeStarted">
+        /// Determines whether to preserve the email sent time for post-send resolution of Now().
+        /// A value of true preserves the email sent time.
+        /// </param>
         public DateTimeOffset NOW(object? useSendTimeStarted = null)
         {
             if (useSendTimeStarted != null)
@@ -30,7 +33,10 @@ namespace Sage.Engine.Runtime
         /// </summary>
         /// <param name="start">The date from which to subtract from</param>
         /// <param name="end">The date </param>
-        /// <param name="diffType">Which part of the date to subtract. Valid options are "Y" (year), "M" (month), "D" (day), "H" (hour), "MI" (minute)</param>
+        /// <param name="diffType">
+        /// Which part of the date to subtract. Valid options are "Y" (year), "M" (month), "D" (day), "H"
+        /// (hour), "MI" (minute)
+        /// </param>
         /// <returns></returns>
         public long DATEDIFF(object? start, object? end, object? diffType)
         {
@@ -44,18 +50,24 @@ namespace Sage.Engine.Runtime
                 case "y":
                     return leftDateTime.Year - rightDateTime.Year;
                 case "m":
-                    return (leftDateTime.Month - rightDateTime.Month) + (12 * (leftDateTime.Year - rightDateTime.Year));
+                    return leftDateTime.Month - rightDateTime.Month + 12 * (leftDateTime.Year - rightDateTime.Year);
                 case "d":
                     return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day)
-                        - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day)).TotalDays;
+                                  - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day)).TotalDays;
                 case "h":
-                    return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day, leftDateTime.Hour, 0, 0)
-                        - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day, rightDateTime.Hour, 0, 0)).TotalHours;
+                    return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day,
+                                      leftDateTime.Hour, 0, 0)
+                                  - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day,
+                                      rightDateTime.Hour, 0, 0)).TotalHours;
                 case "mi":
-                    return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day, leftDateTime.Hour, leftDateTime.Minute, 0)
-                        - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day, rightDateTime.Hour, rightDateTime.Minute, 0)).TotalMinutes;
+                    return (long)(new DateTime(leftDateTime.Year, leftDateTime.Month, leftDateTime.Day,
+                                      leftDateTime.Hour, leftDateTime.Minute, 0)
+                                  - new DateTime(rightDateTime.Year, rightDateTime.Month, rightDateTime.Day,
+                                      rightDateTime.Hour, rightDateTime.Minute, 0)).TotalMinutes;
                 default:
-                    throw new RuntimeException($"Invalid value specified for diffType parameter.  Given: {partString} expected one of the following: y m d h mi", this);
+                    throw new RuntimeException(
+                        $"Invalid value specified for diffType parameter.  Given: {partString} expected one of the following: y m d h mi",
+                        this);
             }
         }
 
@@ -73,14 +85,21 @@ namespace Sage.Engine.Runtime
                 useUtcBool = SageValue.ToBoolean(useUtc);
             }
 
-            DateTimeStyles dateTimeStyles = DateTimeStyles.AssumeLocal;
+            DateTimeStyles dateTimeStyles = DateTimeStyles.AssumeUniversal;
             if (useUtcBool)
             {
                 dateTimeStyles |= DateTimeStyles.AdjustToUniversal;
-                return SageValue.ToDateTime(date, this._currentCulture, dateTimeStyles).UtcDateTime;
+                return SageValue.ToDateTime(date, _currentCulture, dateTimeStyles).UtcDateTime;
             }
 
-            return SageValue.ToDateTime(date, this._currentCulture, dateTimeStyles).LocalDateTime;
+            DateTimeOffset result = SageValue.ToDateTime(date, _currentCulture, dateTimeStyles);
+
+            if (result.Offset != TimeSpan.Zero)
+            {
+                return TimeZoneInfo.ConvertTimeFromUtc(result.UtcDateTime, _currentTimezone);
+            }
+
+            return result.DateTime;
         }
     }
 }

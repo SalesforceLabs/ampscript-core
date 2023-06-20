@@ -12,12 +12,73 @@ namespace Sage.Engine.Runtime
     /// </summary>
     public static class SageValue
     {
-        private static Lazy<TimeZoneInfo> _timezoneConversion = new Lazy<TimeZoneInfo>(
+        private static readonly Lazy<TimeZoneInfo> _timezoneConversion = new(
             () => TimeZoneInfo.FindSystemTimeZoneById("Canada Central Standard Time"),
             LazyThreadSafetyMode.PublicationOnly
         );
 
+        public static string ToString(object? value, CultureInfo cultureInfo)
+        {
+            value = UnboxVariable(value);
+
+            if (value == null)
+            {
+                return string.Empty;
+            }
+
+            if (value is DateTime)
+            {
+                return ((DateTime)value).ToString(cultureInfo);
+            }
+
+            if (value is DateTimeOffset)
+            {
+                return ((DateTimeOffset)value).ToString(cultureInfo);
+            }
+
+            return value.ToString() ?? string.Empty;
+        }
+
+        public static string ToString(object? value, string formatString, CultureInfo cultureInfo)
+        {
+            value = UnboxVariable(value);
+
+            // A DateTime from a string is not success here.
+            if (TryToDateTime(value, cultureInfo, DateTimeStyles.AssumeLocal, out DateTimeOffset date) ==
+                UnboxResult.Succeed)
+            {
+                return date.ToString(formatString, cultureInfo);
+            }
+
+            if (TryToLong(value, out long longResult) != UnboxResult.Fail)
+            {
+                return longResult.ToString(formatString, cultureInfo);
+            }
+
+            if (TryToDecimal(value, out decimal decimalResult) != UnboxResult.Fail)
+            {
+                return decimalResult.ToString(formatString, cultureInfo);
+            }
+
+            // Booleans automatically ToString correctly without formatting needs
+            return value?.ToString() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// If the object is a SageVariable, returns the boxed object to do the comparision.
+        /// </summary>
+        public static object? UnboxVariable(object? input)
+        {
+            if (input is SageVariable variable)
+            {
+                return variable.Value;
+            }
+
+            return input;
+        }
+
         #region BOXING
+
         public enum UnboxResult
         {
             Succeed,
@@ -84,6 +145,7 @@ namespace Sage.Engine.Runtime
                 result = (long)doubleVal;
                 return UnboxResult.Succeed;
             }
+
             if (inputObj is decimal decimalVal && Math.Round(decimalVal, 0) == decimalVal)
             {
                 result = (long)decimalVal;
@@ -270,14 +332,15 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">The input boxed inputObj</param>
         /// <param name="result">The result of the conversion</param>
         /// <returns>Whether or not DateTimeOffset is the best representation of this boxed inputObj</returns>
-        public static UnboxResult TryToDateTime(object? inputObj, IFormatProvider? formatProvider, DateTimeStyles dateTimeStyles, out DateTimeOffset result)
+        public static UnboxResult TryToDateTime(object? inputObj, IFormatProvider? formatProvider,
+            DateTimeStyles dateTimeStyles, out DateTimeOffset result)
         {
             inputObj = UnboxVariable(inputObj);
 
             if (inputObj is DateTimeOffset dateTimeObj)
             {
                 result = dateTimeObj;
-                
+
                 result = TimeZoneInfo.ConvertTime(result, _timezoneConversion.Value);
                 return UnboxResult.Succeed;
             }
@@ -299,7 +362,8 @@ namespace Sage.Engine.Runtime
         /// <param name="inputObj">Boxed inputObj to convert to an DateTimeOffset</param>
         /// <returns>The DateTimeOffset representation of the object</returns>
         /// <exception cref="InvalidCastException">When the inputObj cannot be unboxed to an DateTimeOffset inputObj.</exception>
-        public static DateTimeOffset ToDateTime(object? inputObj, IFormatProvider? formatProvider, DateTimeStyles dateTimeStyles)
+        public static DateTimeOffset ToDateTime(object? inputObj, IFormatProvider? formatProvider,
+            DateTimeStyles dateTimeStyles)
         {
             if (TryToDateTime(inputObj, formatProvider, dateTimeStyles, out DateTimeOffset result) == UnboxResult.Fail)
             {
@@ -354,13 +418,16 @@ namespace Sage.Engine.Runtime
 
             return result;
         }
+
         #endregion
 
         #region COMPARE
+
         // .net 5 changed from NLS to ICU to be more compatible with Linux.
         // The Marketing Cloud ampscript looks to follow NLS, but this workaround appears to fix it:
         // https://github.com/dotnet/runtime/issues/20599
-        private static readonly StringComparer s_stringComparer = StringComparer.Create(CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace);
+        private static readonly StringComparer s_stringComparer =
+            StringComparer.Create(CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace);
 
         /// <summary>
         /// A set of comparision operators supported in the language
@@ -373,7 +440,7 @@ namespace Sage.Engine.Runtime
             NotEqualTo,
             GreaterThan,
             GreaterThanOrEqual
-        };
+        }
 
         /// <summary>
         /// Converts the result of a comparison (-1, 0, 1) to a boolean representation (== / !=)
@@ -418,26 +485,32 @@ namespace Sage.Engine.Runtime
         {
             return CompareTo(left, right, CompareOperator.LessThan);
         }
+
         public static bool LessThanOrEqual(object? left, object? right)
         {
             return CompareTo(left, right, CompareOperator.LessThanOrEqual);
         }
+
         public static bool GreaterThan(object? left, object? right)
         {
             return CompareTo(left, right, CompareOperator.GreaterThan);
         }
+
         public static bool GreaterThanOrEqual(object? left, object? right)
         {
             return CompareTo(left, right, CompareOperator.GreaterThanOrEqual);
         }
+
         public static bool EqualTo(object? left, object? right)
         {
             return CompareTo(left, right, CompareOperator.EqualTo);
         }
+
         public static bool NotEqualTo(object? left, object? right)
         {
             return CompareTo(left, right, CompareOperator.NotEqualTo);
         }
+
         public static bool CompareTo(object? left, object? right, CompareOperator op)
         {
             left = UnboxVariable(left);
@@ -455,22 +528,29 @@ namespace Sage.Engine.Runtime
 
             if (left == null || right == null)
             {
-                throw new InternalEngineException($"Comparision continuing after null checks with provided null value. Left: {left} Right: {right}");
+                throw new InternalEngineException(
+                    $"Comparision continuing after null checks with provided null value. Left: {left} Right: {right}");
             }
 
-            if (TryCompareBooleans(left, right, out int boolResult))
+            if (left is bool || right is bool)
             {
-                if (boolResult == 0)
+                if (TryCompareBooleans(left, right, out int boolResult))
                 {
-                    return IsEqualToken(op);
-                }
+                    if (boolResult == 0)
+                    {
+                        return IsEqualToken(op);
+                    }
 
-                return !IsEqualToken(op);
+                    return !IsEqualToken(op);
+                }
             }
 
-            if (TryCompareDateTime(left, right, out int dateTimeResult))
+            if (left is DateTime || left is DateTimeOffset || right is DateTimeOffset || right is DateTime)
             {
-                return ConvertCompareToBool(op, dateTimeResult);
+                if (TryCompareDateTime(left, right, out int dateTimeResult))
+                {
+                    return ConvertCompareToBool(op, dateTimeResult);
+                }
             }
 
             if (TryCompareNumbers(left, right, out int numberResult))
@@ -513,8 +593,10 @@ namespace Sage.Engine.Runtime
         {
             // NOTE! By-design this is not a lazily-checked or statement.  We want values for both left and right, and if this were ||,
             // then the right side may not be evaluated!
-            if (TryToDateTime(left, null, DateTimeStyles.AssumeLocal, out DateTimeOffset leftDateTime) != UnboxResult.Fail |
-                TryToDateTime(right, null, DateTimeStyles.AssumeLocal, out DateTimeOffset rightDateTime) != UnboxResult.Fail)
+            if ((TryToDateTime(left, null, DateTimeStyles.AssumeLocal, out DateTimeOffset leftDateTime) !=
+                 UnboxResult.Fail) |
+                (TryToDateTime(right, null, DateTimeStyles.AssumeLocal, out DateTimeOffset rightDateTime) !=
+                 UnboxResult.Fail))
             {
                 result = leftDateTime.CompareTo(rightDateTime);
                 return true;
@@ -531,8 +613,8 @@ namespace Sage.Engine.Runtime
         {
             // NOTE! By-design this is not a lazily-checked or statement.  We want values for both left and right, and if this were ||,
             // then the right side may not be evaluated!
-            if (TryToBoolean(left, out bool leftBool) == UnboxResult.Succeed |
-                TryToBoolean(right, out bool rightBool) == UnboxResult.Succeed)
+            if ((TryToBoolean(left, out bool leftBool) == UnboxResult.Succeed) |
+                (TryToBoolean(right, out bool rightBool) == UnboxResult.Succeed))
             {
                 result = leftBool.CompareTo(rightBool);
                 return true;
@@ -544,7 +626,6 @@ namespace Sage.Engine.Runtime
 
         /// <summary>
         /// Compares two numbers, if either one is a number.
-        ///
         /// Uses decimal comparision first, then goes to a long comparision.
         /// </summary>
         private static bool TryCompareNumbers(object? left, object? right, out int result)
@@ -555,8 +636,8 @@ namespace Sage.Engine.Runtime
                 return false;
             }
 
-            if (TryToDecimal(left, out decimal leftDecimal) != UnboxResult.Fail |
-                TryToDecimal(right, out decimal rightDecimal) != UnboxResult.Fail)
+            if ((TryToDecimal(left, out decimal leftDecimal) != UnboxResult.Fail) |
+                (TryToDecimal(right, out decimal rightDecimal) != UnboxResult.Fail))
             {
                 result = leftDecimal.CompareTo(rightDecimal);
                 return true;
@@ -568,7 +649,6 @@ namespace Sage.Engine.Runtime
 
         /// <summary>
         /// Compares two strings. As this is the last resort - anything converts to a string.
-        ///
         /// String comparisons are case-insensitive in the language.
         /// </summary>
         private static bool TryCompareStrings(object? left, object? right, CompareOperator op, out int result)
@@ -592,65 +672,7 @@ namespace Sage.Engine.Runtime
 
             throw new InternalEngineException("Strings came back as not strings! What gives?");
         }
+
         #endregion
-
-        public static string ToString(object? value, CultureInfo cultureInfo)
-        {
-            value = UnboxVariable(value);
-            
-            if (value == null)
-            {
-                return string.Empty;
-            }
-
-            if (value is DateTime)
-            {
-                return ((DateTime)value).ToString(cultureInfo);
-            }
-
-            if (value is DateTimeOffset)
-            {
-                return ((DateTimeOffset)value).ToString(cultureInfo);
-            }
-
-            return value.ToString() ?? string.Empty;
-        }
-
-        public static string ToString(object? value, string formatString, CultureInfo cultureInfo)
-        {
-            value = UnboxVariable(value);
-
-            // A DateTime from a string is not success here.
-            if (TryToDateTime(value, cultureInfo, DateTimeStyles.AssumeLocal, out DateTimeOffset date) == UnboxResult.Succeed)
-            {
-                return date.ToString(formatString, cultureInfo);
-            }
-
-            if (TryToLong(value, out long longResult) != UnboxResult.Fail)
-            {
-                return longResult.ToString(formatString, cultureInfo);
-            }
-
-            if (TryToDecimal(value, out decimal decimalResult) != UnboxResult.Fail)
-            {
-                return decimalResult.ToString(formatString, cultureInfo);
-            }
-
-            // Booleans automatically ToString correctly without formatting needs
-            return value?.ToString() ?? string.Empty;
-        }
-
-        /// <summary>
-        /// If the object is a SageVariable, returns the boxed object to do the comparision.
-        /// </summary>
-        public static object? UnboxVariable(object? input)
-        {
-            if (input is SageVariable variable)
-            {
-                return variable.Value;
-            }
-
-            return input;
-        }
     }
 }
