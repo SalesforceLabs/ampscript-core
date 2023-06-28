@@ -1,0 +1,176 @@
+{
+    "version": "2.0",
+    "name": "ampscript",
+    "scopeName": "text.html.amp",
+    "foldingStartMarker": "%%\\[\\s*$",
+    "foldingStopMarker": "^\\s*\\]%%$",
+    "injections": {
+        "R:comment.block,comment.block.html,meta.attribute": {
+            "patterns": [
+                {
+                    "include": "#ampscript"
+                },
+                {
+                    "include": "#ampscript-substitutions"
+                }
+            ]
+        }
+    },
+    "patterns": [
+        {
+            "include": "#ampscript"
+        },
+        {
+            "include": "text.html.basic"
+        }
+    ],
+    "repository": {
+        "ampscript": {
+            "name": "meta.embedded.amp",
+            "begin": "(%%[=\\[])",
+            "end": "([\\]=]%%)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.other.namespace.amp"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "keyword.other.namespace.amp"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#ampscript-comments"
+                },
+                {
+                    "include": "#ampscript-functions"
+                },
+                {
+                    "include": "#ampscript-numeric"
+                },
+                {
+                    "include": "#ampscript-contstants"
+                },
+                {
+                    "include": "#ampscript-language-elements"
+                },
+                {
+                    "include": "#ampscript-strings"
+                }
+            ]
+        },
+        "ampscript-comments": {
+            "patterns": [
+                {
+                    "name": "comment.block.amp",
+                    "begin": "/\\*",
+                    "captures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.amp"
+                        }
+                    },
+                    "end": "\\*/"
+                }
+            ]
+        },
+        "ampscript-functions": {
+            "name": "support.function.amp",
+            "match": "((?i:beginimpressionregion|endimpressionregion|beginassetblock|endassetblock|contentarea|contentareabyname|contentblockbyname|contentblockbyid|contentblockbykey|treatascontent|treatascontentarea|lookup|lookuprows|lookuprowscs|rowcount|row|field|now|datediff|dateparse|redirectto|random|add|subtract|multiply|divide|mod|concat|indexof|char|empty|propercase|substring|length|lowercase|uppercase|trim|regexmatch|replace|replacelist|format|iif|isnull|output|outputline|v|attributevalue)\\b)(?=\\()"
+        },
+        "ampscript-numeric": {
+            "name": "constant.numeric.amp",
+            "match": "\\b((0(x|X)[0-9a-fA-F]+)|([0-9]+(\\.[0-9]+)?))\\b"
+        },
+        "ampscript-contstants": {
+            "patterns": [
+                {
+                    "name": "constant.language.boolean.true.amp",
+                    "match": "((?i:true)\\b)"
+                },
+                {
+                    "name": "constant.language.boolean.false.amp",
+                    "match": "((?i:false)\\b)"
+                },
+                {
+                    "name": "constant.language.boolean.null.amp",
+                    "match": "((?i:null)\\b)"
+                }
+            ]
+        },
+        "ampscript-language-elements": {
+            "patterns": [
+                {
+                    "name": "keyword.control.amp",
+                    "match": "((?i:do|else|elseif|for|if|endif|next|then|to|downto)\\b)"
+                },
+                {
+                    "name": "storage.type.amp",
+                    "match": "((?i:var|set)\\b)"
+                },
+                {
+                    "name": "variable.parameter.amp",
+                    "match": "\\@[a-zA-Z0-9_]+"
+                },
+                {
+                    "name": "variable.parameter.amp",
+                    "match": "\\[[a-zA-Z0-9_]+\\]"
+                },
+                {
+                    "name": "support.class.amp",
+                    "match": "((?i:and|or|not)\\b)"
+                },
+                {
+                    "name": "variable.operator.amp",
+                    "match": "==|!=|>|<|>=|<=|="
+                }
+            ]
+        },
+        "ampscript-strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.amp",
+                    "begin": "\"",
+                    "end": "\"",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.amp"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.amp"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.amp",
+                            "match": "\"\""
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.amp",
+                    "begin": "'",
+                    "end": "'",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.amp"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.amp"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.amp",
+                            "match": "''"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
