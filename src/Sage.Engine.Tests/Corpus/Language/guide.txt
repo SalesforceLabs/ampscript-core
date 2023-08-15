@@ -1,0 +1,68 @@
+﻿===========
+Slot
+===========
+Hello
+{{.slot foo}}
+{{/slot}}
+World
+++++++++++
+Hello
+
+
+World
+===========
+Slot HTML Content
+===========
+Hello
+{{.slot foo}}
+This is content
+{{/slot}}
+World
+++++++++++
+Hello
+
+This is content
+
+World
+===========
+Slot AMP Content
+===========
+Hello
+{{.slot foo}}
+%%=ADD(1,2)=%%
+{{/slot}}
+World
+++++++++++
+Hello
+
+3
+
+World
+===========
+Slot Block
+===========
+{{.slot foo}}
+{{.block foo htmlemail}}
+Hello world
+{{/block}}
+{{/slot}}
+++++++++++
+Hello world
+===========
+Slot Block Data
+===========
+{{.slot foo}}
+{{.block foo htmlemail}}
+{{.data}}{
+  "email": {
+    "options": {
+      "generateFrom": ""
+    }
+  }
+}
+{{/data}}
+Hello world
+{{/block}}
+{{/slot}}
+++++++++++
+Hello world

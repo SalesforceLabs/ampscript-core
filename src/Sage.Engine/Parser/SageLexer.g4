@@ -9,12 +9,26 @@ options {
     caseInsensitive = true;
 }
 
-HtmlText:       ~[%]+;
+HtmlText:       ~[%{]+;
 SeaWhitespace:  [ \t\r\n]+ -> channel(HIDDEN);
 AmpBlockStart:          '%%['  -> mode(AMP), channel(HIDDEN);
 InlineAmpBlockStart:    '%%='  -> mode(AMP);
 AttributeNameAtSea:    '%%' [a-z_][a-z_0-9 ]* '%%';
 PercentSign:    '%';
+CurlyBrace:     '{';
+GuideTagStart: '{{' -> pushMode(GuideTag);
+
+mode GuideTag;
+GuideWhitespace:            [ \t\r\n]+ -> channel(HIDDEN);
+GuideOpenSlotTagType:       '.slot';
+GuideOpenBlockTagType:      '.block';
+GuideOpenDataTagType:       '.data';
+GuideCloseBlockTagType:     '/block';
+GuideCloseSlotTagType:      '/slot';
+GuideCloseDataTagType:      '/data';
+GuideIdentifier:            [a-z][a-z0-9]*;
+GuideTagEnd:                '}}' -> popMode;
+
 
 mode AMP;
 

@@ -1,0 +1,150 @@
+﻿===========
+Slot
+===========
+Hello
+{{.slot foo}}
+{{/slot}}
+World
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (GuideContentContext
+        (GuideSlotTagContext
+          (GuideSlotTagOpenContext)
+          (ContentBlockContext
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext)))
+          (GuideSlotTagCloseContext))))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))))
+===========
+Slot HTML Content
+===========
+Hello
+{{.slot foo}}
+This is content
+{{/slot}}
+World
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (GuideContentContext
+        (GuideSlotTagContext
+          (GuideSlotTagOpenContext)
+          (ContentBlockContext
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext)))
+          (GuideSlotTagCloseContext))))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))))
+===========
+Slot AMP Content
+===========
+Hello
+{{.slot foo}}
+%%NAME%%
+{{/slot}}
+World
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (GuideContentContext
+        (GuideSlotTagContext
+          (GuideSlotTagOpenContext)
+          (ContentBlockContext
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext))
+            (AmpOrEmbeddedContentContext
+              (AttributeNameAtSeaContext))
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext)))
+          (GuideSlotTagCloseContext))))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))))
+
+===========
+Slot Block
+===========
+{{.slot foo}}
+{{.block foo htmlemail}}
+{{/block}}
+{{/slot}}
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (GuideContentContext
+        (GuideSlotTagContext
+          (GuideSlotTagOpenContext)
+          (ContentBlockContext
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext))
+            (AmpOrEmbeddedContentContext
+              (GuideContentContext
+                (GuideBlockTagContext
+                  (GuideBlockTagOpenContext)
+                  (ContentBlockContext
+                    (AmpOrEmbeddedContentContext
+                      (InlineHtmlContext)))
+                  (GuideBlockTagCloseContext))))
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext)))
+          (GuideSlotTagCloseContext))))))
+===========
+Slot Block Data
+===========
+{{.slot foo}}
+{{.block foo htmlemail}}
+{{.data}}{
+  "email": {
+    "options": {
+      "generateFrom": ""
+    }
+  }
+}
+{{/data}}
+{{/block}}
+{{/slot}}
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (GuideContentContext
+        (GuideSlotTagContext
+          (GuideSlotTagOpenContext)
+          (ContentBlockContext
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext))
+            (AmpOrEmbeddedContentContext
+              (GuideContentContext
+                (GuideBlockTagContext
+                  (GuideBlockTagOpenContext)
+                  (ContentBlockContext
+                    (AmpOrEmbeddedContentContext
+                      (InlineHtmlContext))
+                    (AmpOrEmbeddedContentContext
+                      (GuideContentContext
+                        (GuideDataTagContext
+                          (GuideDataTagOpenContext)
+                          (InlineHtmlContext)
+                          (InlineHtmlContext)
+                          (InlineHtmlContext)
+                          (InlineHtmlContext)
+                          (InlineHtmlContext)
+                          (InlineHtmlContext)
+                          (GuideDataTagCloseContext))))
+                    (AmpOrEmbeddedContentContext
+                      (InlineHtmlContext)))
+                  (GuideBlockTagCloseContext))))
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext)))
+          (GuideSlotTagCloseContext))))))
