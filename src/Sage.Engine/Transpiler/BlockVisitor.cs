@@ -49,6 +49,11 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
         }
     }
 
+    public override IEnumerable<StatementSyntax> VisitGuideContent(SageParser.GuideContentContext context)
+    {
+        return _transpiler.GuideVisitor.Visit(context);
+    }
+
     /// <summary>
     /// An inline AmpBlock is AMPscript of the form %%= -- for example, %%=V(Firstname)=%%.
     /// </summary>

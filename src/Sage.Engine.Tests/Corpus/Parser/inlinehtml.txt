@@ -1,0 +1,39 @@
+﻿===========
+Inline HTML Percents
+===========
+This is some Percent % signs.
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))))
+===========
+Inline HTML Curly Brace
+===========
+This is some Curly { braces.
+{ 'this': 1, { 'is': 2 }, { 'json': 3 }}
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))))

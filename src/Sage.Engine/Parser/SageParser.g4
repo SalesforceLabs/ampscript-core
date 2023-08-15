@@ -22,6 +22,7 @@ attributeNameAtSea
 inlineHtml
     : HtmlText 
     | PercentSign
+    | CurlyBrace
     ;
 
 ampBlock
@@ -42,11 +43,13 @@ ampStatement
 
 ampOrEmbeddedContent
     : ampBlock
+    | guideContent
     | inlineHtml
     | inlineAmpBlock
     | attributeNameAtSea
     ;
 
+// AMPscript
 varDeclaration
     : Var VarName (Comma VarName)*
     ;
@@ -129,3 +132,41 @@ attribute
 arguments
     : OpenParen ( expression (Comma expression)* )? CloseParen
     ;
+
+// Guide
+guideContent
+    : guideSlotTag
+    | guideBlockTag
+    | guideDataTag
+    ;
+
+// {{.data}}
+guideDataTag
+    : guideDataTagOpen inlineHtml* guideDataTagClose;
+
+guideDataTagOpen
+    : GuideTagStart GuideOpenDataTagType GuideTagEnd;
+
+guideDataTagClose
+    : GuideTagStart GuideCloseDataTagType GuideTagEnd;
+
+
+// {{.block}}
+guideBlockTag
+    : guideBlockTagOpen contentBlock guideBlockTagClose;
+
+guideBlockTagOpen
+    : GuideTagStart GuideOpenBlockTagType GuideIdentifier GuideIdentifier GuideTagEnd;
+
+guideBlockTagClose
+    : GuideTagStart GuideCloseBlockTagType GuideTagEnd;
+
+// {{.slot}}
+guideSlotTag
+    : guideSlotTagOpen contentBlock guideSlotTagClose;
+
+guideSlotTagOpen
+    : GuideTagStart GuideOpenSlotTagType GuideIdentifier GuideTagEnd;
+
+guideSlotTagClose
+    : GuideTagStart GuideCloseSlotTagType GuideTagEnd;
