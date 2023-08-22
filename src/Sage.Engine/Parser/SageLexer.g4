@@ -26,7 +26,7 @@ GuideOpenDataTagType:       '.data';
 GuideCloseBlockTagType:     '/block';
 GuideCloseSlotTagType:      '/slot';
 GuideCloseDataTagType:      '/data';
-GuideIdentifier:            [a-z][a-z0-9]*;
+GuideIdentifier:            [a-z0-9]*;
 GuideTagEnd:                '}}' -> popMode;
 
 

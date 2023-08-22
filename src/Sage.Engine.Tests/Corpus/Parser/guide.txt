@@ -148,3 +148,25 @@ Slot Block Data
             (AmpOrEmbeddedContentContext
               (InlineHtmlContext)))
           (GuideSlotTagCloseContext))))))
+===========
+Slot Number Identifier
+===========
+Hello
+{{.slot 12345}}
+{{/slot}}
+World
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))
+    (AmpOrEmbeddedContentContext
+      (GuideContentContext
+        (GuideSlotTagContext
+          (GuideSlotTagOpenContext)
+          (ContentBlockContext
+            (AmpOrEmbeddedContentContext
+              (InlineHtmlContext)))
+          (GuideSlotTagCloseContext))))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))))
