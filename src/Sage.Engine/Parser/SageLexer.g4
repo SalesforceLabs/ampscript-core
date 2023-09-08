@@ -6,17 +6,20 @@
 lexer grammar SageLexer;
 
 options {
+    superClass=AmpscriptLexerBase;
     caseInsensitive = true;
 }
 
-HtmlText:       ~[%{]+;
-SeaWhitespace:  [ \t\r\n]+ -> channel(HIDDEN);
-AmpBlockStart:          '%%['  -> mode(AMP), channel(HIDDEN);
-InlineAmpBlockStart:    '%%='  -> mode(AMP);
-AttributeNameAtSea:    '%%' [a-z_][a-z_0-9 ]* '%%';
-PercentSign:    '%';
-CurlyBrace:     '{';
-GuideTagStart: '{{' -> pushMode(GuideTag);
+HtmlText:                   ~[<%{]+;
+SeaWhitespace:              [ \t\r\n]+ -> channel(HIDDEN);
+AmpBlockStart:              '%%['  -> pushMode(AMP), channel(HIDDEN);
+InlineAmpBlockStart:        '%%='  -> pushMode(AMP);
+AttributeNameAtSea:         '%%' [a-z_][a-z_0-9 ]* '%%';
+PercentSign:                '%';
+CurlyBrace:                 '{';
+SeaLessThan:                '<';
+GuideTagStart:              '{{' -> pushMode(GuideTag);
+HtmlScriptOpen:             '<script' -> pushMode(INSIDESCRIPT);
 
 mode GuideTag;
 GuideWhitespace:            [ \t\r\n]+ -> channel(HIDDEN);
@@ -32,13 +35,14 @@ GuideTagEnd:                '}}' -> popMode;
 
 mode AMP;
 
-MultiLineComment:   '/*' .*? '*/' -> channel(HIDDEN);
-AmpBlockEnd:        ']%%' -> channel(HIDDEN), mode(DEFAULT_MODE);
-InlineAmpBlockEnd:  '=%%'          -> mode(DEFAULT_MODE);
-Whitespace:         [ \t\r\n]+ -> channel(HIDDEN);
-SingleQuoteStringStart: '\'' -> pushMode(SingleQuoteString);
-DoubleQuoteStringStart: '"' -> pushMode(DoubleQuoteString);
-AttributeName: '[' ~']'+ ']';
+MultiLineComment:           '/*' .*? '*/' -> channel(HIDDEN);
+AmpBlockEnd:                ']%%' -> channel(HIDDEN), popMode;
+InlineAmpBlockEnd:          '=%%'          -> popMode;
+Whitespace:                 [ \t\r\n]+ -> channel(HIDDEN);
+SingleQuoteStringStart:     '\'' -> pushMode(SingleQuoteString);
+DoubleQuoteStringStart:     '"' -> pushMode(DoubleQuoteString);
+AttributeName:              '[' ~']'+ ']';
+ScriptCloseAmpScript:       '</script>' { _ampscriptScript = false; } -> popMode, channel(HIDDEN);
 
 
 Set:                'set';
@@ -74,8 +78,6 @@ CloseParen:         ')';
 
 Integer:            [-]? '0' | [-]? NonZeroDigit Digit*;
 Real:               [-]? (Digit+ '.' Digit* | '.' Digit+);
-fragment NonZeroDigit:         [1-9];
-fragment Digit:                [0-9];
 NameString:         [a-z_][a-z_0-9]*;
 
 mode SingleQuoteString;
@@ -88,3 +90,49 @@ mode DoubleQuoteString;
 DoubleQuoteStringData:       ~["]+;
 EscapedDoubleQuote:       '""';
 DoubleQuoteStringEnd:        '"' -> popMode;
+
+
+mode INSIDESCRIPT;
+HtmlClose:                      '>' { this.PushModeOnHtmlClose(); };
+HtmlSlashClose:                 '/>' -> popMode;
+HtmlSlash:                      '/';
+HtmlEquals:                     '=';
+HtmlStartQuoteString:           '\\'? '\'' -> pushMode(HtmlQuoteStringMode);
+HtmlStartDoubleQuoteString:     '\\'? '"'  -> pushMode(HtmlDoubleQuoteStringMode);
+HtmlHex:                        '#' HexDigit+ ;
+HtmlDecimal:                    Digit+;
+HtmlSpace:                      [ \t\r\n]+;
+HtmlName:                       HtmlNameStartChar HtmlNameChar*;
+
+mode HtmlQuoteStringMode;
+HtmlEndQuoteString:            '\'' '\''? ->  popMode;
+HtmlQuoteString:               ~[<']+;
+
+mode HtmlDoubleQuoteStringMode;
+HtmlEndDoubleQuoteString:      '"' '"'? ->  popMode;
+HtmlDoubleQuoteString:         ~[<"]+;
+
+fragment HtmlNameChar options { caseInsensitive = false; }
+    : HtmlNameStartChar
+    | '-'
+    | '_'
+    | '.'
+    | Digit
+    | '\u00B7'
+    | '\u0300'..'\u036F'
+    | '\u203F'..'\u2040'
+    ;
+fragment HtmlNameStartChar options { caseInsensitive = false; }
+    : [:a-zA-Z]
+    | '\u2070'..'\u218F'
+    | '\u2C00'..'\u2FEF'
+    | '\u3001'..'\uD7FF'
+    | '\uF900'..'\uFDCF'
+    | '\uFDF0'..'\uFFFD'
+    ;
+fragment LNum:                 Digit+ ('_' Digit+)*;
+fragment ExponentPart:         'e' [+-]? LNum;
+fragment NonZeroDigit:         [1-9];
+fragment Digit:                [0-9];
+fragment OctalDigit:           [0-7];
+fragment HexDigit:             [a-f0-9];

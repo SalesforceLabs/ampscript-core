@@ -54,7 +54,7 @@ namespace Sage.Engine.Tests
         /// </summary>
         public static void AssertEqualGeneratedCode<TNode>(TNode actual, string expected) where TNode : SyntaxNode
         {
-            Assert.That(actual.NormalizeWhitespace(eol: "\n").ToFullString(), Is.EqualTo(expected));
+            Assert.That(actual.NormalizeWhitespace(eol: "\n").ToFullString(), Is.EqualTo(expected.ReplaceLineEndings("\n")));
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Sage.Engine.Parser;
 
 public static class AntlrParser
 {
-    public static IParseTree Parse(string code, TextWriter? outputStream, TextWriter? errorStream)
+    public static IParseTree Parse(string code, TextWriter outputStream, TextWriter errorStream)
     {
         var stream = new AntlrInputStream(code);
         var lexer = new SageLexer(stream, outputStream, errorStream);

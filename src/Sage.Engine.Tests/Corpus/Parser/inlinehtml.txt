@@ -6,10 +6,8 @@ This is some Percent % signs.
 (ContentBlockFileContext
   (ContentBlockContext
     (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext)
+      (InlineHtmlContext)
       (InlineHtmlContext))))
 ===========
 Inline HTML Curly Brace
@@ -20,20 +18,33 @@ This is some Curly { braces.
 (ContentBlockFileContext
   (ContentBlockContext
     (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext))))
+===========
+Inline HTML Tags
+===========
+<html>
+<head></head>
+<br/>
+</html>
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
     (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
-      (InlineHtmlContext))
-    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext)
       (InlineHtmlContext))))
