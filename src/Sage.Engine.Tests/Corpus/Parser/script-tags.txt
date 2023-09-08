@@ -1,0 +1,96 @@
+﻿===========
+Basic script tags
+===========
+<script language="ampscript" runat="server">
+</script>
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext
+        (ScriptTagContext)))))
+===========
+Basic script tags with AMPscript
+===========
+<script language="ampscript" runat="server">
+SET @FOO = 1
+</script>
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext
+        (ScriptTagContext)))
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (SetVariableContext
+            (VariableAssignmentContext
+              (ConstantExpressionContext
+                (ConstantContext)))))))))
+===========
+Basic script tags with multiple AMPscript
+===========
+<script language="ampscript" runat="server">
+SET @FOO = 1
+</script>
+This is more stuff
+<script language="ampscript" runat="server">
+SET @FOO = 2
+</script>
+This is more
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext
+        (ScriptTagContext)))
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (SetVariableContext
+            (VariableAssignmentContext
+              (ConstantExpressionContext
+                (ConstantContext)))))))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext)
+      (InlineHtmlContext
+        (ScriptTagContext)))
+    (AmpOrEmbeddedContentContext
+      (AmpBlockContext
+        (AmpStatementContext
+          (SetVariableContext
+            (VariableAssignmentContext
+              (ConstantExpressionContext
+                (ConstantContext)))))))
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext))))
+===========
+Non Ampscript Tags
+===========
+<script language="Javascript" runat="server"></script>
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext
+        (ScriptTagContext))
+      (InlineHtmlContext)
+      (InlineHtmlContext))))
+      
+===========
+Javascript Code
+===========
+<script runat="server" language="javascript">
+This is some javascript
+</script>
+----------
+(ContentBlockFileContext
+  (ContentBlockContext
+    (AmpOrEmbeddedContentContext
+      (InlineHtmlContext
+        (ScriptTagContext))
+      (InlineHtmlContext)
+      (InlineHtmlContext)
+      (InlineHtmlContext))))
+      

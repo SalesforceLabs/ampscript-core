@@ -21,8 +21,25 @@ attributeNameAtSea
 
 inlineHtml
     : HtmlText 
+    | scriptTag
+    | HtmlOpen
+    | HtmlSpace
+    | HtmlScriptClose
     | PercentSign
     | CurlyBrace
+    | SeaLessThan
+    ;
+
+scriptTag
+    : HtmlScriptOpen (HtmlEquals
+    | HtmlStartQuoteString
+    | HtmlStartDoubleQuoteString
+    | HtmlName
+    | HtmlEndQuoteString
+    | HtmlQuoteString
+    | HtmlEndDoubleQuoteString
+    | HtmlDoubleQuoteString
+    | HtmlSpace)+ HtmlClose
     ;
 
 ampBlock
@@ -44,7 +61,7 @@ ampStatement
 ampOrEmbeddedContent
     : ampBlock
     | guideContent
-    | inlineHtml
+    | inlineHtml+
     | inlineAmpBlock
     | attributeNameAtSea
     ;

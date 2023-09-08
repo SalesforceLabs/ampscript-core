@@ -20,18 +20,10 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
         this._transpiler = transpiler;
     }
 
-    /// <summary>
-    /// A content block can be HTML, AMP, SSJS, GUIDE - anything!
-    /// </summary>
-    public override IEnumerable<StatementSyntax> VisitContentBlock(SageParser.ContentBlockContext context)
+    protected override IEnumerable<StatementSyntax> AggregateResult(IEnumerable<StatementSyntax> aggregate, IEnumerable<StatementSyntax> nextResult)
     {
-        foreach (SageParser.AmpOrEmbeddedContentContext block in context.ampOrEmbeddedContent())
-        {
-            foreach (StatementSyntax statement in base.Visit(block))
-            {
-                yield return statement;
-            }
-        }
+        var next = nextResult ?? Enumerable.Empty<StatementSyntax>();
+        return aggregate?.Concat(next) ?? next;
     }
 
     /// <summary>
@@ -68,17 +60,11 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
     }
 
     /// <summary>
-    /// Inline HTML only needs to add the content to the output stream.
-    ///
-    /// Example:
-    /// __outputStream.Append("<html><body></body></html>");
+    /// Inline uses a special visitor to handle scripting tags
     /// </summary>
     public override IEnumerable<StatementSyntax> VisitInlineHtml(SageParser.InlineHtmlContext context)
     {
-        return new[]
-        {
-            _transpiler.Runtime.EmitToOutputStream(context.GetText())
-        };
+        return _transpiler.HtmlVisitor.Visit(context);
     }
 
     /// <summary>

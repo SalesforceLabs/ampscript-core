@@ -21,7 +21,7 @@ public static class TestUtils
     {
         ParserTestResult result;
 
-        IParseTree parseTree = AntlrParser.Parse(test.Code, null, null);
+        IParseTree parseTree = AntlrParser.Parse(test.Code, Console.Out, Console.Error);
         string serializedTree = AntlrParser.SerializeTree(parseTree);
         result = new ParserTestResult(serializedTree);
 

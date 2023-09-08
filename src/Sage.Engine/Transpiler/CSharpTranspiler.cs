@@ -70,6 +70,11 @@ internal class CSharpTranspiler
         get;
     }
 
+    public HtmlVisitor HtmlVisitor
+    {
+        get;
+    }
+
     private readonly SageParser _parser;
 
     /// <summary>
@@ -83,6 +88,7 @@ internal class CSharpTranspiler
         ExpressionVisitor = new ExpressionVisitor(this);
         StringVisitor = new StringVisitor(this);
         GuideVisitor = new GuideVisitor(this);
+        HtmlVisitor = new HtmlVisitor(this);
         Runtime = new Runtime();
         IfVisitor = new IfVisitor(this);
         this.SourceFileName = "TEST.cs";

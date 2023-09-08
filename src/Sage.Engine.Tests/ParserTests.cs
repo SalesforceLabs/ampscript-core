@@ -11,7 +11,7 @@ namespace Sage.Engine.Tests
     /// These tests validate that the ANTLR4 generated parse tree is what is expected from test files
     /// </summary>
     [TestFixture]
-    public class ParserTests
+    public class ParserTests : SageTest
     {
         [Test]
         [ParserTest("Parser")]

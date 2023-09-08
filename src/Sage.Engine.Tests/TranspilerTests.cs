@@ -4,8 +4,8 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 namespace Sage.Engine.Tests
-{ using Antlr4.Runtime;
-    using Microsoft.CodeAnalysis;
+{
+    using Antlr4.Runtime;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NUnit.Framework;
     using Parser;
@@ -152,8 +152,10 @@ namespace Sage.Engine.Tests
         [Test]
         [TestCase("FOR @I=1 TO 10 DO VAR @VAR NEXT @I", new[]
         {
-            $"#line (1, 5) - (1, 9) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(1L));",
-            $"#line (1, 13) - (1, 15) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(10L));",
+            @$"#line (1, 5) - (1, 9) ""TEST.cs""
+{Runtime.RuntimeVariable}.SetVariable(""@i"", SageValue.ToLong(1L));",
+            @$"#line (1, 13) - (1, 15) ""TEST.cs""
+{Runtime.RuntimeVariable}.SetVariable(""__for_target_@i_1"", SageValue.ToLong(10L));",
             @$"#line (1, 1) - (1, 18) ""TEST.cs""
 while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) <= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
 {{
@@ -170,8 +172,10 @@ while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) <= SageVa
         })]
         [TestCase("FOR @I=10 DOWNTO 1 DO VAR @VAR NEXT @I", new[]
         {
-            $"#line (1, 5) - (1, 10) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"@i\", SageValue.ToLong(10L));",
-            $"#line (1, 18) - (1, 19) \"TEST.cs\"\n{Runtime.RuntimeVariable}.SetVariable(\"__for_target_@i_1\", SageValue.ToLong(1L));",
+            @$"#line (1, 5) - (1, 10) ""TEST.cs""
+{Runtime.RuntimeVariable}.SetVariable(""@i"", SageValue.ToLong(10L));",
+            @$"#line (1, 18) - (1, 19) ""TEST.cs""
+{Runtime.RuntimeVariable}.SetVariable(""__for_target_@i_1"", SageValue.ToLong(1L));",
             @$"#line (1, 1) - (1, 22) ""TEST.cs""
 while (SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""@i"")) >= SageValue.ToLong({Runtime.RuntimeVariable}.GetVariable(""__for_target_@i_1"")))
 {{
