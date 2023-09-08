@@ -55,14 +55,6 @@ Outputs:
 Hello Donnie
 ```
 
-## Marketing Cloud Supported Languages
-
-| Language | Summary |
-|----------|---------|
-| AMPscript | ⚠️ Partial support |
-| SSJS | ⛔ Not supported |
-| GTL | ⛔ Not Supported |
-
 ### ⚠️ AMPscript Support
 | Feature | Summary |
 |----------|---------|
@@ -73,8 +65,16 @@ Hello Donnie
 | Logic Operators `==`, `!=`, `&&`, etc | ✔️ |
 | Inline Ampscript `%%= =%%`| ✔️ |
 | Personalization Strings `[Foo]` or `%%Foo%%` | ✔️ |
-| Tag Syntax `<script language="ampscript">` | ⛔ Not Supported |
-| System Strings `xtmonth, jobid, subscriberkey, etc` | ⛔ Not Supported |
+| Tag Syntax `<script language="ampscript">` | ✔️ |
+| System Strings `xtmonth, jobid, subscriberkey, etc` | ⛔ Not Yet Supported |
+
+## Marketing Cloud Supported Languages
+
+| Language | Summary |
+|----------|---------|
+| AMPscript | ⚠️ Partial support |
+| SSJS | ⛔ Not supported |
+| GTL | ⛔ Not Supported |
 
 ## Supported Functions
 
