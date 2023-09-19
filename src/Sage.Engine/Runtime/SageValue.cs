@@ -382,6 +382,12 @@ namespace Sage.Engine.Runtime
         public static UnboxResult TryToBoolean(object? inputObj, out bool result)
         {
             inputObj = UnboxVariable(inputObj);
+ 
+            if (inputObj == null)
+            {
+                result = false;
+                return UnboxResult.Succeed;
+            }
 
             if (inputObj is bool boolObj)
             {

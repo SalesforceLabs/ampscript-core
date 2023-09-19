@@ -1,0 +1,15 @@
+﻿===========
+NULL IF CHECK
+===========
+%%[
+	VAR @variable
+    
+    IF @variable THEN
+        OUTPUT("1")
+    ENDIF
+    IF NOT @variable THEN
+        OUTPUT("2")
+    ENDIF
+]%%
+++++++++++
+2

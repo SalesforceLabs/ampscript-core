@@ -47,3 +47,12 @@ set @RESULT = Substring('Logan',1.5)
 %%=v(@RESULT)=%%
 ++++++++++
 !
+==========
+Substring('Logan',1,50)
+==========
+%%[
+set @RESULT = Substring('Logan',1,50)
+]%%
+%%=v(@RESULT)=%%
+++++++++++
+Logan

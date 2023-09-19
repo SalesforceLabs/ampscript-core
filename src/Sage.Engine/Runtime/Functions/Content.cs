@@ -171,6 +171,11 @@ namespace Sage.Engine.Runtime
         public string TREATASCONTENT(object? content)
         {
             string contentString = content?.ToString() ?? string.Empty;
+            
+            if (string.IsNullOrWhiteSpace(contentString))
+            {
+                return contentString;
+            }
 
             return CompileAndExecuteEmbeddedCodeAsync($"treatascontent__{_stackFrame.Peek().CurrentLineNumber}", contentString) ?? string.Empty;
         }
