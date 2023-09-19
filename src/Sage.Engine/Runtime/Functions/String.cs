@@ -150,7 +150,19 @@ namespace Sage.Engine.Runtime
 
             int lengthInt = SageValue.ToInt(length);
 
-            return subject?.ToString()?.Substring(startInt - 1, lengthInt) ?? string.Empty;
+            string subjectToCheck = subject?.ToString() ?? string.Empty;
+
+            if (string.IsNullOrEmpty(subjectToCheck))
+            {
+                return string.Empty;
+            }
+
+            if (lengthInt > subjectToCheck.Length - startInt)
+            {
+                lengthInt = (subjectToCheck.Length - startInt + 1);
+            }
+
+            return subjectToCheck.Substring(startInt - 1, lengthInt);
         }
 
         /// <summary>

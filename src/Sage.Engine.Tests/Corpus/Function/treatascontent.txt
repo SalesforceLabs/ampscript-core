@@ -10,3 +10,8 @@ TREATASCONTENTAREA
 %%= TREATASCONTENTAREA("Content",CONCAT("%", "%", "=ADD(1,2)=", "%", "%")) =%%
 ++++++++++
 3
+==========
+Empty TREATASCONTENT
+==========
+%%=TREATASCONTENT("")=%%
+++++++++++

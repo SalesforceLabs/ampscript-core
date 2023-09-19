@@ -38,6 +38,11 @@ namespace Sage.Engine.Runtime
             this.Name = name;
         }
 
+        public static implicit operator bool(SageVariable other)
+        {
+            return SageValue.EqualTo(true, other);
+        }
+
         public override string? ToString()
         {
             return Value?.ToString();
