@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Sage.Engine.DependencyInjection;
 using Sage.Engine.Extensions;
@@ -52,8 +53,12 @@ namespace Sage.Engine.Tests
         /// <summary>
         /// Encapsulates how the test validates the code is identical between generated and expected code.
         /// </summary>
-        public static void AssertEqualGeneratedCode<TNode>(TNode actual, string expected) where TNode : SyntaxNode
+        public static void AssertEqualGeneratedCode<TNode>(TNode actual, string expected, bool withTrivia = true) where TNode : SyntaxNode
         {
+            if (!withTrivia)
+            {
+                actual = actual.WithoutTrivia();
+            }
             Assert.That(actual.NormalizeWhitespace(eol: "\n").ToFullString(), Is.EqualTo(expected.ReplaceLineEndings("\n")));
         }
     }

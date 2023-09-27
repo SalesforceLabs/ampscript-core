@@ -48,14 +48,14 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
 
         foreach (SageParser.ElseIfStatementContext? elseIfExpression in context.elseIfStatement())
         {
-            ifStack.Push(_transpiler.IfVisitor.Visit(elseIfExpression).WithLineDirective(elseIfExpression.Elseif().Symbol, elseIfExpression.Then().Symbol, _transpiler.SourceFileName));
+            ifStack.Push(_transpiler.IfVisitor.Visit(elseIfExpression));
         }
 
         ElseClauseSyntax? elseClause = null;
         if (context.elseStatement() != null)
         {
             elseClause =
-                ElseClause(Block(_transpiler.BlockVisitor.Visit(context.elseStatement()))).WithLineDirective(context.elseStatement().Else().Symbol, context.elseStatement().Else().Symbol, _transpiler.SourceFileName);
+                ElseClause(TranspilerExtensions.BlockWithHiddenDirectives(_transpiler.BlockVisitor.Visit(context.elseStatement())));
         }
 
         IfStatementSyntax root = ifStack.Peek();
@@ -170,7 +170,7 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
                         PredefinedType(
                             Token(SyntaxKind.LongKeyword)),
                         IdentifierName("MaxValue"))),
-                Block(
+                TranspilerExtensions.BlockWithHiddenDirectives(
                     SingletonList<StatementSyntax>(
                         BreakStatement())))
                 .WithHiddenLineDirective());
@@ -192,7 +192,7 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
                         PredefinedType(
                             Token(SyntaxKind.LongKeyword)),
                         IdentifierName("MinValue"))),
-                Block(
+                TranspilerExtensions.BlockWithHiddenDirectives(
                     SingletonList<StatementSyntax>(
                         BreakStatement())))
                 .WithHiddenLineDirective());
@@ -209,7 +209,7 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
                 kindCheck,
                 TranspilerExtensions.GetLongValue(_transpiler.Runtime.GetFromRuntime(assignmentVariableName)),
                 TranspilerExtensions.GetLongValue(_transpiler.Runtime.GetFromRuntime(targetVariableName))),
-            Block(statements))
+            TranspilerExtensions.BlockWithHiddenDirectives(statements))
             .WithLineDirective(context.For().Symbol, context.Do().Symbol, _transpiler.SourceFileName));
 
         return results;
@@ -224,7 +224,7 @@ internal class StatementVisitor : SageParserBaseVisitor<IEnumerable<StatementSyn
 
         ExpressionSyntax expression = _transpiler.ExpressionVisitor.Visit(context.variableAssignment().expression());
 
-        yield return _transpiler.Runtime.AssignToRuntime(variableName, expression);
+        yield return _transpiler.Runtime.AssignToRuntime(variableName, expression).WithLineDirective(context, this._transpiler.SourceFileName);
     }
 
     /// <summary>

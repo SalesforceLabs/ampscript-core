@@ -201,7 +201,7 @@ internal class CSharpTranspiler
                                 .WithType(
                                     IdentifierName("RuntimeContext")))))
             .WithBody(
-                Block(statements))
+                TranspilerExtensions.BlockWithHiddenDirectives(statements))
             .WithHiddenLineDirective();
     }
 }

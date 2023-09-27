@@ -53,6 +53,7 @@ namespace Sage.Engine
                     appServices.Configure<CompilationOptions>((o) =>
                     {
                         o.InputFile = ampscriptOption.Source;
+                        o.GeneratedMethodName = CompilerOptionsBuilder.BuildMethodFromFilename(ampscriptOption.Source.FullName);
                     });
                 });
 
