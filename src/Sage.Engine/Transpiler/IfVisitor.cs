@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using Microsoft.CodeAnalysis.CSharp;
+using System.Xml.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sage.Engine.Parser;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -23,17 +26,19 @@ internal class IfVisitor : SageParserBaseVisitor<IfStatementSyntax>
 
     private IfStatementSyntax GetIf(ExpressionSyntax expression, IEnumerable<StatementSyntax> block)
     {
-        return IfStatement(expression, Block(block));
+        return IfStatement(
+            expression,
+            TranspilerExtensions.BlockWithHiddenDirectives(block));
     }
 
     public override IfStatementSyntax VisitIfStatement(SageParser.IfStatementContext context)
     {
         ExpressionSyntax e = _transpiler.ExpressionVisitor.Visit(context.expression());
-        return GetIf(e, _transpiler.BlockVisitor.Visit(context.contentBlock()));
+        return GetIf(e, _transpiler.BlockVisitor.Visit(context.contentBlock())).WithLineDirective(context.expression(), this._transpiler.SourceFileName);
     }
 
     public override IfStatementSyntax VisitElseIfStatement(SageParser.ElseIfStatementContext context)
     {
-        return GetIf(_transpiler.ExpressionVisitor.Visit(context.expression()), _transpiler.BlockVisitor.Visit(context.contentBlock()));
+        return GetIf(_transpiler.ExpressionVisitor.Visit(context.expression()), _transpiler.BlockVisitor.Visit(context.contentBlock())).WithLineDirective(context.expression(), this._transpiler.SourceFileName);
     }
 }

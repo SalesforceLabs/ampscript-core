@@ -82,6 +82,21 @@ internal static class TranspilerExtensions
     }
 
     /// <summary>
+    /// Decorates the provided syntax node with a #line directive, indicating which line in the source file this represents.
+    /// </summary>
+    /// <see cref="https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/enhanced-line-directives.md"/>
+    public static BlockSyntax BlockWithHiddenDirectives(IEnumerable<StatementSyntax> statements)
+    {
+        return Block(statements)
+            .WithOpenBraceToken(Token(
+                TriviaList(Trivia(LineDirectiveTrivia(Token(SyntaxKind.HiddenKeyword), true))),
+                SyntaxKind.OpenBraceToken, TriviaList()))
+            .WithCloseBraceToken(Token(
+                TriviaList(Trivia(LineDirectiveTrivia(Token(SyntaxKind.HiddenKeyword), true))),
+                SyntaxKind.CloseBraceToken, TriviaList()));
+    }
+
+    /// <summary>
     /// Invokes a static method on a given class. Arguments can be added to the returned InvocationExpression
     /// </summary>
     /// <param name="className">Name of the class, without the namespace</param>
