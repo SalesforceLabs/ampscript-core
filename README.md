@@ -13,6 +13,9 @@ The plugin supports files with a ".ampscript" extension.
 
 It is not yet available on the VSCode marketplace. In order use it, you will need to download and install the VSIX file that contains the plugin.
 
+#### Download and Install VSCode
+If you do not have VSCode installed, install it here: https://code.visualstudio.com/download
+
 #### Download the VSIX plugin
 Download the latest VSIX release from the [releases](https://github.com/SalesforceLabs/ampscript-core/releases) tab.
 
@@ -34,9 +37,9 @@ Double click on the "dd4tmp.ampscript" file, then go to the "Run and Debug" sect
 
 A browser window should appear with the example running.  From here - you can make any changes to the example and reload your browser window.
 
+<img src="docs/img/example-running.png" alt="Example Running" width="40%"/>
 
 ## Subscriber Attributes
-
 
 Subscriber attributes `%%Foo%%`/`[Foo]` are supported through a JSON file named `subscriber.json` in the working directory.
 
