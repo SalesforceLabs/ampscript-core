@@ -23,6 +23,7 @@
     "Ampscript ": {
       "commandName": "Project",
       "commandLineArgs": "ampscript --source \"C:\\code\\AmpscriptFiles\\dd4tmp.ampscript\"",
+      "workingDirectory": "C:\\code\\AmpscriptFiles",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

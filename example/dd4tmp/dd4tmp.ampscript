@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+%%=CONTENTBLOCKBYNAME("Style")=%%
+</head>
+<!-- background color -->
+<body bgcolor="5#ff3788">
+    <!-- background color -->
+    <table bgcolor="#ffffff" width="100%" border="0" cellspacing="0" cellpadding="0">
+        %%=CONTENTBLOCKBYNAME("LOGO")=%%
+        %%=CONTENTBLOCKBYNAME("MESSAGE")=%%
+        %%=CONTENTBLOCKBYNAME("FOOTER") =%%
+    </table>
+</body>
+
+</html>
+<!-- Parcel, HTML email template, and content areas created by Lindsay Siovaila and the Solutions Engineering R+D team. 2015. -->

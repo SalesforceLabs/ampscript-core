@@ -1,0 +1,3 @@
+%%[
+OUTPUT(LOOKUP("BannerToId", "Id", "BannerType", @bannerType))
+]%%

@@ -1,0 +1,51 @@
+<tr><td>
+%%[
+    SET @bannerType = "Stress"
+
+    IF ([plan_type] == "SILVER") THEN
+        SET @bannerType = "Family"
+    ELSEIF([plan_type] == "GOLD") THEN
+        SET @bannerType = "Food"
+    ENDIF
+
+    SET @bannerId = CONTENTBLOCKBYNAME("BannerNameToId")
+    SET @bannerUrl = CONCAT("https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/campaign-toolkits/rachel-morris-customer-journey/banner-ads/MakanaHealthPlans-banner-ad-", @bannerId, ".png")
+]%%
+          <!-- banner ad content area -->
+                <table style='background-color:#ffffff;' class='tmp--container' width='600' align='center' border='0' cellspacing='0' cellpadding='0'>
+                    <tr>
+                        <td class='tmp--full-width' width='100%' align='left' style='padding:20px;'><img width='600' class='photo' style='display:block;' src='%%=V(@bannerUrl)=%%'></td>
+                    </tr>
+                </table>
+                <!-- end content area --> 
+         </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- footer content area -->
+                <table style='background-color:#6c5e91;' class='tmp--container' width='600' align='center' border='0' cellspacing='0' cellpadding='0'>
+                    <tr>
+                        <td class='tmp--full-width-center' width='100%' align='center' style='padding:25px 20px 0 20px;'><img width='50' id='style-footer-logo' src='https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/branding-assets/email-templates/branding-MakanaHealth-logo-footer-gray-2x.png'></td>
+                    </tr>
+                </table>
+                <table style='background-color:#6c5e91;' class='tmp--container' width='600' align='center' border='0' cellspacing='0' cellpadding='0'>
+                    <tr>
+                        <td style='color:#ffffff;font-family:Gotham, Arial, sans-serif;font-size:11px;font-style:normal;font-weight:normal;padding:20px 20px 10px 20px;' class='tmp--full-width-center' width='100%' align='center' width='432'><a href="%%view_email_url%%" alias="Web Version" target="_blank" style="color:#ffffff;text-decoration:none;">View as a Webpage</a> </td>
+                    </tr>
+                    <tr>
+                        <td style='color:#ffffff;font-family:Gotham, Arial, sans-serif;font-size:11px;font-style:normal;font-weight:normal;padding:10px 20px 20px 20px;' class='tmp--full-width-center' width='100%' align='center' width='432'>%%Member_Busname%%
+                            <br />%%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%.
+                            <br /> </td>
+                    </tr>
+                    <tr>
+                        <td style="font-family:Gotham, Helvetica, Arial, sans-serif; text-align:center; color:#ffffff; font-size:11px; font-weight:bold; line-height:14px; padding:0 25px 15px 25px;"> <img width="30" src="https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/branding-assets/email-templates/branding-MakanaHealth-social-icon-website-white.png" style="padding:0px 5px;" /> <img width="30" src="https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/branding-assets/email-templates/branding-MakanaHealth-social-icon-facebook-white.png" style="padding:0px 5px;" /> <img width="30" src="https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/branding-assets/email-templates/branding-MakanaHealth-social-icon-twitter-white.png" style="padding:0px 5px;" /> <img width="30" src="https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/branding-assets/email-templates/branding-MakanaHealth-social-icon-instagram-white.png" style="padding:0px 5px;" /> </td>
+                    </tr>
+                </table>
+                <table style='background-color:#6c5e91;' class='tmp--container' width='600' border='0' align='center' cellpadding='0' cellspacing='0'>
+                    <tr>
+                        <td style="font-family:Gotham, Helvetica, Arial, sans-serif;text-align:center;color:#ffffff;font-size:11px;font-style:normal;font-weight:normal;line-height:14px;padding:0 25px 35px 25px;"> <a href="%%profile_center_url%%" alias="Profile Center" target="_blank" style="color:#ffffff;text-decoration:none;">Profile Center</a> <span style="color:#aa95d1; padding:0 5px;">|</span> <a href="%%subscription_center_url%%" alias="Manage Subscriptions" target="_blank" style="color:#ffffff;text-decoration:none;">Manage Subscriptions </a> <span style="color:#aa95d1; padding:0 5px;">|</span> <a target="_blank" href="%%unsub_center_url%%" alias="Unsubscribe" title="Unsubscribe" style="color:#ffffff;text-decoration:none;">Unsubscribe </a> </td>
+                    </tr>
+                </table>
+                <!-- end content area -->
+            </td>
+        </tr>

@@ -1,0 +1,26 @@
+        <tr>
+            <td>
+                <!-- logo content area-->
+                <table style='background-color:#6c5e91;' class='tmp--container' width='600' align='center' border='0' cellspacing='0' cellpadding='0'>
+                    <tr>
+                        <td width='100%' style='padding:20px 25px 20px 25px;'>
+                            <center><img width='250' id='style-header-logo' src='https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/branding-assets/email-templates/branding-MakanaHealth-logo-header-gray-2x.png'></center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- end content area -->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- content area -->
+                <!-- hero image content area-->
+                <table style='background-color:#ffffff;' class='tmp--container' width='600' align='center' border='0' cellspacing='0' cellpadding='0'>
+                    <tr>
+                        <td class='full-width' width='100%' align='left'><img class='photo' style='display:block;' width='600' src='https://s3-us-west-2.amazonaws.com/rd-industry-emails/healthcare-life-sciences/makana/campaign-toolkits/rachel-morris-customer-journey/onboarding-register-in-portal/makana-health-plans-onboarding-register-in-portal-hero-2x.jpg'></td>
+                    </tr>
+                </table>
+                <!-- end content area -->  
+                <!-- end content area -->
+            </td>
+        </tr>

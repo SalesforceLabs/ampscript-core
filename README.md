@@ -3,7 +3,44 @@ AMPscript Core is an open source implementation of the Marketing Cloud AMPscript
 
 It is cross platform and works on Windows, macOS and Linux.
 
+A VSCode plugin is available to edit, run and debug AMPscript files locally on your machine.
+
+<img src="docs/img/welcome.gif" alt="VSCode Plugin" width="50%"/>
+
+## Getting Started Using the VSCode Plugin
+The VSCode plugin provides syntax highlighting and debugging capability for AMPscript files.
+The plugin supports files with a ".ampscript" extension.
+
+It is not yet available on the VSCode marketplace. In order use it, you will need to download and install the VSIX file that contains the plugin.
+
+#### Download and Install VSCode
+If you do not have VSCode installed, install it here: https://code.visualstudio.com/download
+
+#### Download the VSIX plugin
+Download the latest VSIX release from the [releases](https://github.com/SalesforceLabs/ampscript-core/releases) tab.
+
+Install the plugin using "Install From VSIX" in the extensions menu.
+
+<img src="docs/img/install-vsix.png" alt="Install From VSIX" width="50%"/>
+
+#### Unzip the example
+Download the example ZIP from the [releases](https://github.com/SalesforceLabs/ampscript-core/releases) tab, and unzip this somewhere on your computer.
+
+Do File->Open Folder and choose the folder where this was unzipped.
+
+<img src="docs/img/open-folder.png" alt="Open Example Folder" width="50%"/>
+
+#### Start the example
+Double click on the "dd4tmp.ampscript" file, then go to the "Run and Debug" section of the editor and click "Run and Debug".
+
+<img src="docs/img/open-file.png" alt="Open Root File" width="40%"/> <img src="docs/img/run-and-debug.png" alt="Open Root File" width="40%"/>
+
+A browser window should appear with the example running.  From here - you can make any changes to the example and reload your browser window.
+
+<img src="docs/img/example-running.png" alt="Example Running" width="40%"/>
+
 ## Subscriber Attributes
+
 Subscriber attributes `%%Foo%%`/`[Foo]` are supported through a JSON file named `subscriber.json` in the working directory.
 
 Supported within the JSON file is a key/value pair of the attribute name and value.
