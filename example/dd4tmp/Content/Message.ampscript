@@ -1,0 +1,26 @@
+<tr>
+    <td>
+        <!-- content area -->
+        <!-- message content area -->
+        <table style='background-color:#ffffff;' class='tmp--container' width='600' align='center' border='0' cellspacing='0' cellpadding='0'>
+            <tr>
+                <td style='color:#404760;font-family:"Salesforce Sans", Arial, sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:18px;padding:25px 25px 5px 25px;vertical-align:top;' width='100%' align='left'>
+                    Welcome %%= IIF(EMPTY([first_name]), "super valued customer", [first_name]) =%%!
+                    <br />
+                    <br />We are so happy you've selected us for your healthcare needs. A full <strong>%%plan_type%%</strong> welcome kit has been shipped to your home address and will arrive in the mail in the next few days. In the meantime, please register in the online Makana Health Plans portal in order to get started with your account.
+                    <!-- ============================== -->
+                    <!-- CTA BTN -->
+                    <!-- ============================== -->
+                    <table class='tmp--full-width' align='left' width='100%'>
+                        <tr>
+                            <td style='padding:20px 0 10px 0;'>
+                                <a style='border-radius:0px;background-color:#6c5f91;border-top:12px solid #6c5f91;border-bottom:12px solid #6c5f91;border-right:18px solid #6c5f91;border-left:18px solid #6c5f91;color:#ffffff;display:inline-block;font-family:"Salesforce Sans", Arial, sans-serif;font-size:12px;font-style:normal;text-transform:uppercase;font-weight:normal;line-height:16px;text-align:center;text-decoration:none;' href='' target='_blank'>Register in Portal</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!-- end content area -->
+    </td>
+</tr>

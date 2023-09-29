@@ -1,0 +1,83 @@
+
+    <style type="text/css">
+    div,
+    p,
+    a,
+    li,
+    td {
+        -webkit-text-size-adjust: none;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    td[class="headercell-phone"] {
+        display: none;
+    }
+    
+    @media screen and (max-width: 480px) {
+        table[class="tmp--container"] {
+            width: 360px !important;
+        }
+        table[class="tmp--container-padding"] {
+            width: 360px !important;
+            padding: 20px !important;
+        }
+        table[class="tmp--container-padding-top"] {
+            width: 360px !important;
+            padding: 20px 0 0 0 !important;
+        }
+        table[class="tmp--container-padding-bottom"] {
+            width: 360px !important;
+            padding: 0 0 20px 0 !important;
+        }
+        table[class="hero"] {
+            width: 100% !important;
+        }
+        table[class="tmp--full-width"] {
+            width: 100% !important;
+            float: left !important;
+            padding: 0 !important;
+        }
+        td[class="tmp--full-width"] {
+            width: 100% !important;
+            float: left !important;
+            padding: 0 !important;
+        }
+        td[class="tmp--full-width-padding-bottom"] {
+            width: 100% !important;
+            float: left !important;
+            padding: 0 0 25px 0 !important;
+        }
+        td[class="tmp--full-width-center"] {
+            width: 100% !important;
+            float: left !important;
+            padding: 10px 0 10px 0 !important;
+            text-align: center !important;
+        }
+        table[class="wrapper-padding"] {
+            padding: 20px !important;
+        }
+        tr[class="wrapper-padding"] {
+            padding: 20px !important;
+        }
+        td[class="wrapper-padding"] {
+            padding: 20px !important;
+        }
+        td[class="col-padding-bottom"] {
+            padding: 0 0 25px 0 !important;
+        }
+        img[class="photo"] {
+            width: 100% !important;
+            height: auto !important;
+        }
+        td[class="row"] {
+            width: 100% !important;
+        }
+        td[class="tmp--hide"] {
+            display: none !important;
+        }
+    }
+    </style>
