@@ -136,3 +136,34 @@ set @result = DATEPARSE("2023-05-01 2:30PM-1:00", 0)
 %%=v(@result)=%%
 ++++++++++
 5/1/2023 11:30:00 AM
+==========
+DATEPART
+==========
+%%[ SET @date = "Mon, 2 Oct 2023 12:01:02" ]%%
+%%=DATEPART(@date, "Y")=%%
+%%=DATEPART(@date, "year")=%%
+%%=DATEPART(@date, "M")=%%
+%%=DATEPART(@date, "monthName")=%%
+%%=DATEPART(@date, "D")=%%
+%%=DATEPART(@date, "day")=%%
+%%=DATEPART(@date, "H")=%%
+%%=DATEPART(@date, "hour")=%%
+%%=DATEPART(@date, "minute")=%%
+%%=DATEPART(@date, "MI")=%%
+%%[ SET @date = "Mon, 25 Sep 2023 12:00:10" ]%%
+%%=DATEPART(@date, "month")=%%
+%%=DATEPART(@date, "minute")=%%
+++++++++++
+2023
+2023
+10
+October
+02
+02
+12
+12
+1
+1
+
+09
+0
