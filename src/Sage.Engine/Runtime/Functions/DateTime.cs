@@ -101,5 +101,71 @@ namespace Sage.Engine.Runtime
 
             return result.DateTime;
         }
+
+        /// <summary>
+        /// Returns a part of a date (year, month, day, hour or minute)
+        /// </summary>
+        /// <remarks>
+        /// The hour or minute will not contain leading zeros.
+        ///
+        /// The month or day will include leading zeros.
+        ///
+        /// This is to maintain compatibility with the existing service.
+        /// </remarks>
+        /// <param name="date">The date to obtain the part from</param>
+        /// <param name="part">The part of the date to return.
+        /// Valid parts include:
+        /// year, y
+        /// month, m, monthname
+        /// day, d
+        /// hour, h
+        /// minute, mi
+        /// </param>
+        /// <returns></returns>
+        /// <exception cref="RuntimeArgumentException">When an invalid part is specified</exception>
+        public object DATEPART(object date, object part)
+        {
+            DateTimeOffset dateUnboxed = SageValue.ToDateTime(date, _currentCulture, DateTimeStyles.AssumeLocal);
+            string partUnboxed = part.ToString() ?? string.Empty;
+
+            var trimLeadingZeros = (string input) =>
+            {
+                string output = input.TrimStart('0');
+
+                if (string.IsNullOrWhiteSpace(output))
+                {
+                    return "0";
+                }
+
+                return output;
+            };
+
+            switch (partUnboxed.Trim().ToLower())
+            {
+                case "year":
+                case "y":
+                    return dateUnboxed.ToString("yyyy");
+                case "month":
+                case "m":
+                    return dateUnboxed.ToString("MM");
+                case "monthname":
+                    return dateUnboxed.ToString("MMMM");
+                case "day":
+                case "d":
+                    return dateUnboxed.ToString("dd");
+                case "hour":
+                case "h":
+                    return trimLeadingZeros(dateUnboxed.ToString("hh"));
+                case "minute":
+                case "mi":
+                    return trimLeadingZeros(dateUnboxed.ToString("mm"));
+                default:
+                    throw new RuntimeArgumentException(
+                        $"Date part specification not recognized {partUnboxed}",
+                        this,
+                        "DATEPART",
+                        "DatePart");
+            }
+        }
     }
 }
