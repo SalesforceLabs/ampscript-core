@@ -4,6 +4,7 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.CommandLine;
+using System.Text;
 using Microsoft.Extensions.Options;
 using Sage.Engine;
 using Sage.Engine.Compiler;
@@ -30,7 +31,7 @@ app.MapGet("/", () =>
         requestScope.ServiceProvider.GetRequiredService<IOptionsSnapshot<CompilationOptions>>().Value;
 
     return Results.Content(
-        requestScope.ServiceProvider.GetRequiredService<WebRequestRenderer>().RenderContent(options), "text/html");
+        requestScope.ServiceProvider.GetRequiredService<WebRequestRenderer>().RenderContent(options), "text/html", Encoding.UTF8);
 });
 
 app.Run();
