@@ -62,6 +62,12 @@ namespace Sage.Engine.Compiler
         public CompilerOptionsBuilder WithSourceCode(string name, string sourceCode)
         {
             this.InputName = name;
+
+            if (!this.OutputDirectory.Exists)
+            {
+                this.OutputDirectory.Create();
+            }
+
             this.InputFile = new FileInfo(Path.Combine(this.OutputDirectory.FullName, name + ".generated.ampscript"));
             File.WriteAllText(InputFile.FullName, this.SourceCode);
             this.SourceCode = sourceCode;
