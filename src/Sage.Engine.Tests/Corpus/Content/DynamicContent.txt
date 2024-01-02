@@ -26,3 +26,21 @@ Invoke And Output content with output
 %%=CONTENTBLOCKBYNAME("Output")=%%
 ++++++++++
 Dynamic Hello World Output
+
+==========
+Dynamically assign variables in referenced content blocks
+==========
+%%[
+SET @INPUT = "Hello"
+SET @COUNTER = 1
+CONTENTBLOCKBYNAME("DynamicForLoop")
+
+SET @INPUT = "Goodbye"
+SET @COUNTER = 2
+CONTENTBLOCKBYNAME("DynamicForLoop")
+]%%
+%%=V(@INPUT_1)=%%
+%%=V(@INPUT_2)=%%
+++++++++++
+Hello
+Goodbye

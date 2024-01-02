@@ -11,3 +11,16 @@ Variables
 %%=V(@VAR)=%%
 ++++++++++
 2
+===========
+Variables Are Copy Not Reference
+===========
+%%[
+	SET @FOO=1
+    SET @BAR=@FOO
+    SET @FOO=2
+]%%
+%%=V(@FOO)=%%
+%%=V(@BAR)=%%
+++++++++++
+1
+2
