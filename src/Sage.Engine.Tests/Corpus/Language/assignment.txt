@@ -22,5 +22,5 @@ Variables Are Copy Not Reference
 %%=V(@FOO)=%%
 %%=V(@BAR)=%%
 ++++++++++
-1
 2
+1
