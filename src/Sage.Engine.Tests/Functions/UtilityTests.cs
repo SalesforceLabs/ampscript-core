@@ -13,7 +13,7 @@ namespace Sage.Engine.Tests.Functions
         [TestCase("Hello", "Hello")]
         [TestCase(1, "1")]
         [TestCase(true, "True")]
-        public void TestOutputAndV(object data, string expected)
+        public void TestOutputAndV(object? data, string expected)
         {
             this._runtimeContext.OUTPUT(data);
             Assert.That(this._runtimeContext.PopContext(), Is.EqualTo(expected));
@@ -24,7 +24,7 @@ namespace Sage.Engine.Tests.Functions
         [TestCase("Hello", "Hello")]
         [TestCase(1, "1")]
         [TestCase(true, "True")]
-        public void TestOutputLine(object data, string expected)
+        public void TestOutputLine(object? data, string expected)
         {
             this._runtimeContext.OUTPUTLINE(data);
 
@@ -36,7 +36,7 @@ namespace Sage.Engine.Tests.Functions
         [TestCase("Hello", "Hello")]
         [TestCase(1, "1")]
         [TestCase(true, "True")]
-        public void TestV(object data, string expected)
+        public void TestV(object? data, string expected)
         {
             string result = this._runtimeContext.V(data);
             Assert.That(result, Is.EqualTo(expected));

@@ -44,7 +44,7 @@ namespace Sage.Engine.Runtime
         /// <param name="subject">The string to search</param>
         /// <param name="search">The string to find</param>
         /// <returns>The position that search exists in subject. If not found, -1 is returned.</returns>
-        public int INDEXOF(object subject, object search)
+        public int INDEXOF(object? subject, object? search)
         {
             if (subject == null || search == null)
             {

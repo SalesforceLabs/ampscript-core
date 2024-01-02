@@ -97,7 +97,7 @@ namespace Sage.Engine.Runtime
         /// Outputs to where this block appears in the content.
         /// </summary>
         /// <param name="data">The data to add to the output stream</param>
-        public void OUTPUT(object data)
+        public void OUTPUT(object? data)
         {
             Output(data);
         }
@@ -106,7 +106,7 @@ namespace Sage.Engine.Runtime
         /// Outputs to where this block appears in the content, with a newline
         /// </summary>
         /// <param name="data">The data to add to the output stream</param>
-        public void OUTPUTLINE(object data)
+        public void OUTPUTLINE(object? data)
         {
             OutputLine(data);
         }
