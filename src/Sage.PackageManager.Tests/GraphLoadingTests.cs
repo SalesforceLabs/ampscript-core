@@ -45,7 +45,7 @@ namespace Sage.PackageManager.Tests
             Assert.That(1 == graph.SelectedEntities.Count);
 
             Asset? asset = graph.GetAsset(1234);
-            Assert.IsNotNull(asset);
+            Assert.That(asset, Is.Not.Null);
 
             Assert.That("Content" == asset!.Compile(graph));
         }

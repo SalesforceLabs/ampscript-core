@@ -20,5 +20,11 @@ namespace Sage.Engine.Tests.Functions
         {
             _runtimeContext = new RuntimeContext(_serviceProvider, TestCompilationOptions());
         }
+
+        [TearDown]
+        public void TestTearDown()
+        {
+            _runtimeContext.Dispose();
+        }
     }
 }
