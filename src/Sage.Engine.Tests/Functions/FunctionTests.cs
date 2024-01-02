@@ -35,7 +35,8 @@ namespace Sage.Engine.Tests.Functions
             else
             {
                 var compatibilityResult = TestCompatibility(test.Code, test.SubscriberContext?.GetAttributes()).Result;
-                Assert.That(compatibilityResult.renderedContent?.Trim(), Is.EqualTo(test.Output));
+
+                Assert.That(compatibilityResult.renderedContent?.Trim().ReplaceLineEndings("\n"), Is.EqualTo(test.Output?.ReplaceLineEndings("\n")));
             }
 
             return result;
