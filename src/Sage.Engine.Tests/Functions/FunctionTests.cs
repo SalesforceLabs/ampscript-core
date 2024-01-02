@@ -7,9 +7,6 @@ namespace Sage.Engine.Tests.Functions
 {
     using NUnit.Framework;
 
-    /// <summary>
-    /// Validates the auto-generated comparision tests
-    /// </summary>
     public class FunctionTests : SageTest
     {
         [Test]
@@ -18,6 +15,29 @@ namespace Sage.Engine.Tests.Functions
         {
             var result = TestUtils.GetOutputFromTest(_serviceProvider, test);
             Assert.That(result.Output, Is.EqualTo(test.Output));
+            return result;
+        }
+
+        [Test]
+        [RuntimeTest("Function")]
+        [Category("Compatibility")]
+        public EngineTestResult TestFunctionsFromScriptCodeCompatibility(CorpusData test)
+        {
+            var result = TestUtils.GetOutputFromTest(_serviceProvider, test);
+            Assert.That(result.Output, Is.EqualTo(test.Output));
+
+            if (test.Output == "!")
+            {
+                Assert.Throws<AggregateException>(() =>
+                    TestCompatibility(test.Code, test.SubscriberContext?.GetAttributes()).Wait()
+                );
+            }
+            else
+            {
+                var compatibilityResult = TestCompatibility(test.Code, test.SubscriberContext?.GetAttributes()).Result;
+                Assert.That(compatibilityResult.renderedContent?.Trim(), Is.EqualTo(test.Output));
+            }
+
             return result;
         }
     }

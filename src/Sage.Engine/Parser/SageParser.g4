@@ -61,6 +61,7 @@ ampStatement
 ampOrEmbeddedContent
     : ampBlock
     | guideContent
+    | javascriptContent
     | inlineHtml+
     | inlineAmpBlock
     | attributeNameAtSea
@@ -148,6 +149,11 @@ attribute
 
 arguments
     : OpenParen ( expression (Comma expression)* )? CloseParen
+    ;
+
+// Javascript
+javascriptContent
+    : JavascriptText
     ;
 
 // Guide

@@ -117,7 +117,15 @@ namespace Sage.Engine.Runtime
         {
             SageVariable existingVariable = GetVariable(name);
 
-            existingVariable.Value = value;
+            // Assignment of variables copy the value
+            if (value is SageVariable inputVariable)
+            {
+                existingVariable.Value = inputVariable.Value;
+            }
+            else
+            {
+                existingVariable.Value = value;
+            }
         }
 
         /// <summary>

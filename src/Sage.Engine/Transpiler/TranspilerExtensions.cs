@@ -64,8 +64,7 @@ internal static class TranspilerExtensions
                 Literal(start.Line),
                 Literal(start.Column + 1)),
             LineDirectivePosition(
-                Literal(stop.Line),
-                // The stop column is the first character in the column - to get to the end it needs to add the length of the token
+                Literal(stop.Line), // The stop column is the first character in the column - to get to the end it needs to add the length of the token
                 Literal(stop.Column + stop.Text.Length + 1)),
             Literal(filename),
             true);

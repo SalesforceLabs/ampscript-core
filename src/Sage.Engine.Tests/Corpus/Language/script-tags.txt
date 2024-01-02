@@ -7,14 +7,3 @@ SET @foo = 1
 %%=V(@foo)=%%
 ++++++++++
 1
-===========
-Slot
-===========
-<script runat="server" language="javascript">
-SET @foo = 1
-</script>
-%%=V(@foo)=%%
-++++++++++
-<script runat="server" language="javascript">
-SET @foo = 1
-</script>

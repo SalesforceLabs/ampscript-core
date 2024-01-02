@@ -28,5 +28,27 @@ namespace Sage.Engine.Tests
                 return new EngineTestResult("!");
             }
         }
+
+        [Test]
+        [RuntimeTest("Language")]
+        [Category("Compatibility")]
+        public EngineTestResult TestLanguageCompatibility(CorpusData test)
+        {
+            try
+            {
+                var result = TestUtils.GetOutputFromTest(_serviceProvider, test);
+                Assert.That(result.Output, Is.EqualTo(test.Output));
+
+                var compatibilityResult = TestCompatibility(test.Code, test.SubscriberContext?.GetAttributes()).Result;
+
+                Assert.That(compatibilityResult.renderedContent?.Trim(), Is.EqualTo(test.Output));
+                return result;
+            }
+            catch (CompileCodeException e)
+            {
+                Assert.Fail(e.Message);
+                return new EngineTestResult("!");
+            }
+        }
     }
 }

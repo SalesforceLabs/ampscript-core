@@ -16,3 +16,23 @@ set @num1 = 1.7976931348623157E+308
 %%=v(@num1)=%%
 ++++++++++
 !
+===========
+Javascript Script Tags (Should throw invalid JavaScript)
+===========
+<script runat="server" language="javascript">
+SET @foo = 1
+</script>
+%%=V(@foo)=%%
+++++++++++
+<script runat="server" language="javascript">
+SET @foo = 1
+</script>
+==========
+DATEPARSE DateTime without UTC
+==========
+%%[
+set @result = DATEPARSE("2023-05-01 2:30PM-1:00", 0)
+]%%
+%%=v(@result)=%%
+++++++++++
+5/1/2023 11:30:00 AM

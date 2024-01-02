@@ -171,7 +171,7 @@ namespace Sage.Engine.Runtime
         public string TREATASCONTENT(object? content)
         {
             string contentString = content?.ToString() ?? string.Empty;
-            
+
             if (string.IsNullOrWhiteSpace(contentString))
             {
                 return contentString;

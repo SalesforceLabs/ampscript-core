@@ -51,7 +51,7 @@ namespace Sage.Engine.Runtime
                     return SageValue.ToString(SageValue.ToDateTime(subject.ToString(), this._currentCulture, DateTimeStyles.AssumeLocal), formatString, cultureInfo);
                 }
 
-                if (string.Compare("number", compareType, StringComparison.InvariantCultureIgnoreCase) == 0)
+                if (string.Compare("numeric", compareType, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     return SageValue.ToString(SageValue.ToDecimal(subject), formatString, cultureInfo);
                 }

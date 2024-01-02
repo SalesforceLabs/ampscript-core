@@ -43,6 +43,10 @@ internal class HtmlVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>>
             {
                 return Enumerable.Empty<StatementSyntax>();
             }
+            if (context.GetText().Contains("javascript", StringComparison.OrdinalIgnoreCase))
+            {
+                return Enumerable.Empty<StatementSyntax>();
+            }
         }
         StringBuilder builder = new StringBuilder();
 
