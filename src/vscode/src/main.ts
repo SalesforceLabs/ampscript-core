@@ -6,7 +6,7 @@ import TelemetryReporter from '@vscode/extension-telemetry';
 import registerCommands from './commands';
 
 // the application insights key (also known as instrumentation key)
-const applicationInsightsKey = '7c5f9888-65f0-4a81-90c9-b7cb17d1ce77';
+const applicationInsightsKey = 'd3cdabd2-8a47-44c7-92bd-7c786d2dd3bd';
 let reporter: TelemetryReporter;
 
 // This method is called when your extension is activated

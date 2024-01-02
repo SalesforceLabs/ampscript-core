@@ -1,3 +1,11 @@
+## 0.0.6
+Update to .net 8
+
+Added DATEPART function
+
+Fixed issue with TREATASCONTENT output directories not existing
+Fixed issue with how variables are assigned
+
 ## 0.0.5
 Initial public release of AMPscript Core and the AMPscript editor.
 
