@@ -31,7 +31,7 @@ namespace Sage.Engine.Tests.Compatibility
                 }
             });
 
-            Assert.NotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.renderedContent, Is.EqualTo("3"));
         }
     }

@@ -1,21 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
-    <Configurations>Debug;Release;CustomerTesting</Configurations>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Antlr4BuildTasks" Version="12.1.0" PrivateAssets="all" />
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.11.1" />
-    <PackageReference Include="Basic.Reference.Assemblies.Net70" Version="1.4.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+    <PackageReference Include="Antlr4BuildTasks" Version="12.7.0" PrivateAssets="all" />
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+    <PackageReference Include="Basic.Reference.Assemblies.Net80" Version="1.4.5" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>

@@ -32,7 +32,7 @@ namespace Sage.Engine.Tests
                 Assert.Fail(string.Join("\n", result.EmitResult.Diagnostics.Select(d => d.ToString())));
             }
 
-            Assert.IsNotNull(result.Assembly);
+            Assert.That(result.Assembly, Is.Not.Null);
 
             var context = new RuntimeContext(_serviceProvider, options);
             object[] variables = new object[] { context };

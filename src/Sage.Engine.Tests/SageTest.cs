@@ -23,7 +23,7 @@ namespace Sage.Engine.Tests
     [TestFixture]
     public class SageTest
     {
-        protected IServiceProvider _serviceProvider;
+        protected ServiceProvider _serviceProvider;
 
         [OneTimeSetUp]
         public void SetupSageTestContainer()
@@ -39,6 +39,12 @@ namespace Sage.Engine.Tests
             collection.AddMarketingCloudRenderingService();
 
             _serviceProvider = collection.BuildServiceProvider();
+        }
+
+        [OneTimeTearDown]
+        public void TearDownContainer()
+        {
+            _serviceProvider.Dispose();
         }
 
         protected CompilationOptions TestCompilationOptions()

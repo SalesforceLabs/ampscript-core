@@ -81,7 +81,7 @@ namespace Sage.Engine.Compiler
             Encoding encoding = Encoding.UTF8;
 
             // Basic.Reference.Assemblies.Net70.References.All
-            var metadataReference = Net70.References.All.ToList();
+            var metadataReference = Net80.References.All.ToList();
             metadataReference.Add(MetadataReference.CreateFromFile(typeof(RuntimeContext).Assembly.Location));
             metadataReference.Add(MetadataReference.CreateFromFile(typeof(IDataExtensionClient).Assembly.Location));
 
