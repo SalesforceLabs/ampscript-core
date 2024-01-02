@@ -3,7 +3,7 @@ FORLOOP
 ===========
 %%[
 	FOR @FOO = 1 TO 10 DO
-        OUTPUT(@FOO)
+        OUTPUT(V(@FOO))
 	NEXT @FOO
 ]%%
 ++++++++++
