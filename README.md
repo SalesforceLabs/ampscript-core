@@ -21,7 +21,7 @@ If it isn't already installed on your computer, install Visual Studion Code (VS 
 
 #### Download and Install the .NET SDK
 
-If it isn't already installed on your computer, install the .NET SDK version 7.0 or later. You can download the SDK from https://dotnet.microsoft.com/en-us/download/dotnet.
+If it isn't already installed on your computer, install the .NET SDK version 8.0. You can download the SDK from https://dotnet.microsoft.com/en-us/download/dotnet.
 
 #### Download the VSIX plugin
 
