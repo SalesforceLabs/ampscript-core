@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <MC_CLIENT_ID></MC_CLIENT_ID>
+      <MC_CLIENT_SECRET></MC_CLIENT_SECRET>
+      <MC_CLIENT_MID></MC_CLIENT_MID>
+      <MC_CLIENT_BASE_URI></MC_CLIENT_BASE_URI>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>

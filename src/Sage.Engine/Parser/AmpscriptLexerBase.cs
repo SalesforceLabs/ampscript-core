@@ -15,8 +15,9 @@ namespace Sage.Engine.Parser
     /// </summary>
     public abstract class AmpscriptLexerBase : Lexer
     {
-        protected string _htmlNameText;
+        protected string? _htmlNameText;
         protected bool _ampscriptScript;
+        protected bool _javascript;
 
         protected AmpscriptLexerBase(ICharStream input, TextWriter output, TextWriter errorOutput)
             : base(input, output, errorOutput)
@@ -42,6 +43,11 @@ namespace Sage.Engine.Parser
                 {
                     _ampscriptScript = true;
                 }
+                if (string.Equals(token.Text, "javascript", System.StringComparison.OrdinalIgnoreCase) &&
+                    string.Equals(_htmlNameText, "language"))
+                {
+                    _javascript = true;
+                }
             }
 
             return token;
@@ -60,6 +66,11 @@ namespace Sage.Engine.Parser
             {
                 PushMode(SageLexer.AMP);
                 _ampscriptScript = false;
+            }
+            if (_javascript)
+            {
+                PushMode(SageLexer.JAVASCRIPT);
+                _javascript = false;
             }
         }
     }

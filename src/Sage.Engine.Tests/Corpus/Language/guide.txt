@@ -1,13 +1,11 @@
 ﻿===========
-Slot
+Slot Empty
 ===========
 Hello
-{{.slot foo}}
-{{/slot}}
+{{.slot foo}}{{/slot}}
 World
 ++++++++++
 Hello
-
 
 World
 ===========

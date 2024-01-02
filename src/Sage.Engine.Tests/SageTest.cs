@@ -8,11 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MarketingCloudIntegration.Render;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sage.Engine.DependencyInjection;
 using Sage.Engine.Extensions;
+using Sage.Engine.Tests.Compatibility;
 using CompilationOptions = Sage.Engine.Compiler.CompilationOptions;
 
 namespace Sage.Engine.Tests
@@ -32,6 +35,8 @@ namespace Sage.Engine.Tests
                 sageOptions.WorkingPath = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
                 sageOptions.OutputRootPath = sageOptions.WorkingPath.AppendDirectory("SageOutput");
             }));
+
+            collection.AddMarketingCloudRenderingService();
 
             _serviceProvider = collection.BuildServiceProvider();
         }
@@ -60,6 +65,21 @@ namespace Sage.Engine.Tests
                 actual = actual.WithoutTrivia();
             }
             Assert.That(actual.NormalizeWhitespace(eol: "\n").ToFullString(), Is.EqualTo(expected.ReplaceLineEndings("\n")));
+        }
+
+        public async Task<RenderResponse> TestCompatibility(string input, Dictionary<string, string>? attributes = null)
+        {
+            var request = new RenderRequest()
+            {
+                attributes = attributes,
+                context = "Preview",
+                content = input,
+                recipient = new Recipient
+                {
+                    contactKey = "sample@example.com"
+                }
+            };
+            return await _serviceProvider.GetRequiredService<IRenderService>().Render("SMS", request);
         }
     }
 }

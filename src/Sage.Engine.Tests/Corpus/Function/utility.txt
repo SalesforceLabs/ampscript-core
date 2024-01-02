@@ -47,6 +47,6 @@ FORMAT Numbers
 %%[
 set @num = 12345
 ]%%
-%%=Format(@num,"C", "Number")=%%
+%%=Format(@num,"C", "Numeric")=%%
 ++++++++++
 $12,345.00

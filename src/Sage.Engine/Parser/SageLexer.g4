@@ -32,7 +32,6 @@ GuideCloseDataTagType:      '/data';
 GuideIdentifier:            [a-z0-9]*;
 GuideTagEnd:                '}}' -> popMode;
 
-
 mode AMP;
 
 MultiLineComment:           '/*' .*? '*/' -> channel(HIDDEN);
@@ -136,3 +135,8 @@ fragment NonZeroDigit:         [1-9];
 fragment Digit:                [0-9];
 fragment OctalDigit:           [0-7];
 fragment HexDigit:             [a-f0-9];
+
+
+mode JAVASCRIPT;
+JavascriptText:              ~[<]+;
+ScriptCloseJavascript:       '</script>' { _javascript = false; } -> popMode, channel(HIDDEN);

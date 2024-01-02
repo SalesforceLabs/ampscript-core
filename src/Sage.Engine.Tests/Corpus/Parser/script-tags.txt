@@ -74,9 +74,7 @@ Non Ampscript Tags
   (ContentBlockContext
     (AmpOrEmbeddedContentContext
       (InlineHtmlContext
-        (ScriptTagContext))
-      (InlineHtmlContext)
-      (InlineHtmlContext))))
+        (ScriptTagContext)))))
       
 ===========
 Javascript Code
@@ -89,8 +87,7 @@ This is some javascript
   (ContentBlockContext
     (AmpOrEmbeddedContentContext
       (InlineHtmlContext
-        (ScriptTagContext))
-      (InlineHtmlContext)
-      (InlineHtmlContext)
-      (InlineHtmlContext))))
+        (ScriptTagContext)))
+    (AmpOrEmbeddedContentContext
+      (JavascriptContentContext))))
       

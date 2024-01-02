@@ -86,4 +86,10 @@ internal class BlockVisitor : SageParserBaseVisitor<IEnumerable<StatementSyntax>
             _transpiler.Runtime.EmitToOutputStream(TranspilerExtensions.GetAttributeValue(attributeName))
         };
     }
+
+    public override IEnumerable<StatementSyntax> VisitJavascriptContent(SageParser.JavascriptContentContext context)
+    {
+        // TODO: Add to warning stream that Javascript is not supported yet.
+        return Enumerable.Empty<StatementSyntax>();
+    }
 }

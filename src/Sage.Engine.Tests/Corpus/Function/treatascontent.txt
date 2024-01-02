@@ -15,3 +15,21 @@ Empty TREATASCONTENT
 ==========
 %%=TREATASCONTENT("")=%%
 ++++++++++
+
+==========
+TREATASCONTENT SET
+==========
+%%[
+FOR @I = 1 TO 10 DO
+]%%
+  %%= TREATASCONTENT(CONCAT("%", "%", "[ SET @FOO_", @I," = ", @I," ]", "%", "%")) =%%
+%%[
+NEXT @I
+]%%
+%%=V(@FOO_1)=%%
+%%=V(@FOO_2)=%%
+%%=V(@FOO_3)=%%
+++++++++++
+1
+2
+3

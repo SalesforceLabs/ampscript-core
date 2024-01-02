@@ -128,15 +128,6 @@ set @result = DATEPARSE("2023-05-01 2:30PM-1:00", 1)
 ++++++++++
 5/1/2023 3:30:00 PM
 ==========
-DATEPARSE DateTime without UTC
-==========
-%%[
-set @result = DATEPARSE("2023-05-01 2:30PM-1:00", 0)
-]%%
-%%=v(@result)=%%
-++++++++++
-5/1/2023 11:30:00 AM
-==========
 DATEPART
 ==========
 %%[ SET @date = "Mon, 2 Oct 2023 12:01:02" ]%%

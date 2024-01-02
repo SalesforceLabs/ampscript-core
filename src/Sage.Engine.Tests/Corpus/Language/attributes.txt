@@ -33,7 +33,7 @@ Name does not exist
 ===========
 Hello %%Last Name%%
 ++++++++++
-Hello 
+Hello %%Last Name%%
 ===========
 Attributes case insensitive
 ===========
