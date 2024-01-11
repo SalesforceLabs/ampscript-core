@@ -39,7 +39,7 @@ jobs:
       working-directory: ./src
       run: dotnet build --configuration ${{ inputs.build_configuration }} --no-restore
     - name: Upload Sage Build
-      if: ${{ inputs.store_artifacts }}
+      if: ${{ inputs.store_artifacts && inputs.build_configuration == 'Release' }}
       uses: actions/upload-artifact@v3
       with:
         name: SageWebhost
