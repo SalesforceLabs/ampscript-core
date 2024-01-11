@@ -120,8 +120,8 @@ namespace Sage.Engine.Tests
 
                         testsFromFile.Add(new CorpusData(testName, code.ToString().Trim(), file, lineStart)
                         {
-                            Output = expectedOutput,
-                            ParseTree = parseTree.ToString().Trim()
+                            Output = expectedOutput.ReplaceLineEndings("\n"),
+                            ParseTree = parseTree.ToString().Trim().ReplaceLineEndings("\n")
                         });
 
                         parseTree = new StringBuilder();
@@ -182,8 +182,8 @@ namespace Sage.Engine.Tests
             expectedOutput = programOutput.ToString().Trim();
             testsFromFile.Add(new CorpusData(testName, code.ToString().Trim(), file, lineStart)
             {
-                Output = expectedOutput,
-                ParseTree = parseTree.ToString().Trim()
+                Output = expectedOutput.ReplaceLineEndings("\n"),
+                ParseTree = parseTree.ToString().Trim().ReplaceLineEndings("\n")
             });
 
             return testsFromFile;

@@ -35,7 +35,7 @@ namespace Sage.Engine.Tests.Functions
             else
             {
                 RenderResponse compatibilityResult = TestCompatibility(test.Code, test.SubscriberContext?.GetAttributes()).Result;
-                return new EngineTestResult(compatibilityResult.renderedContent?.Trim());
+                return new EngineTestResult(compatibilityResult.renderedContent?.Trim().ReplaceLineEndings("\n"));
             }
         }
     }

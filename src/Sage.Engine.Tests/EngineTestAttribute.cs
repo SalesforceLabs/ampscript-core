@@ -99,7 +99,7 @@ namespace Sage.Engine.Tests
 
         protected override object GetTestValidationData(CorpusData data)
         {
-            return new ParserTestResult(data.ParseTree);
+            return new ParserTestResult(data.ParseTree?.ReplaceLineEndings("\n") ?? string.Empty);
         }
     }
 
@@ -114,7 +114,7 @@ namespace Sage.Engine.Tests
 
         protected override object GetTestValidationData(CorpusData data)
         {
-            return new EngineTestResult(data.Output);
+            return new EngineTestResult(data.Output?.ReplaceLineEndings("\n") ?? string.Empty);
         }
     }
 }
