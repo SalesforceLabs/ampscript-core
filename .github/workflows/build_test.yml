@@ -32,19 +32,29 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+    - name: Setup NPM
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    - name: Restore NPM
+      run: npm install -g typescript vsce ovsx
     - name: Restore dependencies
       working-directory: ./src
       run: dotnet restore
     - name: Build
       working-directory: ./src
       run: dotnet build --configuration ${{ inputs.build_configuration }} --no-restore
-    - name: Upload Sage Build
-      if: ${{ inputs.store_artifacts && inputs.build_configuration == 'Release' }}
+    - name: Package VSCode Plugin
+      working-directory: ./src/vscode
+      run: vsce package
+    - name: Upload Sage VSCode Plugin
+      if: ${{ inputs.store_artifacts }}
       uses: actions/upload-artifact@v3
       with:
-        name: SageWebhost
-        path: ./src/Sage.Webhost/bin/${{ inputs.build_configuration }}/net8.0/
-        retention-days: 7
+        name: VSCode-Plugin
+        path: ./src/vscode/*.vsix
+        retention-days: 3
     - name: Test
       working-directory: ./src
       run: dotnet test --no-build --verbosity normal ${{ inputs.test_args }}
