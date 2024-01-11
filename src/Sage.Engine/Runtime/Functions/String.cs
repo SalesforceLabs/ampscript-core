@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -278,6 +279,35 @@ namespace Sage.Engine.Runtime
             string[] searchStrings = searches.Select(r => r?.ToString() ?? string.Empty).ToArray();
 
             return ReplaceWithCaseInsensitiveSearch(subjectString, replaceString, searchStrings);
+        }
+
+        /// <summary>
+        /// Creates a rowset from a character string by splitting the string at the specified delimiter.
+        /// </summary>
+        /// <param name="sourceData">A string that contains the data to load into a rowset.</param>
+        /// <param name="delimiter">The character (such as a comma) that is used as a delimiter in the source data.</param>
+        /// <remarks>The FIELD must always be accessed from the "1" index.</remarks>
+        /// <returns>A datatable representing the rowset to be used by ROWCOUNT, ROW and FIELD functions.</returns>
+        public DataTable BUILDROWSETFROMSTRING(object? sourceData, object? delimiter)
+        {
+            string sourceDataString = sourceData?.ToString() ?? string.Empty;
+            string delimiterString = delimiter?.ToString() ?? string.Empty;
+
+            var dataTable = new DataTable();
+            dataTable.Columns.Add(new DataColumn("Value", typeof(string)));
+
+            if (!string.IsNullOrEmpty(sourceDataString))
+            {
+                // Just split the string and add a row to the data table for each of the resulting strings
+                string[] split = sourceDataString.Split(delimiterString, StringSplitOptions.None);
+                foreach (string str in split)
+                {
+                    dataTable.Rows.Add(new object[] { str });
+                }
+                dataTable.AcceptChanges();
+            }
+
+            return dataTable;
         }
 
         /// <summary>

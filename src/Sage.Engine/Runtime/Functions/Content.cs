@@ -73,7 +73,7 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentAreaId);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync($"contentareaid__{id}",
+                CompileAndExecuteEmbeddedCode($"contentareaid__{id}",
                     () => GetClassicContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
@@ -94,7 +94,7 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentAreaName);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync($"contentareaname__{id}",
+                CompileAndExecuteEmbeddedCode($"contentareaname__{id}",
                     () => GetClassicContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
@@ -115,7 +115,7 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentBlockName);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync($"contentblockname__{id}",
+                CompileAndExecuteEmbeddedCode($"contentblockname__{id}",
                     () => GetContentBuilderContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
@@ -136,7 +136,7 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentBlockId);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync($"contentblockid__{id}",
+                CompileAndExecuteEmbeddedCode($"contentblockid__{id}",
                     () => GetContentBuilderContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
@@ -157,7 +157,7 @@ namespace Sage.Engine.Runtime
             string id = this.ThrowIfStringNullOrEmpty(contentBlockKey);
 
             string? executionResults =
-                CompileAndExecuteEmbeddedCodeAsync($"contentblockkey__{id}",
+                CompileAndExecuteEmbeddedCode($"contentblockkey__{id}",
                     () => GetContentBuilderContentClient().GetContentByCustomerKey(this.ThrowIfStringNullOrEmpty(id)));
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
@@ -177,7 +177,7 @@ namespace Sage.Engine.Runtime
                 return contentString;
             }
 
-            return CompileAndExecuteEmbeddedCodeAsync($"treatascontent__{_stackFrame.Peek().CurrentLineNumber}", contentString) ?? string.Empty;
+            return CompileAndExecuteEmbeddedCode($"treatascontent", contentString) ?? string.Empty;
         }
 
         /// <summary>

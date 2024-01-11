@@ -4,3 +4,42 @@ REDIRECTO
 %%=REDIRECTTO("http://example.com")=%%
 ++++++++++
 http://example.com
+==========
+URLENCODE("Hello World", false, false)
+==========
+%%=URLENCODE("Hello World")=%%
+++++++++++
+Hello World
+==========
+URLENCODE("Hello World", false, false)
+==========
+%%=URLENCODE("Hello World", 0, 1)=%%
+++++++++++
+Hello%20World
+==========
+URLENCODE Only Spaces As HTML
+==========
+%%=URLENCODE("http://example.com?query=Hello World,",false,false)=%%
+++++++++++
+http://example.com?query=Hello%20World,
+==========
+URLENCODE Spaces Plus And All Others
+==========
+%%=URLENCODE("http://example.com?query=Hello World,",true,false)=%%
+++++++++++
+http://example.com?query%3dHello+World%2c
+==========
+URLENCODE Unicode
+==========
+%%=URLEncode('Sample Text: サンプルテキスト', true, true)=%%
+++++++++++
+Sample+Text%3a+%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab%e3%83%86%e3%82%ad%e3%82%b9%e3%83%88
+==========
+URLENCODE AMPscript In URL
+==========
+%%[
+    SET @url = "http://example.com?add=%%=ADD(1,2)=%%"
+]%%
+%%=URLEncode(@url)=%%
+++++++++++
+http://example.com?add=3

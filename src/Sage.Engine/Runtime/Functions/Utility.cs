@@ -36,7 +36,7 @@ namespace Sage.Engine.Runtime
                 string? cultureString = culture.ToString();
                 if (cultureString != null)
                 {
-                    cultureInfo = new CultureInfo(cultureString);
+                    cultureInfo = CompatibleGlobalizationSettings.GetCulture(cultureString);
                 }
             }
 
@@ -62,6 +62,40 @@ namespace Sage.Engine.Runtime
             {
                 return subject.ToString() ?? string.Empty;
             }
+        }
+
+        /// <summary>
+        /// Formats a number as a numeric type, such as a decimal, date, or currency value.
+        /// 
+        /// You can also use this function to convert numbers stored in strings to a number data type, and to round numbers to a certain number of decimal places.
+        /// </summary>
+        /// <param name="number">The number that you want to format. This function assumes that the input number uses a period (.) as a decimal separator.</param>
+        /// <param name="formatType">
+        /// The number type to convert the number to. Accepted values:
+        /// 
+        /// C - Formats the number as a currency value.
+        /// D - Formats the number as a decimal number.
+        /// E - Formats the number using scientific notation.
+        /// F - Formats the number to a fixed number of decimal places (two decimal places by default).
+        /// G - Formats the number without thousands separators.
+        /// N - Formats the number with thousands separators.
+        /// P - Formats the number as a percentage.
+        /// R - Round-trip (format ensures value parsed to string can be parsed back to numeric value)
+        /// X - Formats the number as a hexadecimal value.
+        /// You can optionally follow this code with a number to indicate the precision of the number. For example, a currency value with two decimal places uses the parameter C2.
+        /// </param>
+        /// <param name="culutreCode">A POSIX locale code, such as en_US or zh-TW. When you provide this value, the resulting number is formatted using patterns that suit the specified locale.</param>
+        public string FORMATNUMBER(object? number, object? formatType, object? culutreCode = null)
+        {
+            if (SageValue.TryToDouble(number, out double numberDouble) == SageValue.UnboxResult.Fail)
+            {
+                return string.Empty;
+            }
+
+            string formatTypeString = this.ThrowIfStringNullOrEmpty(formatType);
+            CultureInfo cultureInfo = CompatibleGlobalizationSettings.GetCulture(culutreCode?.ToString() ?? "en_US");
+
+            return numberDouble.ToString(formatTypeString, cultureInfo);
         }
 
         /// <summary>
@@ -131,6 +165,17 @@ namespace Sage.Engine.Runtime
             string attributeNameString = this.ThrowIfStringNullOrEmpty(attributeName);
 
             return GetSubscriberContext().GetAttribute(attributeNameString);
+        }
+
+        /// <summary>
+        /// Returns a timestamp for the beginning or end of a list, data extension (DE), or manual send at the job or individual subscriber level.
+        ///
+        /// For now, this only returns NOW() since there is no send that's part of this context.
+        /// </summary>
+        /// <param name="useSendTimeStarted">Ignored</param>
+        public DateTimeOffset GETSENDTIME(object? useSendTimeStarted = null)
+        {
+            return NOW(useSendTimeStarted);
         }
     }
 }

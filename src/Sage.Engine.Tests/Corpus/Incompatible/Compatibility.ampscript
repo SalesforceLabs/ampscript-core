@@ -36,3 +36,24 @@ set @result = DATEPARSE("2023-05-01 2:30PM-1:00", 0)
 %%=v(@result)=%%
 ++++++++++
 5/1/2023 11:30:00 AM
+==========
+FORMATNUMBER Rounding
+==========
+%%[
+/*
+https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings
+
+Specifically:
+On .NET Framework and .NET Core up to .NET Core 2.0, the runtime selects the result with the greater least significant digit (that is, using MidpointRounding.AwayFromZero).
+On .NET Core 2.1 and later, the runtime selects the result with an even least significant digit (that is, using MidpointRounding.ToEven).
+
+The existing implementation is on .net framework, this is .net core 2.1.
+
+This means that rounding will be different for situations like below.
+
+The AMPscript implementation is 123.45, AMPscript Core is 123.44 due to this difference.
+*/
+]%%
+%%=FormatNumber(123.445,"N2")=%%
+++++
+123.44

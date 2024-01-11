@@ -19,11 +19,6 @@ namespace Sage.Engine.Runtime
         /// </param>
         public DateTimeOffset NOW(object? useSendTimeStarted = null)
         {
-            if (useSendTimeStarted != null)
-            {
-                throw new NotImplementedException("useSendTimeStarted is not implemented");
-            }
-
             // TODO: Use CST without daylight savings
             return DateTimeOffset.Now;
         }

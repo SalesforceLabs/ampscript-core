@@ -245,3 +245,46 @@ set @lowercase = "^[a-z]+$"
 abc
 
 ABC
+==========
+BUILDROWSETFROMSTRING
+==========
+%%[
+SET @STRING = "ONE|TWO|THREE|FOUR"
+SET @ROWS=BUILDROWSETFROMSTRING(@STRING, "|")
+SET @ROWCOUNT=ROWCOUNT(@ROWS)
+]%%
+%%=V(@ROWCOUNT)=%%
+%%=V(FIELD(ROW(@ROWS, 1), 1))=%%
+%%=V(FIELD(ROW(@ROWS, 2), 1))=%%
+%%=V(FIELD(ROW(@ROWS, 3), 1))=%%
+%%=V(FIELD(ROW(@ROWS, 4), 1))=%%
+++++++++++
+4
+ONE
+TWO
+THREE
+FOUR
+==========
+BUILDROWSETFROMSTRING bad row
+==========
+%%[
+SET @STRING = "ONE|TWO|THREE|FOUR"
+SET @ROWS=BUILDROWSETFROMSTRING(@STRING, "|")
+SET @ROWCOUNT=ROWCOUNT(@ROWS)
+]%%
+%%=V(@ROWCOUNT)=%%
+%%=V(FIELD(ROW(@ROWS, 5), 1))=%%
+++++++++++
+!
+==========
+BUILDROWSETFROMSTRING bad field
+==========
+%%[
+SET @STRING = "ONE|TWO|THREE|FOUR"
+SET @ROWS=BUILDROWSETFROMSTRING(@STRING, "|")
+SET @ROWCOUNT=ROWCOUNT(@ROWS)
+]%%
+%%=V(@ROWCOUNT)=%%
+%%=V(FIELD(ROW(@ROWS, 1), 2))=%%
+++++++++++
+!
