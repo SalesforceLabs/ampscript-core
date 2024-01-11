@@ -38,3 +38,8 @@ jobs:
       environment: "MC Integration"
       test_args: --filter TestCategory="Compatibility"
       build_configuration: ${{ needs.init.outputs.build_configuration }}
+    secrets:
+      MC_CLIENT_ID: ${{ secrets.MC_CLIENT_ID }}
+      MC_CLIENT_SECRET: ${{ secrets.MC_CLIENT_SECRET }}
+      MC_CLIENT_MID: ${{ secrets.MC_CLIENT_MID }}
+      MC_CLIENT_BASE_URI: ${{ secrets.MC_CLIENT_BASE_URI }}
