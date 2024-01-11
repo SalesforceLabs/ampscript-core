@@ -112,7 +112,7 @@ PASS
 ==========
 FORMATNUMBER Rounding
 ==========
-%%=FormatNumber(123.445,"N2")=%%
+%%=FormatNumber(123.4451,"N2")=%%
 ++++
 123.45
 ==========
@@ -130,7 +130,7 @@ FORMATNUMBER Normalizing Numbers
 ==========
 FORMATNUMBER Localizing Numbers 
 ==========
-%%=FormatNumber("123.445","C2","de_DE")=%%
+%%=FormatNumber("123.4451","C2","de_DE")=%%
 ++++
 123,45 €
 ==========
