@@ -21,6 +21,11 @@ on:
         description: Determines whether or not to upload artifacts
         type: boolean
         default: false
+    secrets:
+      MC_CLIENT_ID:
+      MC_CLIENT_SECRET: 
+      MC_CLIENT_MID:
+      MC_CLIENT_BASE_URI:
 
 jobs:
   build_test_archive:
@@ -57,5 +62,10 @@ jobs:
         path: ./src/vscode/*.vsix
         retention-days: 3
     - name: Test
-      working-directory: ./src
+      working-directory: ./src      
+      env:
+        MC_CLIENT_ID: ${{ secrets.MC_CLIENT_ID }}
+        MC_CLIENT_SECRET: ${{ secrets.MC_CLIENT_SECRET }}
+        MC_CLIENT_MID: ${{ secrets.MC_CLIENT_MID }}
+        MC_CLIENT_BASE_URI: ${{ secrets.MC_CLIENT_BASE_URI }}
       run: dotnet test --no-build --verbosity normal ${{ inputs.test_args }}
