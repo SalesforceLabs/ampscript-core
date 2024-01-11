@@ -203,12 +203,13 @@ namespace Sage.Engine.Runtime
             return _subscriberContext;
         }
 
-        internal string? CompileAndExecuteEmbeddedCodeAsync(string id, string code)
+        internal string? CompileAndExecuteEmbeddedCode(string id, string code)
         {
+            id = $"{_stackFrame.Peek().Name}__{id}__{_stackFrame.Peek().CurrentLineNumber}";
             CompilerOptionsBuilder fromCodeString =
                 new CompilerOptionsBuilder(_rootCompilationOptions).WithSourceCode(id, code);
 
-            return CompileAndExecuteEmbeddedCodeAsync(fromCodeString.Build(), code);
+            return CompileAndExecuteEmbeddedCode(fromCodeString.Build(), code);
         }
 
         /// <summary>
@@ -223,7 +224,7 @@ namespace Sage.Engine.Runtime
         /// of content retrieval.
         /// </param>
         /// <returns>The result of executing the code</returns>
-        internal string? CompileAndExecuteEmbeddedCodeAsync(string id, Func<FileInfo?> getCode)
+        internal string? CompileAndExecuteEmbeddedCode(string id, Func<FileInfo?> getCode)
         {
             FileInfo? code = getCode();
             if (code == null)
@@ -234,10 +235,10 @@ namespace Sage.Engine.Runtime
             CompilerOptionsBuilder fromFileOptions =
                 new CompilerOptionsBuilder(_rootCompilationOptions).WithInputFile(code);
 
-            return CompileAndExecuteEmbeddedCodeAsync(fromFileOptions.Build(), code);
+            return CompileAndExecuteEmbeddedCode(fromFileOptions.Build(), code);
         }
 
-        internal string? CompileAndExecuteEmbeddedCodeAsync(CompilationOptions currentOptions, object fileInfoOrString)
+        internal string? CompileAndExecuteEmbeddedCode(CompilationOptions currentOptions, object fileInfoOrString)
         {
             CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(currentOptions);
 

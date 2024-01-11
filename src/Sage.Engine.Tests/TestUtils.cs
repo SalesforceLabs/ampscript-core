@@ -22,7 +22,7 @@ public static class TestUtils
         ParserTestResult result;
 
         IParseTree parseTree = AntlrParser.Parse(test.Code, Console.Out, Console.Error);
-        string serializedTree = AntlrParser.SerializeTree(parseTree);
+        string serializedTree = AntlrParser.SerializeTree(parseTree).ReplaceLineEndings("\n");
         result = new ParserTestResult(serializedTree);
 
         File.WriteAllText(Path.Combine(TestContext.CurrentContext.WorkDirectory, $"{test.FileFriendlyName}_expected.txt"),
@@ -52,7 +52,7 @@ public static class TestUtils
 
         try
         {
-            var engineResult = new EngineTestResult(CSharpCompiler.CompileAndExecute(options, GetTestRuntimeContext(serviceProvider, options, test), out CompileResult compileResult).Trim());
+            var engineResult = new EngineTestResult(CSharpCompiler.CompileAndExecute(options, GetTestRuntimeContext(serviceProvider, options, test), out CompileResult compileResult).ReplaceLineEndings("\n").Trim());
 
             File.WriteAllText(Path.Combine(TestContext.CurrentContext.WorkDirectory, $"{test.FileFriendlyName}_transpiled.cs"), compileResult.TranspiledSource);
 

@@ -50,3 +50,98 @@ set @num = 12345
 %%=Format(@num,"C", "Numeric")=%%
 ++++++++++
 $12,345.00
+==========
+GETSENDTIME matches NOW
+==========
+%%[
+SET @NOW1 = FORMAT(NOW(), "YYYY-MM-dd hh:mm")
+SET @SENDTIME = FORMAT(GETSENDTIME(), "YYYY-MM-dd hh:mm")
+SET @NOW2 = FORMAT(NOW(), "YYYY-MM-dd hh:mm")
+
+/* 
+This tests the time twice (now1 and now2) because if the test runs during a minute boundary, now1 may be :59 and SENDTIME might be :00.
+By doing it before & after, it'll guarantee to catch a minute rollover.
+*/
+
+
+IF (@NOW1 == @SENDTIME) THEN
+]%%
+PASS
+%%[
+ELSEIF (@SENDTIME == @NOW2) THEN
+]%%
+PASS
+%%[
+ELSE
+]%%
+FAIL
+%%[
+ENDIF
+]%%
+++++++++++
+PASS
+==========
+GETSENDTIME(TRUE) matches NOW
+==========
+%%[
+SET @NOW1 = FORMAT(NOW(), "YYYY-MM-dd hh:mm")
+SET @SENDTIME = FORMAT(GETSENDTIME(TRUE), "YYYY-MM-dd hh:mm")
+SET @NOW2 = FORMAT(NOW(), "YYYY-MM-dd hh:mm")
+
+/* 
+This tests the time twice (now1 and now2) because if the test runs during a minute boundary, now1 may be :59 and SENDTIME might be :00.
+By doing it before & after, it'll guarantee to catch a minute rollover.
+*/
+
+IF (@NOW1 == @SENDTIME) THEN
+]%%
+PASS
+%%[
+ELSEIF (@SENDTIME == @NOW2) THEN
+]%%
+PASS
+%%[
+ELSE
+]%%
+FAIL
+%%[
+ENDIF
+]%%
+++++++++++
+PASS
+==========
+FORMATNUMBER Rounding
+==========
+%%=FormatNumber(123.4451,"N2")=%%
+++++
+123.45
+==========
+FORMATNUMBER Converting Strings to Numbers 
+==========
+%%=FormatNumber("1234.56", "N")=%%
+++++
+1,234.56
+==========
+FORMATNUMBER Normalizing Numbers 
+==========
+%%=FormatNumber("1,234.56","G","en_US")=%%
+++++
+1234.56
+==========
+FORMATNUMBER Localizing Numbers 
+==========
+%%=FormatNumber("123.4451","C2","de_DE")=%%
+++++
+123,45 €
+==========
+FORMATNUMBER Converting Numbers to Percentages
+==========
+%%[
+  Set @val1 = 42
+  Set @val2 = 326
+  Set @pct = Divide(@val1, @val2)
+]%%
+
+%%=FormatNumber(@pct, "P3")=%%
+++++
+12.883%

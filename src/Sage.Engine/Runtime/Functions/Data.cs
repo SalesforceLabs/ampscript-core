@@ -166,7 +166,7 @@ namespace Sage.Engine.Runtime
 
             if (SageValue.TryToInt(index, out int intResult) != SageValue.UnboxResult.Fail)
             {
-                if (intResult > dataRow.Table?.Columns?.Count)
+                if (intResult <= dataRow.Table?.Columns?.Count)
                 {
                     returnResult = dataRow[intResult - 1];
                 }
@@ -178,7 +178,7 @@ namespace Sage.Engine.Runtime
 
             if (returnResult == null && SageValue.ToBoolean(missingIsFailure))
             {
-                throw new RuntimeException("Invalid attribute name passed to the FIELD function.  No attribute exists.", this);
+                throw new RuntimeException($"Invalid attribute passed to the FIELD function.  No attribute exists at index {index}", this);
             }
 
             return returnResult ?? string.Empty;
