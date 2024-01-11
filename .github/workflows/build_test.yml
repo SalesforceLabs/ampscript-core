@@ -36,6 +36,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
+        cache-dependency-path: './src/vscode/package-lock.json'
         cache: 'npm'
     - name: Restore NPM
       run: npm install -g typescript vsce ovsx
