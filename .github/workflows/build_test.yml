@@ -33,13 +33,13 @@ jobs:
       run: dotnet restore
     - name: Build
       working-directory: ./src
-      run: dotnet build --configuration {{ inputs.build_configuration }} --no-restore
+      run: dotnet build --configuration ${{ inputs.build_configuration }} --no-restore
     - name: Upload Sage Build
       uses: actions/upload-artifact@v3
       with:
         name: SageWebhost
-        path: Sage.Webhost/bin/{{ inputs.build_configuration }}/net8.0/
+        path: Sage.Webhost/bin/${{ inputs.build_configuration }}/net8.0/
         retention-days: 7
     - name: Test
       working-directory: ./src
-      run: dotnet test --no-build --verbosity normal {{ inputs.test_args }}
+      run: dotnet test --no-build --verbosity normal ${{ inputs.test_args }}
