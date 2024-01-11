@@ -18,10 +18,10 @@ jobs:
       - name: Set release configuration for release branches
         id: set_buildconfig
         run: |
-          if [[ "${{github.base_ref}}" == "release" ]]; then
-            echo "::set-output name=build_configuration::release"
+          if [[ "${{ github.ref_name }}" == "release" ]]; then
+            echo "::set-output name=build_configuration::Release"
           else
-            echo "::set-output name=build_configuration::debug"
+            echo "::set-output name=build_configuration::Debug"
           fi
 
   build_test:
