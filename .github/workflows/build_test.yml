@@ -17,6 +17,10 @@ on:
         description: Whether to build debug or release configuration of the code
         type: string
         default: debug
+      store_artifacts:
+        description: Determines whether or not to upload artifacts
+        type: boolean
+        default: false
 
 jobs:
   build_test_archive:
@@ -35,10 +39,11 @@ jobs:
       working-directory: ./src
       run: dotnet build --configuration ${{ inputs.build_configuration }} --no-restore
     - name: Upload Sage Build
+      if: ${{ inputs.store_artifacts }}
       uses: actions/upload-artifact@v3
       with:
         name: SageWebhost
-        path: Sage.Webhost/bin/${{ inputs.build_configuration }}/net8.0/
+        path: ./src/Sage.Webhost/bin/${{ inputs.build_configuration }}/net8.0/
         retention-days: 7
     - name: Test
       working-directory: ./src

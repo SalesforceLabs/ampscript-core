@@ -30,6 +30,7 @@ jobs:
     with:
       test_args: --filter TestCategory!="Compatibility"
       build_configuration: ${{ needs.init.outputs.build_configuration }}
+      store_artifacts: true
   build_test_backward_compatibility:
     uses: ./.github/workflows/build_test.yml
     needs: init
