@@ -16,7 +16,7 @@
     <Touch Files="node_modules/.install-stamp" AlwaysCreate="true" />
   </Target>
   
-  <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall" BeforeTargets="BeforeBuild">
+  <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall" AfterTargets="AfterBuild">
     <ItemGroup>
       <SageOutput Include="..\Sage.Webhost\$(OutputPath)\**\*.*" />
     </ItemGroup>

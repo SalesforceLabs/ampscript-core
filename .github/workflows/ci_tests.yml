@@ -5,26 +5,36 @@ name: CI Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "release", "ci-dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "release", "ci-dev" ]
 
 jobs:
-  build:
+  init:
     runs-on: ubuntu-latest
-
+    outputs:
+      build_configuration: ${{ steps.set_buildconfig.outputs.build_configuration }}
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      working-directory: ./src
-      run: dotnet restore
-    - name: Build
-      working-directory: ./src
-      run: dotnet build --no-restore
-    - name: Test
-      working-directory: ./src
-      run: dotnet test --no-build --verbosity normal --filter TestCategory!="Compatibility"
+      - name: Set release configuration for release branches
+        id: set_buildconfig
+        run: |
+          if [[ "${{ github.ref_name }}" == "release" ]]; then
+            echo "::set-output name=build_configuration::Release"
+          else
+            echo "::set-output name=build_configuration::Debug"
+          fi
+
+  build_test:
+    uses: ./.github/workflows/build_test.yml
+    needs: init
+    with:
+      test_args: --filter TestCategory!="Compatibility"
+      build_configuration: ${{ needs.init.outputs.build_configuration }}
+      store_artifacts: true
+  build_test_backward_compatibility:
+    uses: ./.github/workflows/build_test.yml
+    needs: init
+    with:
+      environment: "MC Integration"
+      test_args: --filter TestCategory="Compatibility"
+      build_configuration: ${{ needs.init.outputs.build_configuration }}
