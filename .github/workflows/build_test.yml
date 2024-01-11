@@ -1,0 +1,45 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build And Test
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: Environment to run tests against
+        type: string
+        default: CI
+      test_args:
+        description: Additional arguments to dotnet test
+        type: string
+      build_configuration:
+        description: Whether to build debug or release configuration of the code
+        type: string
+        default: debug
+
+jobs:
+  build_test_archive:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      working-directory: ./src
+      run: dotnet restore
+    - name: Build
+      working-directory: ./src
+      run: dotnet build --configuration {{ inputs.build_configuration }} --no-restore
+    - name: Upload Sage Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: SageWebhost
+        path: Sage.Webhost/bin/{{ inputs.build_configuration }}/net8.0/
+        retention-days: 7
+    - name: Test
+      working-directory: ./src
+      run: dotnet test --no-build --verbosity normal {{ inputs.test_args }}
