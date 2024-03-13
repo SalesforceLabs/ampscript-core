@@ -3,14 +3,14 @@ import * as vscode from 'vscode';
 
 export function extensionsChecks() {
 	const extensionHandlers = {
+		// "publisher.extensionName":
 		"sergey-agadzhanov.AMPscript": {
+			// handler returns false if the extension is incompatible, true otherwise.
+			// handler can also run additional actions in the case there's a need.
 			handler: () => {
-				vscode.window.showInformationMessage(`MCFS [AMPScript] extension is currently not supported by AMPscript Core.`);
+				vscode.window.showInformationMessage(`The extension MCFS [AMPScript] is incompatible with AMPscript Core and will prevent AMPscript Core from debugging AMPscript.`);
 				return false;
 			}
-		},
-		"FiB.beautyAmp": {
-			handler: () => true
 		}
 	};
 
