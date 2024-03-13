@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import TelemetryReporter from '@vscode/extension-telemetry';
 import registerCommands from './commands';
+import { extensionsChecks } from './checks';
 
 // the application insights key (also known as instrumentation key)
 const applicationInsightsKey = 'd3cdabd2-8a47-44c7-92bd-7c786d2dd3bd';
@@ -21,6 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('ampscript', provider));
     context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('JSON', provider));
     context.subscriptions.push(reporter);
+    console.log(`Extension starting`);
+    extensionsChecks();
 }
 
 // This method is called when your extension is deactivated
