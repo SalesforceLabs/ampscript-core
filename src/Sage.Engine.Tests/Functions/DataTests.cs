@@ -10,7 +10,14 @@ namespace Sage.Engine.Tests.Functions
         [Test]
         public void Lookup()
         {
-            var emailAddress = this._runtimeContext.LOOKUP("Loyalty","EmailAddress","SubscriberKey", "1");
+            var emailAddress = this._runtimeContext.LOOKUP("Loyalty", "EmailAddress", "SubscriberKey", "1");
+            Assert.That(emailAddress, Is.EqualTo("donnie@northerntrailoutfitters.com"));
+        }
+
+        [Test]
+        public void LookupWithSpaceHeader()
+        {
+            var emailAddress = this._runtimeContext.LOOKUP("Loyalty", "EmailAddress", "First Name", "donnie");
             Assert.That(emailAddress, Is.EqualTo("donnie@northerntrailoutfitters.com"));
         }
     }

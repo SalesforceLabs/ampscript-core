@@ -46,7 +46,7 @@ namespace Sage.Engine.Data.Sqlite
         public ParameterizedQueryItem(string parameterName, string data, bool caseSensitive)
         {
             QuotedIdentifier = QuotedIdentifier.Create(parameterName);
-            ParameterizedName = $"${QuotedIdentifier.Unquote()}";
+            ParameterizedName = $"${QuotedIdentifier.Unquote().Replace(' ', '_')}";
             CaseSensitive = caseSensitive;
             Data = data;
         }
