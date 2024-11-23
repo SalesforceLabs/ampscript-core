@@ -25,10 +25,6 @@ namespace Sage.Engine.Compiler
     {
         public static string CompileAndExecute(CompilationOptions options, RuntimeContext context, out CompileResult result)
         {
-            if (string.IsNullOrEmpty(options.SourceCode))
-            {
-                options.SourceCode = File.ReadAllText(options.InputFile.FullName);
-            }
             result = GenerateAssemblyFromSource(options);
 
             result.Execute(context);
@@ -46,12 +42,9 @@ namespace Sage.Engine.Compiler
         /// </summary>
         public static CompileResult GenerateAssemblyFromSource(CompilationOptions options)
         {
-            if (options.SourceCode == null)
-            {
-                throw new ArgumentNullException(nameof(options.SourceCode));
-            }
+            string code = options.Content.GetTextReader().ReadToEnd();
 
-            CSharpTranspiler transpiler = CSharpTranspiler.CreateFromSource(options.InputFile.FullName, options.GeneratedMethodName, options.SourceCode);
+            CSharpTranspiler transpiler = CSharpTranspiler.CreateFromSource(options.Content.Location, options.GeneratedMethodName, code);
 
             CompilationUnitSyntax compilationUnit = transpiler.GenerateCode();
 
@@ -63,7 +56,7 @@ namespace Sage.Engine.Compiler
             (EmitResult emitResult, Assembly? assembly, AssemblyLoadContext? assemblyContext) = GenerateAssembly(options, compilation, sourceText);
 
             return new CompileResult(
-                options.InputFile.FullName,
+                options.Content.Location,
                 options.GeneratedMethodName,
                 compilationUnit,
                 compilation,
@@ -106,7 +99,7 @@ namespace Sage.Engine.Compiler
 
             SyntaxTree encoded = CSharpSyntaxTree.Create(
                 syntaxRootNode,
-                path: $"{options.InputName}.generated.cs",
+                path: $"{options.Content.Name}.generated.cs",
                 encoding: encoding);
 
             var compilation = CSharpCompilation.Create(
@@ -130,7 +123,7 @@ namespace Sage.Engine.Compiler
 
             var embeddedTexts = new List<EmbeddedText>
             {
-                EmbeddedText.FromSource($"{options.InputName}.generated.cs", sourceText)
+                EmbeddedText.FromSource($"{options.Content.Name}.generated.cs", sourceText)
             };
 
             EmitResult emitResult = compilation.Emit(
@@ -144,7 +137,7 @@ namespace Sage.Engine.Compiler
 
             if (emitResult.Success)
             {
-                var context = new AssemblyLoadContext(options.InputName, true);
+                var context = new AssemblyLoadContext(options.Content.Location, true);
 
                 Assembly assembly = context.LoadFromStream(options.AssemblyStream, options.SymbolStream);
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, salesforce.com, inc.
+﻿// Copyright (c) 2022, salesforce.com, inc.
 // All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
@@ -36,7 +36,7 @@ namespace Sage.Engine
             subscriberExceptionContext["Message"] = generateCodeException.Message;
             subscriberExceptionContext["Stack"] = new JsonArray();
 
-            options.InputFile = _pathToExceptionHtml;
+            options.Content = new LocalFileContent(_pathToExceptionHtml.FullName, 1);
 
             return _renderer.Render(
                 options,
@@ -63,7 +63,7 @@ namespace Sage.Engine
                 jsonFrame["Name"] = frame.Name;
                 jsonFrame["CurrentLineNumber"] = frame.CurrentLineNumber;
                 jsonFrame["Code"] = GetLinesFromCode(frame.CurrentLineNumber,
-                    frame.CodeFromFile ?? throw new FileNotFoundException());
+                    frame.Content ?? throw new FileNotFoundException());
                 callstack.Add(jsonFrame);
             }
 
@@ -71,7 +71,7 @@ namespace Sage.Engine
             subscriberExceptionContext["ExceptionType"] = runtimeException.GetType().Name;
             subscriberExceptionContext["Message"] = runtimeException.Message;
 
-            options.InputFile = _pathToExceptionHtml;
+            options.Content = new LocalFileContent(_pathToExceptionHtml.FullName, 1);
             return _renderer.Render(
                 options,
                 new SubscriberContext(subscriberExceptionContext.ToJsonString()));
@@ -80,9 +80,9 @@ namespace Sage.Engine
         /// <summary>
         /// Gets lines of code near the given line number
         /// </summary>
-        private string GetLinesFromCode(int lineNumber, FileInfo code)
+        private string GetLinesFromCode(int lineNumber, IContent code)
         {
-            string[] lines = File.ReadAllLines(code.FullName);
+            string[] lines = File.ReadAllLines(code.Location);
 
             int start = Math.Max(lineNumber - 3, 0);
             int end = Math.Min(lineNumber + 3, lines.Length);

@@ -20,8 +20,11 @@ namespace Sage.Engine.Transpiler;
 internal class CSharpTranspiler
 {
     /// <summary>
-    /// This is the full path to the input file
+    /// This is the full path to the input file.
     /// </summary>
+    /// <remarks>
+    /// This is used to refer back to the source file for debugging purposes in the #line directive.
+    /// </remarks>
     internal string SourceFileName
     {
         get;
@@ -184,10 +187,16 @@ internal class CSharpTranspiler
     internal MethodDeclarationSyntax GenerateMethodFromCode(string methodName)
     {
         var statements = new List<StatementSyntax>();
-        statements.AddRange(this.BlockVisitor.Visit(this._parser.contentBlock()));
+
+        var results = this.BlockVisitor.Visit(this._parser.contentBlock());
+
+        if (results != null)
+        {
+            statements.AddRange(results);
+        }
 
         // public static string Method(RuntimeContext __runtime)
-        return MethodDeclaration(
+            return MethodDeclaration(
                 PredefinedType(
                     Token(SyntaxKind.VoidKeyword)),
                 Identifier(methodName))

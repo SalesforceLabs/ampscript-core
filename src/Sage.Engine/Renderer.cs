@@ -14,11 +14,14 @@ namespace Sage.Engine
     public class Renderer
     {
         private readonly IServiceProvider _services;
+        private readonly IEnumerable<ICompiler> _compilers;
 
         public Renderer(
-            IServiceProvider services)
+            IServiceProvider services,
+            IEnumerable<ICompiler> compilers)
         {
             _services = services;
+            _compilers = compilers;
         }
 
         public string Render(
@@ -27,7 +30,15 @@ namespace Sage.Engine
         {
             var runtimeContext = new RuntimeContext(_services, compOptions, context);
 
-            return CSharpCompiler.CompileAndExecute(compOptions, runtimeContext, out var _);
+            foreach (var compiler in _compilers)
+            {
+                if (compiler.CanCompile(compOptions.Content))
+                {
+                    return compiler.Compile(compOptions, runtimeContext, context);
+                }
+            }
+
+            throw new InternalEngineException("Failed to compile any content");
         }
     }
 }

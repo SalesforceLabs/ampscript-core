@@ -5,6 +5,7 @@
 
 using System.Diagnostics;
 using System.Text;
+using Sage.Engine.Compiler;
 
 namespace Sage.Engine.Runtime
 {
@@ -31,10 +32,7 @@ namespace Sage.Engine.Runtime
             get;
         }
 
-        /// <summary>
-        /// The location where the code exists on disk. May be null for rendering without a file on disk.
-        /// </summary>
-        public FileInfo? CodeFromFile
+        public IContent Content
         {
             get;
         }
@@ -56,11 +54,11 @@ namespace Sage.Engine.Runtime
             set;
         }
 
-        public StackFrame(string name, FileInfo? codeFromFile)
+        public StackFrame(string name, IContent content)
         {
             OutputStream = new StringBuilder();
             Name = name;
-            CodeFromFile = codeFromFile;
+            Content = content;
         }
 
         public StackFrame(string name, string generatedCode)
@@ -70,18 +68,18 @@ namespace Sage.Engine.Runtime
             GeneratedCode = generatedCode;
         }
 
-        private StackFrame(string name, int lineNumber, FileInfo? codeFromFile, string? generatedCode, StringBuilder outputStream)
+        private StackFrame(string name, int lineNumber, IContent content, string? generatedCode, StringBuilder outputStream)
         {
             Name = name;
             CurrentLineNumber = lineNumber;
-            CodeFromFile = codeFromFile;
+            Content = content;
             GeneratedCode = generatedCode;
             OutputStream = new StringBuilder(outputStream.ToString());
         }
 
         public object Clone()
         {
-            return new StackFrame(Name, CurrentLineNumber, CodeFromFile, GeneratedCode, OutputStream);
+            return new StackFrame(Name, CurrentLineNumber, Content, GeneratedCode, OutputStream);
         }
     }
 }

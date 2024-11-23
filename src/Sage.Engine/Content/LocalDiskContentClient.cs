@@ -29,7 +29,7 @@ namespace Sage.Engine.Content
         /// <summary>
         /// Returns content from a file with the specified name
         /// </summary>
-        public FileInfo? GetContentByName(string name)
+        public IContent? GetContentByName(string name)
         {
             return GetContentFromPath(name);
         }
@@ -37,7 +37,7 @@ namespace Sage.Engine.Content
         /// <summary>
         /// Returns content from a file with the specified name
         /// </summary>
-        public FileInfo? GetContentById(string id)
+        public IContent? GetContentById(string id)
         {
             return GetContentFromPath(id);
         }
@@ -45,7 +45,7 @@ namespace Sage.Engine.Content
         /// <summary>
         /// Returns content from a file with the specified name
         /// </summary>
-        public FileInfo? GetContentByCustomerKey(string customerKey)
+        public IContent? GetContentByCustomerKey(string customerKey)
         {
             return GetContentFromPath(customerKey);
         }
@@ -53,16 +53,15 @@ namespace Sage.Engine.Content
         /// <summary>
         /// Returns content from a file with the specified name in the directory provided at the construction of this object.
         /// </summary>,
-        private FileInfo? GetContentFromPath(string path)
+        private IContent? GetContentFromPath(string id)
         {
-            string finalPath = Path.Combine(_options.InputDirectory.FullName, $"{path}.ampscript");
-
-            if (!File.Exists(finalPath))
+            string filePath = Path.Combine(_options.InputDirectory.FullName, $"{id}.ampscript");
+            if (File.Exists(filePath))
             {
-                return null;
+                return new LocalFileContent(id, filePath, 1, ContentType.AMPscript);
             }
 
-            return new FileInfo(finalPath);
+            return null;
         }
     }
 }

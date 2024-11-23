@@ -50,14 +50,8 @@ namespace Sage.Engine.Runtime
             _dataExtensionClient = provider.GetRequiredService<IDataExtensionClient>();
             _dataExtensionClient.ConnectAsync().Wait();
 
-            if (_rootCompilationOptions.InputFile.Directory == null)
-            {
-                throw new InternalEngineException(
-                    $"Directory for the input file ({_rootCompilationOptions.InputFile.FullName}) is unexpectedly not available");
-            }
-
             string subscriberContextFile =
-                Path.Combine(_rootCompilationOptions.InputFile.Directory.FullName, "subscriber.json");
+                Path.Combine(Path.GetDirectoryName(_rootCompilationOptions.Content.Location), "subscriber.json");
             if (subscriberContext != null)
             {
                 _subscriberContext = subscriberContext;
@@ -71,8 +65,7 @@ namespace Sage.Engine.Runtime
                 _subscriberContext = new SubscriberContext(null);
             }
 
-            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName,
-                _rootCompilationOptions.InputFile));
+            _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName, _rootCompilationOptions.Content));
         }
 
         public void Dispose()
@@ -158,9 +151,9 @@ namespace Sage.Engine.Runtime
         /// </summary>
         /// <param name="name">The name of the content</param>
         /// <param name="code">The file where the content exists</param>
-        public void PushContext(string name, FileInfo code)
+        public void PushContext(string name, IContent content)
         {
-            _stackFrame.Push(new StackFrame(name, code));
+            _stackFrame.Push(new StackFrame(name, content));
         }
 
         /// <summary>
@@ -205,11 +198,13 @@ namespace Sage.Engine.Runtime
 
         internal string? CompileAndExecuteEmbeddedCode(string id, string code)
         {
-            id = $"{_stackFrame.Peek().Name}__{id}__{_stackFrame.Peek().CurrentLineNumber}";
-            CompilerOptionsBuilder fromCodeString =
-                new CompilerOptionsBuilder(_rootCompilationOptions).WithSourceCode(id, code);
+            var content =
+                new EmbeddedContent(
+                    code,
+                    id,
+                    $"{_stackFrame.Peek().Name}__{id}__{_stackFrame.Peek().CurrentLineNumber}", 1, ContentType.AMPscript);
 
-            return CompileAndExecuteEmbeddedCode(fromCodeString.Build(), code);
+            return CompileAndExecuteReferencedCode(content);
         }
 
         /// <summary>
@@ -224,34 +219,21 @@ namespace Sage.Engine.Runtime
         /// of content retrieval.
         /// </param>
         /// <returns>The result of executing the code</returns>
-        internal string? CompileAndExecuteEmbeddedCode(string id, Func<FileInfo?> getCode)
+        internal string? CompileAndExecuteReferencedCode(IContent content)
         {
-            FileInfo? code = getCode();
-            if (code == null)
-            {
-                return null;
-            }
-
             CompilerOptionsBuilder fromFileOptions =
-                new CompilerOptionsBuilder(_rootCompilationOptions).WithInputFile(code);
+                new CompilerOptionsBuilder(_rootCompilationOptions).WithContent(content);
 
-            return CompileAndExecuteEmbeddedCode(fromFileOptions.Build(), code);
+            return CompileAndExecuteReferencedCode(fromFileOptions.Build());
         }
 
-        internal string? CompileAndExecuteEmbeddedCode(CompilationOptions currentOptions, object fileInfoOrString)
+        internal string? CompileAndExecuteReferencedCode(CompilationOptions currentOptions)
         {
             CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(currentOptions);
 
             string poppedContext;
 
-            if (fileInfoOrString is FileInfo contextFile)
-            {
-                PushContext(currentOptions.GeneratedMethodName, contextFile);
-            }
-            else
-            {
-                PushContext(currentOptions.GeneratedMethodName, fileInfoOrString.ToString() ?? string.Empty);
-            }
+            PushContext(currentOptions.GeneratedMethodName, currentOptions.Content);
 
             try
             {

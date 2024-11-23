@@ -40,5 +40,13 @@ namespace Sage.Engine.Compiler
                 services.Configure(options);
             }
         }
+
+        /// <summary>
+        /// Infers the type of content based on the path of the file.
+        /// </summary>
+        public static ContentType InferContentTypeFromFilename(string path)
+        {
+            return ContentType.AMPscript;
+        }
     }
 }
