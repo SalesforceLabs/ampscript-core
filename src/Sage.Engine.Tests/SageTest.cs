@@ -13,6 +13,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sage.Engine.Compiler;
 using Sage.Engine.DependencyInjection;
 using Sage.Engine.Extensions;
 using Sage.Engine.Tests.Compatibility;
@@ -51,8 +52,7 @@ namespace Sage.Engine.Tests
         {
             return new CompilationOptions()
             {
-                InputFile = new FileInfo("TEST.ampscript"),
-                InputName = "TEST",
+                Content = new EmbeddedContent("TEST", "TEST", "TEST.ampscript", 1, ContentType.AMPscript),
                 SymbolStream = new MemoryStream(),
                 AssemblyStream = new MemoryStream(),
                 OptimizationLevel = OptimizationLevel.Debug,

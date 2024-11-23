@@ -30,47 +30,16 @@ namespace Sage.Engine.Compiler
         }
 
         /// <summary>
-        /// Name of the input, usually the file name of the file
-        /// </summary>
-        public string? InputName { get; private set; }
-
-        /// <summary>
         /// Path to the input ampscript file. Can be relative to the current working directory or absolute.
         /// </summary>
-        public FileInfo? InputFile { get; private set; }
-
-        /// <summary>
-        /// The AMPscript source code
-        /// </summary>
-        public string? SourceCode { get; private set; }
+        public IContent Content { get; private set; }
 
         /// <summary>
         /// Use the provided source file to compile code. This is not compatible with WithSourceCode.
         /// </summary>
-        public CompilerOptionsBuilder WithInputFile(FileInfo inputFile)
+        public CompilerOptionsBuilder WithContent(IContent content)
         {
-            this.InputFile = inputFile;
-            this.SourceCode = File.ReadAllText(inputFile.FullName);
-            this.InputName = inputFile.Name;
-
-            return this;
-        }
-
-        /// <summary>
-        /// This is dynamically generated code to compile that did not come from a file on disk.
-        /// </summary>
-        public CompilerOptionsBuilder WithSourceCode(string name, string sourceCode)
-        {
-            this.InputName = name;
-
-            if (!this.OutputDirectory.Exists)
-            {
-                this.OutputDirectory.Create();
-            }
-
-            this.InputFile = new FileInfo(Path.Combine(this.OutputDirectory.FullName, name + ".generated.ampscript"));
-            File.WriteAllText(InputFile.FullName, this.SourceCode);
-            this.SourceCode = sourceCode;
+            Content = content;
 
             return this;
         }
@@ -157,18 +126,16 @@ namespace Sage.Engine.Compiler
         /// </summary>
         public CompilationOptions Build()
         {
-            if (this.InputName == null || this.InputFile == null || this.SourceCode == null)
+            if (this.Content == null)
             {
-                throw new InvalidOperationException("No input has been specified");
+                throw new InvalidOperationException("No content has been specified");
             }
 
-            string generatedMethodName = BuildMethodFromFilename(this.InputName);
+            string generatedMethodName = BuildMethodFromFilename(Content.Name);
 
             return new CompilationOptions()
             {
-                InputName = this.InputName,
-                InputFile = this.InputFile,
-                SourceCode = this.SourceCode,
+                Content = Content,
                 GeneratedMethodName = generatedMethodName.ToString(),
                 OptimizationLevel = this.OptimizationLevel,
                 OutputDirectory = this.OutputDirectory,

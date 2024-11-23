@@ -1,8 +1,9 @@
-// Copyright (c) 2022, salesforce.com, inc.
+﻿// Copyright (c) 2022, salesforce.com, inc.
 // All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
+using Microsoft.Extensions.DependencyInjection;
 using Sage.Engine.Runtime;
 
 namespace Sage.Engine.Tests
@@ -22,7 +23,7 @@ namespace Sage.Engine.Tests
             string pathToTest = Path.Combine(TestContext.CurrentContext.TestDirectory, "Corpus", "Compiler", sourceFile);
 
             Compiler.CompilationOptions options = new CompilerOptionsBuilder()
-                .WithInputFile(new FileInfo(pathToTest))
+                .WithContent(new LocalFileContent(pathToTest, 1))
                 .Build();
 
             CompileResult result = CSharpCompiler.GenerateAssemblyFromSource(options);
@@ -41,6 +42,19 @@ namespace Sage.Engine.Tests
                 ?.GetMethod(options.GeneratedMethodName)
                 ?.Invoke(null, variables);
             Assert.That(context.PopContext(), Is.EqualTo("Hello  World"));
+        }
+
+        [Test]
+        [TestCase("%%=ADD(1,2)=%%", ContentType.AMPscript, "3")]
+        public void TestRenderer(string input, ContentType type, string expected)
+        {
+            var content = new EmbeddedContent(input, "TEST", "TEST", 1, type);
+            CompilationOptions options = new CompilerOptionsBuilder()
+                .WithContent(content)
+                .Build();
+            var result = _serviceProvider.GetRequiredService<Renderer>().Render(options);
+
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

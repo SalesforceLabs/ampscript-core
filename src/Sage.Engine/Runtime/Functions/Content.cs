@@ -4,6 +4,7 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using System.Runtime.CompilerServices;
+using Sage.Engine.Compiler;
 
 // Ignore the following in this file - mostly due to enabling this codebase to adhere to these rules but AMPscript code may not.
 // ReSharper disable CheckNamespace
@@ -72,9 +73,13 @@ namespace Sage.Engine.Runtime
         {
             string id = this.ThrowIfStringNullOrEmpty(contentAreaId);
 
-            string? executionResults =
-                CompileAndExecuteEmbeddedCode($"contentareaid__{id}",
-                    () => GetClassicContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id)));
+            IContent? content = GetClassicContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id));
+            if (content == null)
+            {
+                throw new RuntimeException($"Failed to find content {id}", this);
+            }
+
+            string? executionResults = CompileAndExecuteReferencedCode(content);
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -93,9 +98,13 @@ namespace Sage.Engine.Runtime
         {
             string id = this.ThrowIfStringNullOrEmpty(contentAreaName);
 
-            string? executionResults =
-                CompileAndExecuteEmbeddedCode($"contentareaname__{id}",
-                    () => GetClassicContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id)));
+            IContent? content = GetClassicContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id));
+            if (content == null)
+            {
+                throw new RuntimeException($"Failed to find content {id}", this);
+            }
+
+            string? executionResults = CompileAndExecuteReferencedCode(content);
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -114,9 +123,13 @@ namespace Sage.Engine.Runtime
         {
             string id = this.ThrowIfStringNullOrEmpty(contentBlockName);
 
-            string? executionResults =
-                CompileAndExecuteEmbeddedCode($"contentblockname__{id}",
-                    () => GetContentBuilderContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id)));
+            IContent? content = GetContentBuilderContentClient().GetContentByName(this.ThrowIfStringNullOrEmpty(id));
+
+            string? executionResults = null;
+            if (content != null)
+            {
+                executionResults = CompileAndExecuteReferencedCode(content);
+            }
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -135,9 +148,13 @@ namespace Sage.Engine.Runtime
         {
             string id = this.ThrowIfStringNullOrEmpty(contentBlockId);
 
-            string? executionResults =
-                CompileAndExecuteEmbeddedCode($"contentblockid__{id}",
-                    () => GetContentBuilderContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id)));
+            IContent? content = GetContentBuilderContentClient().GetContentById(this.ThrowIfStringNullOrEmpty(id));
+            string? executionResults = null;
+            if (content != null)
+            {
+                executionResults = CompileAndExecuteReferencedCode(content);
+            }
+
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -156,9 +173,14 @@ namespace Sage.Engine.Runtime
         {
             string id = this.ThrowIfStringNullOrEmpty(contentBlockKey);
 
-            string? executionResults =
-                CompileAndExecuteEmbeddedCode($"contentblockkey__{id}",
-                    () => GetContentBuilderContentClient().GetContentByCustomerKey(this.ThrowIfStringNullOrEmpty(id)));
+            IContent? content = GetContentBuilderContentClient()
+                .GetContentByCustomerKey(this.ThrowIfStringNullOrEmpty(id));
+
+            string? executionResults = null;
+            if (content != null)
+            {
+                executionResults = CompileAndExecuteReferencedCode(content);
+            }
 
             return ReturnContentBasedOnInput(executionResults, id, throwIfNotFound, defaultContent, success);
         }
@@ -177,7 +199,7 @@ namespace Sage.Engine.Runtime
                 return contentString;
             }
 
-            return CompileAndExecuteEmbeddedCode($"treatascontent", contentString) ?? string.Empty;
+            return CompileAndExecuteEmbeddedCode("treatascontent", contentString) ?? string.Empty;
         }
 
         /// <summary>

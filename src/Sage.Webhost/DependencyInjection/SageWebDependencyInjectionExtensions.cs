@@ -52,8 +52,7 @@ namespace Sage.Webhost.DependencyInjection
                     appServices.Configure<CompilationOptions>(o =>
                     {
                         o.GeneratedMethodName = CompilerOptionsBuilder.BuildMethodFromFilename(generatedFilename);
-                        o.InputName = generatedFile.Name;
-                        o.InputFile = generatedFile;
+                        o.Content = new LocalFileContent(generatedFile.FullName, 1);
                     });
                     appServices.AddOptions<PackageExtractorOptions>()
                         .Configure<IOptions<SageInMemoryDataOption>, IOptions<ContentOptions>>(
@@ -91,8 +90,7 @@ namespace Sage.Webhost.DependencyInjection
                     appServices.Configure<CompilationOptions>(o =>
                     {
                         o.GeneratedMethodName = CompilerOptionsBuilder.BuildMethodFromFilename(generatedFilename);
-                        o.InputName = generatedFile.Name;
-                        o.InputFile = generatedFile;
+                        o.Content = new LocalFileContent(generatedFile.FullName, 1);
                     });
                     appServices.Configure<ContentOptions>(contentOptions =>
                     {

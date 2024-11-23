@@ -40,6 +40,7 @@ public static class TestUtils
             options,
             test.SubscriberContext);
     }
+    
 
     /// <summary>
     /// Executes the engine and gets the expected result from the engine
@@ -47,7 +48,7 @@ public static class TestUtils
     public static EngineTestResult GetOutputFromTest(IServiceProvider serviceProvider, CorpusData test)
     {
         CompilationOptions options = new CompilerOptionsBuilder()
-            .WithSourceCode(test.FileFriendlyName, test.Code)
+            .WithContent(new EmbeddedContent(test.Code, test.FileFriendlyName, test.FileFriendlyName, 1, ContentType.AMPscript))
         .Build();
 
         try

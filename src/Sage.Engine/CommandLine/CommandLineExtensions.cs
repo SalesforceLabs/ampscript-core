@@ -3,23 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Builder;
-using System.CommandLine.NamingConventionBinder;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Antlr4.Runtime.Misc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using Sage.Engine.CommandLine;
 using Sage.Engine.Compiler;
 using Sage.Engine.Extensions;
-using static Sage.Engine.AmpscriptCommand;
 
 namespace Sage.Engine
 {
@@ -52,7 +41,7 @@ namespace Sage.Engine
 
                     appServices.Configure<CompilationOptions>((o) =>
                     {
-                        o.InputFile = ampscriptOption.Source;
+                        o.Content = new LocalFileContent(ampscriptOption.Source.FullName, 1);
                         o.GeneratedMethodName = CompilerOptionsBuilder.BuildMethodFromFilename(ampscriptOption.Source.FullName);
                     });
                 });
