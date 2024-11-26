@@ -1,0 +1,11 @@
+﻿===========
+Unless Helper False
+===========
+{{#unless isActiveFalse}}hello{{/unless}}
+++++++++++
+hello
+===========
+Unless Helper True
+===========
+{{#unless isActiveTrue}}hello{{/unless}}
+++++++++++

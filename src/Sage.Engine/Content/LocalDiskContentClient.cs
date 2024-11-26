@@ -61,6 +61,12 @@ namespace Sage.Engine.Content
                 return new LocalFileContent(id, filePath, 1, ContentType.AMPscript);
             }
 
+            filePath = Path.Combine(_options.InputDirectory.FullName, $"{id}.hbs");
+            if (File.Exists(filePath))
+            {
+                return new LocalFileContent(id, filePath, 1, ContentType.Handlebars);
+            }
+
             return null;
         }
     }

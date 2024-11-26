@@ -10,7 +10,8 @@ namespace Sage.Engine.Compiler
     /// </summary>
     public enum ContentType
     {
-        AMPscript
+        AMPscript,
+        Handlebars
     };
 
     /// <summary>

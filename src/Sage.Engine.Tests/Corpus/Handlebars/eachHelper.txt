@@ -1,0 +1,6 @@
+﻿===========
+eachHelper
+===========
+{{#each people}}<h1>{{name}}</h1>{{/each}}
+++++++++++
+<h1>Adam</h1><h1>Howard</h1>

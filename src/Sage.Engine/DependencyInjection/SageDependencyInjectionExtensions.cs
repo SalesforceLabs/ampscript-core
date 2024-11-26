@@ -10,6 +10,7 @@ using Sage.Engine.Compiler;
 using Sage.Engine.Data.DependencyInjection;
 using Sage.Engine.Data.Sqlite;
 using Sage.Engine.Extensions;
+using Sage.Engine.Handlebars;
 
 namespace Sage.Engine.DependencyInjection
 {
@@ -61,6 +62,7 @@ namespace Sage.Engine.DependencyInjection
             services.AddLocalDiskContentClient();
             services.AddScoped<Renderer>();
             services.AddScoped<ICompiler, AmpscriptCompiler>();
+            services.AddScoped<ICompiler, HandlebarsCompiler>();
         }
     }
 }

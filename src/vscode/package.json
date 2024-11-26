@@ -3,7 +3,7 @@
   "publisher": "salesforce",
   "displayName": "AMPscript Editor",
   "description": "Locally run AMPscript, powered by AMPscript Core",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -39,6 +39,12 @@
           ".ampscript"
         ],
         "configuration": "./syntaxes/language-configuration.json"
+      },
+      {
+        "id": "handlebars",
+        "extensions": [
+          ".hbs"
+        ]
       }
     ],
     "grammars": [
@@ -58,12 +64,13 @@
         "type": "ampscript",
         "languages": [
           "ampscript",
-          "json"
+          "json",
+          "handlebars"
         ],
-        "label": "Debug AMPscript",
+        "label": "Debug With AMPscript Core",
         "configurationSnippets": [
         {
-          "label": "AMPscript: Debug the current AMPscript file",
+          "label": "AMPscript: Debug the current AMPscript Core file",
           "description": "Launch an AMPscript file with a debugger.",
           "body": {
             "name": "AMPscript launch",

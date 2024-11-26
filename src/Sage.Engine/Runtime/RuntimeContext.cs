@@ -49,21 +49,8 @@ namespace Sage.Engine.Runtime
             _contentBuilderContentClient = provider.GetRequiredService<IContentBuilderContentClient>();
             _dataExtensionClient = provider.GetRequiredService<IDataExtensionClient>();
             _dataExtensionClient.ConnectAsync().Wait();
-
-            string subscriberContextFile =
-                Path.Combine(Path.GetDirectoryName(_rootCompilationOptions.Content.Location), "subscriber.json");
-            if (subscriberContext != null)
-            {
-                _subscriberContext = subscriberContext;
-            }
-            else if (Path.Exists(subscriberContextFile))
-            {
-                _subscriberContext = new SubscriberContext(File.ReadAllText(subscriberContextFile));
-            }
-            else
-            {
-                _subscriberContext = new SubscriberContext(null);
-            }
+            
+            _subscriberContext = subscriberContext ?? new SubscriberContext(null);
 
             _stackFrame.Push(new StackFrame(_rootCompilationOptions.GeneratedMethodName, _rootCompilationOptions.Content));
         }
@@ -229,7 +216,6 @@ namespace Sage.Engine.Runtime
 
         internal string? CompileAndExecuteReferencedCode(CompilationOptions currentOptions)
         {
-            CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(currentOptions);
 
             string poppedContext;
 
@@ -237,6 +223,8 @@ namespace Sage.Engine.Runtime
 
             try
             {
+                
+                CompileResult compileResult = CSharpCompiler.GenerateAssemblyFromSource(currentOptions);
                 compileResult.Execute(this);
             }
             finally

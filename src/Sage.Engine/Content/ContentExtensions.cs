@@ -46,6 +46,13 @@ namespace Sage.Engine.Compiler
         /// </summary>
         public static ContentType InferContentTypeFromFilename(string path)
         {
+            string extension = Path.GetExtension(path).ToLowerInvariant();
+
+            if (extension == ".hbs")
+            {
+                return ContentType.Handlebars;
+            }
+
             return ContentType.AMPscript;
         }
     }
