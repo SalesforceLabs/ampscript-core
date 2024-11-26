@@ -1,0 +1,6 @@
+﻿===========
+WithHelper Tests
+===========
+{{#with primary}}{{name}}{{/with}}
+++++++++++
+Adam

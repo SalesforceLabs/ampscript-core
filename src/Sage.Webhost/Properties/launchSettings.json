@@ -22,13 +22,23 @@
     },
     "Ampscript ": {
       "commandName": "Project",
-      "commandLineArgs": "ampscript --source \"C:\\code\\AmpscriptFiles\\dd4tmp.ampscript\"",
-      "workingDirectory": "C:\\code\\AmpscriptFiles",
+      "commandLineArgs": "ampscript --source \"C:\\code\\AmpscriptFiles\\dd4tmp\\dd4tmp.ampscript\"",
+      "workingDirectory": "C:\\code\\AmpscriptFiles\\dd4tmp",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7194"
+    },
+    "HBS": {
+      "commandName": "Project",
+      "commandLineArgs": "ampscript --source \"C:\\code\\AmpscriptFiles\\dd4tmp-hbs\\dd4tmp.hbs\"",
+      "workingDirectory": "C:\\code\\AmpscriptFiles\\dd4tmp",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
       "applicationUrl": "https://localhost:7194"
     }
   },

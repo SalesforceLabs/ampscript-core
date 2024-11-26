@@ -1,0 +1,12 @@
+﻿===========
+If True Block
+===========
+{{#if isActiveTrue}}hello{{else}}world{{/if}}
+++++++++++
+hello
+===========
+If False Block
+===========
+{{#if isActiveFalse}}hello{{else}}world{{/if}}
+++++++++++
+world

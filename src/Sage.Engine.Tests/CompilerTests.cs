@@ -45,7 +45,10 @@ namespace Sage.Engine.Tests
         }
 
         [Test]
+        [TestCase("%%=ADD(1,2)=%%", ContentType.Handlebars, "%%=ADD(1,2)=%%")]
         [TestCase("%%=ADD(1,2)=%%", ContentType.AMPscript, "3")]
+        [TestCase("{{#if true}}Hello{{/if}}", ContentType.AMPscript, "")]
+        [TestCase("{{#if true}}Hello{{/if}}", ContentType.Handlebars, "Hello")]
         public void TestRenderer(string input, ContentType type, string expected)
         {
             var content = new EmbeddedContent(input, "TEST", "TEST", 1, type);

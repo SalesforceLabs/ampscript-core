@@ -1,10 +1,11 @@
-// Copyright (c) 2022, salesforce.com, inc.
+﻿// Copyright (c) 2022, salesforce.com, inc.
 // All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using Microsoft.Extensions.Options;
 using Sage.Engine.Compiler;
+using Sage.Engine.Runtime;
 using Sage.Webhost;
 
 namespace Sage.Engine
@@ -33,7 +34,14 @@ namespace Sage.Engine
         {
             try
             {
-                return _renderer.Render(inputOption);
+                SubscriberContext context = null;
+                string subscriberContextFile = Path.Combine(Path.GetDirectoryName(inputOption.Content.Location), "subscriber.json");
+                if (Path.Exists(subscriberContextFile))
+                {
+                    context = new SubscriberContext(File.ReadAllText(subscriberContextFile));
+                }
+
+                return _renderer.Render(inputOption, context);
             }
             catch (GenerateCodeException compileException)
             {

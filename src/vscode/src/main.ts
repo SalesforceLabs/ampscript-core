@@ -78,6 +78,9 @@ export class AmpscriptConfigurationProvider implements vscode.DebugConfiguration
             } else if (editor.document.languageId === 'ampscript') {
                 config.args = "ampscript --source ${file}";
                 reporter.sendTelemetryEvent("launch", {'type': 'ampscriptfile'});
+            } else if (editor.document.languageId === 'handlebars') {
+                config.args = "ampscript --source ${file}";
+                reporter.sendTelemetryEvent("launch", {'type': 'handlebars'});
             }
         }
 

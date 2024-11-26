@@ -14,7 +14,9 @@ namespace Sage.Engine.Runtime
     /// </summary>
     public class SubscriberContext
     {
-        private readonly JsonNode? _context;
+        // TODO: This should be updated to only parse once
+        private readonly JsonNode? _contextNode;
+        private readonly JsonDocument? _contextDocument;
 
         public SubscriberContext(string? context)
         {
@@ -27,12 +29,13 @@ namespace Sage.Engine.Runtime
             {
                 PropertyNameCaseInsensitive = true
             };
-            _context = JsonNode.Parse(context, options);
+            _contextNode = JsonNode.Parse(context, options);
+            _contextDocument = JsonDocument.Parse(context);
         }
 
         public object? GetAttribute(string attributeName)
         {
-            var result = _context?[attributeName];
+            var result = _contextNode?[attributeName];
 
             if (result == null)
             {
@@ -42,9 +45,20 @@ namespace Sage.Engine.Runtime
             return result;
         }
 
+        /// <summary>
+        /// Returns a flat, non-nested set of subscriber attributes as a key/value pair of strings.
+        /// </summary>
         public Dictionary<string, string> GetAttributes()
         {
-            return JsonSerializer.Deserialize<Dictionary<string, string>>(_context);
+            return JsonSerializer.Deserialize<Dictionary<string, string>>(_contextNode) ?? new Dictionary<string, string>();
+        }
+
+        /// <summary>
+        /// Enables "rich" attributes, which can be complete JSON documents
+        /// </summary>
+        public JsonDocument? GetRichAttributes()
+        {
+            return _contextDocument;
         }
     }
 }
