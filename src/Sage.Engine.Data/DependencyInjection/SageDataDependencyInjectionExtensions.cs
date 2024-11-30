@@ -4,6 +4,7 @@
 // For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/Apache-2.0
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Sage.Engine.Data.Sqlite;
 
 namespace Sage.Engine.Data.DependencyInjection
@@ -18,6 +19,8 @@ namespace Sage.Engine.Data.DependencyInjection
             {
                 inMemoryOptions.ConnectionString = "Data Source=:memory:";
             });
+
+            services.AddSingleton<IConfigureOptions<SageInMemoryDataOption>, ConfigureSageInMemoryDataOption>();
 
             if (options != null)
             {
