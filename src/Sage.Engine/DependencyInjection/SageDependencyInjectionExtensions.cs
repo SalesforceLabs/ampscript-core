@@ -49,7 +49,6 @@ namespace Sage.Engine.DependencyInjection
                 }
             });
             services.AddLocalDiskContentClient();
-            services.AddScoped<RuntimeContext>();
             services.AddScoped<Renderer>();
             services.AddScoped<ICompiler, AmpscriptCompiler>();
             services.AddScoped<ICompiler, HandlebarsCompiler>();
