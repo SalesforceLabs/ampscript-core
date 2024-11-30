@@ -7,6 +7,7 @@ using System.CommandLine;
 using Microsoft.Extensions.Options;
 using Sage.Engine;
 using Sage.Engine.Compiler;
+using Sage.Engine.Data.DependencyInjection;
 using Sage.Engine.Data.Sqlite;
 using Sage.Engine.DependencyInjection;
 using Sage.Engine.Extensions;
@@ -120,6 +121,9 @@ namespace Sage.Webhost.DependencyInjection
             IServiceCollection commandLineCollection = new ServiceCollection();
             services.AddSagePackageManagerCommandLine(commandLineCollection);
             services.AddSage();
+
+            services.AddInMemoryDataExtensions();
+
             services.AddSageLaunchCommand(commandLineCollection);
             ServiceProvider provider = commandLineCollection.BuildServiceProvider();
             provider.GetRequiredService<LaunchCommand>().Invoke(args);

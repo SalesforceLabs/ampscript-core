@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sage.Engine.Data\Sage.Engine.Data.csproj" />
+    <ProjectReference Include="..\Sage.Engine.Data\Sage.Engine.InMemoryData.csproj" />
     <ProjectReference Include="..\Sage.Engine\Sage.Engine.csproj" />
   </ItemGroup>
 

@@ -27,9 +27,4 @@
       <Package>Sage.Engine.Parser</Package>
     </Antlr4>
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Sage.Engine.Data\Sage.Engine.Data.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -14,6 +14,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sage.Engine.Compiler;
+using Sage.Engine.Data.DependencyInjection;
 using Sage.Engine.DependencyInjection;
 using Sage.Engine.Extensions;
 using Sage.Engine.Tests.Compatibility;
@@ -36,6 +37,7 @@ namespace Sage.Engine.Tests
                 sageOptions.WorkingPath = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
                 sageOptions.OutputRootPath = sageOptions.WorkingPath.AppendDirectory("SageOutput");
             }));
+            collection.AddInMemoryDataExtensions();
 
             collection.AddMarketingCloudRenderingService();
 

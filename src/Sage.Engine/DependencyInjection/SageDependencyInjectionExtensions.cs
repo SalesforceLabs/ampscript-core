@@ -7,10 +7,8 @@ using System.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Sage.Engine.Compiler;
-using Sage.Engine.Data.DependencyInjection;
-using Sage.Engine.Data.Sqlite;
-using Sage.Engine.Extensions;
 using Sage.Engine.Handlebars;
+using Sage.Engine.Runtime;
 
 namespace Sage.Engine.DependencyInjection
 {
@@ -50,16 +48,8 @@ namespace Sage.Engine.DependencyInjection
                     compilationOptions.OutputDirectory = sageOptions.Value.OutputRootPath;
                 }
             });
-
-            services.AddInMemoryDataExtensions();
-            services.AddOptions<SageInMemoryDataOption>().Configure<IOptions<SageOptions>>((dataOptions, sageOptions) =>
-            {
-                if (sageOptions.Value.WorkingPath != null)
-                {
-                    dataOptions.DataExtensionDirectory = sageOptions.Value.WorkingPath.AppendDirectory("DataExtensions");
-                }
-            });
             services.AddLocalDiskContentClient();
+            services.AddScoped<RuntimeContext>();
             services.AddScoped<Renderer>();
             services.AddScoped<ICompiler, AmpscriptCompiler>();
             services.AddScoped<ICompiler, HandlebarsCompiler>();

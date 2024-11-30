@@ -16,13 +16,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Webhost", "Sage.Webhos
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateComparisonCorpusTesting", "GenerateComparisonCorpusTesting\GenerateComparisonCorpusTesting.csproj", "{901F09B5-E27E-4E94-9CC3-560784D73E53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Engine.Data", "Sage.Engine.Data\Sage.Engine.Data.csproj", "{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.Engine.InMemoryData", "Sage.Engine.Data\Sage.Engine.InMemoryData.csproj", "{BEDD5FF0-4677-4EC0-A984-ECD19B9FB63B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sage.PackageManager", "Sage.PackageManager\Sage.PackageManager.csproj", "{19767037-EBDC-46F2-B017-8B5EC6A04802}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sage.PackageManager.Tests", "Sage.PackageManager.Tests\Sage.PackageManager.Tests.csproj", "{DC2F94A6-8CA2-4DE6-860D-3E711FBAC769}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VSCode", "vscode\vscode.proj", "{48F56A6B-A285-4B40-9E96-044F7AA2C532}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "vscode", "vscode\vscode.proj", "{48F56A6B-A285-4B40-9E96-044F7AA2C532}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
